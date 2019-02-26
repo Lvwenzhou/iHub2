@@ -15,7 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+import iHubSite.views as site_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('login/', site_view.login),
+    path('logout/', site_view.logout),
+    path('register/', site_view.register),
+    path('index/', site_view.index),
+    path('carpool_index/', site_view.carpool_index),
+    path('carpool_join/', site_view.carpool_join),
+    path('carpool_my/', site_view.carpool_my),
+    path('carpool_start/', site_view.carpool_start),
+    path('carpool_quit/', site_view.carpool_quit),
+    path('carpool_cancel/', site_view.carpool_cancel),
+    path('carpool_take_part/', site_view.carpool_take_part),
+    path('carpool_map/', site_view.carpool_map),
 ]

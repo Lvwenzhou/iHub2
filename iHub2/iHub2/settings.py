@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'iHubSite',
 ]
 
 MIDDLEWARE = [
@@ -77,7 +78,7 @@ WSGI_APPLICATION = 'iHub2.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ihub_db',
+        'NAME': 'ihub2',
         'USER': 'root',
         'PASSWORD': '!Hub2019',
         'HOST': 'rm-bp1b4qfjs27c5ld11wo.mysql.rds.aliyuncs.com',
@@ -124,3 +125,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+     os.path.join(BASE_DIR, 'static').replace('\\', '/'),
+)

@@ -1,0 +1,95 @@
+<!doctype html>
+{% load staticfiles %}
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+    <!--link rel="stylesheet" href="{% static "css/weui.css" %}"-->
+
+    <title>!Hub-约出行</title>
+  </head>
+  <body>
+
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgba(0,0,0,0);">
+    <a class="navbar-brand" href="#" style="color: #12414B;font-family: AvenirNext-Bold;">!Hub</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#" style="color: #FFFFFF;font-family: AvenirNext-Bold;">拼车主页</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" style="color: #FFFFFF;font-family: AvenirNext-Bold;">查看已有拼车</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" style="color: #FFFFFF;font-family: AvenirNext-Bold;">发起拼车</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" style="color: #FFFFFF;font-family: AvenirNext-Bold;">我的拼车信息</a>
+        </li>
+      </ul>
+
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="请输入相关拼车信息" aria-label="Search" style="background-color: rgba(0,0,0,0)">
+        <br><br><button class="btn btn-light" type="submit">搜索！</button>
+      </form>
+
+    </div>
+  </nav>
+
+  <p>&nbsp;</p>
+
+  <div class="row">
+  <div class="col-1"></div>
+  <div class="col-10">
+    <button type="button" class="btn btn-lg btn-block btn-info" onclick="location.href='/carpool_start/'">发起拼车</button><br>
+    {% for plan in plan_list %}
+    <!--div class="shadow-sm p-3 mb-5 bg-white rounded"-->
+    <a onclick="location.href='/carpool_take_part/?plan_id={{ plan.id }}'">
+    <div class="shadow p-3 mb-5 bg-white rounded">
+      <p class="font-italic"><strong>{{ plan.from_site }}&nbsp;&rarr;&nbsp;{{ plan.to_site }}</strong></p>
+      <p class="font-weight-normal">发起者: {{ plan.pub_username }}&nbsp;性别: {{ plan.pub_gender }}<br>计划出行时间: {{ plan.trip_time }}<br>报名截止时间: {{ plan.deadline }}</p>
+
+      {% if plan.note != "" %}
+      <p class="font-weight-light">备注: {{ plan.note }}</p>
+      {% endif %}
+
+      <span class="badge badge-success">{{ plan.trip_mode }}</span>
+      <span class="badge badge-info">{{ plan.category }}</span>
+      <br>
+      {% if plan.auth_gender == 0 %}
+      <span class="badge badge-warning">男女均可</span>
+      {% elif plan.auth_gender == 1 %}
+      <span class="badge badge-warning">仅限男性</span>
+      {% elif plan.auth_gender == 2 %}
+      <span class="badge badge-warning">仅限女性</span>
+      {% endif %}
+      <span class="badge badge-primary">已有/需要人数: {{ plan.num_have }}/{{ plan.num_need }}</span>
+    </div>
+    {% endfor %}
+    </a>
+  </div>
+  <div class="col-1"></div>
+  </div>
+
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  </body>
+</html>

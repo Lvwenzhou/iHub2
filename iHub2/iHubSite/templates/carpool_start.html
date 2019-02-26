@@ -1,0 +1,159 @@
+<!doctype html>
+{% load staticfiles %}
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+    <link rel="stylesheet" href="{% static "css/weui.css" %}">
+
+    <title>!Hub-约出行</title>
+  </head>
+  <body>
+
+  <!--div class="panel panel-default" style="height:120px;background-color:#10316B;">
+    <div class="panel-body" style="font-family: AvenirNext-Bold;font-size: 48px;color: #FFFFFF;text-align: center;padding-top:20px;">
+        发起拼车
+    </div>
+  </div-->
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #63C5DA;">
+    <a class="navbar-brand" href="#" style="color: #FEFFFE;font-family: AvenirNext-Bold;">!Hub</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#" style="color: #FFFFFF;font-family: AvenirNext-Bold;">拼车主页</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" style="color: #FFFFFF;font-family: AvenirNext-Bold;">查看已有拼车</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" style="color: #FFFFFF;font-family: AvenirNext-Bold;">发起拼车</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" style="color: #FFFFFF;font-family: AvenirNext-Bold;">我的拼车信息</a>
+        </li>
+      </ul>
+
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="请输入相关拼车信息" aria-label="Search" style="background-color: rgba(0,0,0,0)">
+        <br><br><button class="btn btn-light" type="submit">搜索！</button>
+      </form>
+
+    </div>
+  </nav>
+  <br>
+
+  <div>
+    <form class="form-signin" method="POST" action="/carpool_start/" style="background-color: rgba(0,0,0,0);border: none">
+      {% csrf_token %}
+      <h3 class="form-signin-heading">发起拼车</h3>
+      <input type="text" class="form-control" name="from_site_input" id="from_site_input" placeholder="起点" required="" autofocus="" />
+      <input type="text" class="form-control" name="to_site_input" id="to_site_input" placeholder="终点" required="" />
+      <input type="number" class="form-control" name="num_need_input" placeholder="除发起者外需要人数" required="" />
+      <br>
+      <input type="text" class="form-control" name="note_input" placeholder="备注(可不填)" />
+
+      <div class="weui-cell">
+        <div class="weui-cell__hd"><label for="" class="weui-label">计划出行时间</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="datetime-local" name="trip_time_input" placeholder=""/>
+        </div>
+      </div>
+
+      <div class="weui-cell">
+        <div class="weui-cell__hd"><label for="" class="weui-label">报名截止时间</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="datetime-local" name="deadline_input" placeholder=""/>
+        </div>
+      </div>
+      <br>
+
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" style="background-color: #63C5DA;border: none" for="inputGroupSelect01">标签/分类</label>
+        </div>
+        <select class="custom-select" id="inputGroupSelect01" name="category_select">
+          <option selected>请选择...</option>
+          <option value="奉贤->徐汇">奉贤->徐汇</option>
+          <option value="徐汇->奉贤">徐汇->奉贤</option>
+          <option value="奉贤->市内">奉贤->市内</option>
+          <option value="市内->奉贤">市内->奉贤</option>
+          <option value="奉贤<->机场">奉贤<->机场</option>
+          <option value="奉贤<->车站">奉贤<->车站</option>
+        </select>
+      </div>
+
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" style="background-color: #63C5DA;border: none" for="inputGroupSelect01">出行方式</label>
+        </div>
+        <select class="custom-select" id="inputGroupSelect01" name="trip_mode_select">
+          <option selected>请选择...</option>
+          <option value="出租车">出租车</option>
+          <option value="发起者自驾">发起者自驾</option>
+          <option value="公共交通">公共交通</option>
+          <option value="其他">其他</option>
+        </select>
+      </div>
+
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" style="background-color: #63C5DA;border: none" for="inputGroupSelect01">允许加入者性别</label>
+        </div>
+        <select class="custom-select" id="inputGroupSelect01" name="auth_gender_select">
+          <option selected>请选择...</option>
+          <option value="0">均可</option>
+          <option value="1">仅限女性</option>
+          <option value="2">仅限男性</option>
+        </select>
+      </div>
+
+      <label class="checkbox">
+        <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> 同意条款
+      </label>
+
+      <button class="btn btn-lg btn-primary btn-block" type="submit" style="background: #F78163;border: none">发布</button>
+
+    </form>
+  </div>
+
+
+
+
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- 以下为高德地图API的js -->
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.11&key=89dda6ed9e52545d6067c54bc1c9a7c8&plugin=AMap.Autocomplete"></script>
+    <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
+    <script type="text/javascript">
+        /*
+        //地图
+        var map = new AMap.Map("container", {
+            resizeEnable: true
+        });*/
+        //输入提示
+        var auto1 = new AMap.Autocomplete({
+            input: "from_site_input",
+        });
+        var auto2 = new AMap.Autocomplete({
+            input: "to_site_input",
+        });
+    </script>
+  </body>
+</html>
