@@ -1,0 +1,63 @@
+<!doctype html>
+{% load staticfiles %}
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--link rel="stylesheet" href="{% static "css/style.css" %}"-->
+    <link rel="stylesheet" href="{% static "css/weui.css" %}">
+    <link rel="stylesheet" href="{% static "css/background_style.css" %}">
+
+    <title>!Hub-约出行</title>
+  </head>
+  <body>
+
+  <div class="semicircle-down"></div>
+  <div class="semicircle-top"></div>
+  <div style="z-index: 99;vertical-align: middle;display: block;width: 100%;position: absolute;margin-top: 20px">
+      <img alt="" src="{% static "img/background/login_title.png" %}" style="max-width:100%;height: auto;">
+  </div>
+  <div class="row" style="z-index: 999;">
+      <div class="col-1"></div>
+      <div class="col-10">
+          <div style="background-color: #FFFFFF;border-radius: 20px;margin-top: 200px;">
+              <div class="row">
+                  <div class="col-1"></div>
+                  <div class="col-10">
+
+              <br>
+              <h2 style="color: #36588D">请先登录</h2>
+              <br>
+              <form method="POST" action="/login/">
+              {% csrf_token %}
+                <div class="form-group">
+                  <input type="text" name="user_no_input" class="form-control" placeholder="学号/工号">
+                </div>
+
+                <div class="form-group">
+                  <input type="password" name="password_input" class="form-control" placeholder="密码">
+                </div>
+                  <br>
+                  <div style="text-align:center"><button type="submit" class="btn btn-primary btn-lg btn-block" style="background-color: #FFEA48;border: none;border-radius: 20px;color: #36588D;">进入!Hub</button></div><br>
+              </form>
+              <div style="text-align:center"><button class="btn btn-primary btn-lg btn-block" onclick="location.href='/register/'" style="background-color: #95A8C5;border: none;border-radius: 20px;color: #36588D;">没有账号，点击注册</button></div><br><br>
+                  </div>
+                  <div class="col-1"></div>
+              </div>
+          </div>
+      </div>
+      <div class="col-1"></div>
+  </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  </body>
+</html>

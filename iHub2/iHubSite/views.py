@@ -12,7 +12,8 @@ from iHubSite.models import Users, CarpoolPlans, JoinCarpoolPlan
 
 
 def index(request):
-    pass
+    if request.method == 'GET':
+        return render(request, 'index.html')
 
 
 def my(request):

@@ -1,0 +1,89 @@
+<!doctype html>
+{% load staticfiles %}
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--link rel="stylesheet" href="{% static "css/style.css" %}"-->
+    <link rel="stylesheet" href="{% static "css/weui.css" %}">
+    <link rel="stylesheet" href="{% static "css/background_style.css" %}">
+
+    <title>!Hub-约出行</title>
+  </head>
+  <body style="background-color: #FFEA48">
+
+  <div class="semicircle-down"></div>
+  <div class="semicircle-top"></div>
+  <div style="z-index: 99;vertical-align: middle;display: block;width: 100%;position: absolute;margin-top: 10px">
+      <img alt="" src="{% static "img/background/login_title.png" %}" style="max-width:100%;height: auto;">
+  </div>
+  <div class="row" style="z-index: 999;">
+      <div class="col-1"></div>
+      <div class="col-10">
+          <form method="POST" action="/register/">
+          {% csrf_token %}
+          <div style="background-color: #FFFFFF;border-radius: 20px;margin-top: 200px;">
+              <div class="row">
+                  <div class="col-1"></div>
+                  <div class="col-10">
+
+              <br>
+              <h2 style="color: #36588D">基本信息</h2>
+              <br>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="name_input" placeholder="姓名" required="" autofocus="" /><br>
+                    <input type="text" class="form-control" name="username_input" placeholder="昵称" required=""/><br>
+                    <input type="text" class="form-control" name="no_input" placeholder="学号/工号" required=""/><br>
+                    <input type="password" class="form-control" name="password_input" placeholder="密码" required=""/><br>
+                    <input type="password" class="form-control" name="password_again_input" placeholder="确认密码" required=""/><br>
+                    <label for="name"><h5>性别</h5></label>
+                      <label>
+                        <input type="radio" name="gender_select" id="optionsRadios1" value="male">男
+                      </label>
+                      <label>
+                        <input type="radio" name="gender_select" id="optionsRadios2" value="female">女
+                      </label>
+                </div>
+                  <br>
+
+                  </div>
+                  <div class="col-1"></div>
+              </div>
+          </div><br>
+          <div style="background-color: #FFFFFF;border-radius: 20px;">
+              <div class="row">
+                  <div class="col-1"></div>
+                  <div class="col-10">
+
+              <br>
+              <h2 style="color: #36588D">个人信息</h2>
+              <br>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="wechatid_input" placeholder="微信ID" required=""/><br>
+                    <input type="text" class="form-control" name="mail_input" placeholder="邮箱" required=""/><br>
+                    <input type="text" class="form-control" name="major_input" placeholder="专业" required=""/><br>
+                </div>
+                  <div style="text-align:center"><button type="submit" class="btn btn-primary btn-lg btn-block" style="background-color: #FFEA48;border: none;border-radius: 20px;background-color: #36588D;">确认</button></div><br>
+
+                  </div>
+                  <div class="col-1"></div>
+              </div>
+          </div>
+          </form>
+          <br>
+      </div>
+      <div class="col-1"></div>
+  </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  </body>
+</html>
