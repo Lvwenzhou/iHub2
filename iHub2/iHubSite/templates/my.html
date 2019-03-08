@@ -11,75 +11,109 @@
     <!--link rel="stylesheet" href="{% static "css/style.css" %}"-->
     <link rel="stylesheet" href="{% static "css/weui.css" %}">
     <link rel="stylesheet" href="{% static "css/background_style.css" %}">
+    <link rel="stylesheet" href="{% static "css/my.css" %}">
 
     <title>!Hub</title>
   </head>
-  <body>
+  <body style="background-color: #36588D">
 
-
-  <p style="text-align: center;color: #3D5989;font-family: 黑体;font-weight: bold;font-size: 20px;"><br>约出行列表</p><br>
-
-  <div style="background-color: #EFEFEF;width: 100%;top: 80px;">
-    <div class="row"><div class="col-1"></div><div class="col-10">
-    <br>
-
-
-        {% for plan in plan_list %}
-            <div class="row" style="background-color: #FFFFFF;border-top-right-radius: 10px;border-top-left-radius: 10px;">
-                <div class="col-1"></div>
-                <div class="col-10">
-                <br>
-                    <p><strong>从&nbsp;</strong>{{ plan.from_site }}<br><strong>至&nbsp;</strong>{{ plan.to_site }}</p>
-                    <p><strong>计划出行时间&nbsp;</strong>{{ plan.trip_time|date:"Y-m-d H:i" }}</p>
-
-                    {% if plan.note != "" %}
-                    <p><strong>备注&nbsp;</strong>{{ plan.note }}</p>
-                    {% endif %}
-
-                    <span class="badge badge-success">{{ plan.trip_mode }}</span>
-                    <span class="badge badge-info">{{ plan.category }}</span>
-                    <br>
-                    {% if plan.auth_gender == 0 %}
-                    <span class="badge badge-warning">男女均可</span>
-                    {% elif plan.auth_gender == 1 %}
-                    <span class="badge badge-warning">仅限男性</span>
-                    {% elif plan.auth_gender == 2 %}
-                    <span class="badge badge-warning">仅限女性</span>
-                    {% endif %}
-                    <span class="badge badge-primary">已有/需要人数: {{ plan.num_have }}/{{ plan.num_need }}</span><br>
-                    <p>&nbsp;</p>
-                </div>
-                <div class="col-1"></div>
-            </div>
-            <div class="row" style="background-color: #FFEA48;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;">
-                <div class="col-3" style="top: 5px;">
-                    <a onclick="location.href='/carpool_take_part/'"><img src="{% static "img/icons/join.png" %}" style="width:60px;height:60px;border-radius: 100%;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a>
-                </div>
-                <div class="col-9" style="top: 5px;">
-                    <p><strong>发起人&nbsp;</strong>{{ plan.pub_username }}&nbsp;&nbsp;{{ plan.pub_gender }}<br><strong>报名截止&nbsp;</strong>{{ plan.deadline|date:"Y-m-d H:i" }}</p>
-                </div>
-            <br>
-            </div>
-            <br>
-        {% endfor %}
-
-    </div><div class="col-1"></div></div>
-      <br>
-  </div>
+  <div class="my_top"></div>
   <p>&nbsp;</p>
-<br>
 
 
-  <div class="row">
-      <div class="col-1"></div>
-      <div class="col-10">
+  {% if not not_log_in %}
+  <div class="row my_avatar"><div class="col-1"></div><div class="col-10">
+      <br>
+      <img src="{% static "img/avatar/avatar_example.png" %}" style="width:100px;height:100px;display: flex;border-radius: 100%;align-items: center;justify-content: center;overflow: hidden;">
+  </div><div class="col-1"></div></div>
+  {% endif %}
 
+  <div class="my_info">
+  {% if not not_log_in %}
+
+      <div class="row"><div class="col-1"></div><div class="col-10">
+          <br>
+          <div style="text-align: right"><a><h6>修改</h6></a></div>
+      </div><div class="col-1"></div></div>
+
+
+      <div style="background-color: #EFEFEF">
+          <div class="row"><div class="col-1"></div><div class="col-10">
+              <br>
+              <p class="font-weight-bold">基本信息</p>
+          </div><div class="col-1"></div></div>
       </div>
-      <div class="col-1"></div>
+      <div class="row">
+          <div class="col-1"></div>
+          <div class="col-10">
+              <div class="my_base_info">
+                  <br>
+                  <p class="font-weight-light"><strong>用户名：</strong>{{ user.name }}</p>
+                  <p class="font-weight-light"><strong>姓名：</strong>{{ user.username }}</p>
+                  <p class="font-weight-light"><strong>性别：</strong>{{ user.gender }}</p>
+              </div>
+          </div>
+          <div class="col-1"></div>
+      </div>
+
+      <div style="background-color: #EFEFEF">
+          <div class="row"><div class="col-1"></div><div class="col-10">
+              <br>
+              <p class="font-weight-bold">学校信息</p>
+          </div><div class="col-1"></div></div>
+      </div>
+      <div class="row">
+          <div class="col-1"></div>
+          <div class="col-10">
+              <div class="my_base_info">
+                  <br>
+                  <!--p class="font-weight-light"><strong>学校：</strong>华东理工大学</p-->
+                  <!--p class="font-weight-light"><strong>身份：</strong>学生</p-->
+                  <p class="font-weight-light"><strong>专业：</strong>{{ user.major }}</p>
+                  <p class="font-weight-light"><strong>学号/工号：</strong>{{ user.no }}</p>
+              </div>
+          </div>
+          <div class="col-1"></div>
+      </div>
+
+      <div style="background-color: #EFEFEF">
+          <div class="row"><div class="col-1"></div><div class="col-10">
+              <br>
+              <p class="font-weight-bold">联系方式及其他信息</p>
+          </div><div class="col-1"></div></div>
+      </div>
+      <div class="row">
+          <div class="col-1"></div>
+          <div class="col-10">
+              <div class="my_base_info">
+                  <br>
+                  <p class="font-weight-light"><strong>邮箱：</strong>{{ user.mail }}</p>
+                  <p class="font-weight-light"><strong>微信ID：</strong>{{ user.weChat_id }}</p>
+                  <p class="font-weight-light"><strong>手机号：</strong>{{ user.phone }}</p>
+                  <p class="font-weight-light"><strong>注册时间：</strong>{{ user.reg_time }}</p>
+                  <p class="font-weight-light"><strong>信誉积分：</strong>{{ user.credit }}</p>
+              </div>
+              <br>
+
+          </div>
+          <div class="col-1"></div>
+      </div>
+
+      <div style="background-color: #EFEFEF">
+          <div class="row"><div class="col-1"></div><div class="col-10">
+          <br>
+          <button type="button" class="btn btn-primary btn-lg btn-block" style="color: #3D5989;background-color: #FFEA48;border-radius: 20px;border: none;" onclick="location.href='/logout/'">退出登录</button><br>
+          <button type="button" class="btn btn-primary btn-lg btn-block" style="color: #FEFFFE;background-color: #3D5989;border-radius: 20px;border: none;" onclick="location.href='/index/'">返回主页</button><br>
+          </div><div class="col-1"></div></div>
+      </div>
+
+  {% else %}
+      <div>sss</div>
+  {% endif %}
   </div>
 
 
-<div class="index_footer">
+  <div class="index_footer">
     <div class="row">
         <div class="col-1"></div>
         <div class="col-10">
@@ -135,7 +169,6 @@
     background-color: #FFFFFF;
     }
 </style>
-
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

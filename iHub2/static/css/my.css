@@ -1,0 +1,82 @@
+/* 顶 */
+.my_top {
+    background: #98A8C2;
+    height: 100px;
+    /*position: absolute;
+    z-index: -99;*/
+    width: 100%;
+	-moz-border-radius:0 0 10px 10px;
+	-webkit-border-radius:0 0 10px 10px;
+	border-radius:0 0 10px 10px;
+}
+
+/* Rectangle 5: */
+.my_rectangle5 {
+    background: #F0F0F0;
+}
+
+/* 基本信息: */
+.my_base_info {
+    font-family: PingFangSC-Medium;
+    font-size: 14px;
+    color: #4A4A4A;
+}
+
+/* Rectangle 6: */
+.my_rectangle6 {
+    background: #FBFBFB;
+}
+
+/* 性别: */
+.my_gender {
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #4A4A4A;
+    text-align: center;
+}
+
+/* 女: */
+.my_female {
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #AEAEAE;
+    text-align: center;
+}
+
+/* 星座: */
+.my_xz {
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #4A4A4A;
+    text-align: center;
+}
+
+/* Rectangle: */
+.my_rectangle {
+    background: #FFE867;
+    border-radius: 24.5px;
+}
+
+/* 退出登陆: */
+.my_logout {
+    font-family: PingFangSC-Semibold;
+    font-size: 14px;
+    color: #3D5989;
+    text-align: center;
+}
+
+/* 个人信息 */
+.my_info {
+    background-color: #FEFFFE;
+    -moz-border-radius: 20px 20px 0 0;
+	-webkit-border-radius: 20px 20px 0 0;
+	border-radius: 20px 20px 0 0;
+}
+
+/* 头像 */
+.my_avatar {
+    margin-top: 0;
+    top: 50px;
+    position: absolute;
+    z-index: 99;
+}

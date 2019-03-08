@@ -23,6 +23,7 @@ urlpatterns = [
     path('logout/', site_view.logout),
     path('register/', site_view.register),
     path('index/', site_view.index),
+    path('my/', site_view.my),
     path('carpool_index/', site_view.carpool_index),
     path('carpool_join/', site_view.carpool_join),
     path('carpool_my/', site_view.carpool_my),
@@ -31,4 +32,5 @@ urlpatterns = [
     path('carpool_cancel/', site_view.carpool_cancel),
     path('carpool_take_part/', site_view.carpool_take_part),
     path('carpool_map/', site_view.carpool_map),
+    path('carpool_search/', site_view.carpool_search),
 ]

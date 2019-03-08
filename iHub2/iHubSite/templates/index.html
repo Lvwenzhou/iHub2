@@ -1,0 +1,145 @@
+<!doctype html>
+{% load staticfiles %}
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--link rel="stylesheet" href="{% static "css/style.css" %}"-->
+    <link rel="stylesheet" href="{% static "css/weui.css" %}">
+    <link rel="stylesheet" href="{% static "css/background_style.css" %}">
+
+    <title>!Hub</title>
+  </head>
+  <body>
+
+  <div style="background-color: #3D5989;width: 100%;position: fixed">
+    <p>&nbsp;</p>
+    <form action="/search/" method="POST">
+      <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+          <input class="form-control" style="border-radius: 10px;" type="search" placeholder="🔍请输入你要搜索的内容" aria-label="Search">
+        </div>
+        <div class="col-2"></div>
+      </div>
+    </form>
+      <img alt="" src="{% static "img/background/login_title.png" %}" style="max-width:100%;height: auto;">
+      <br>
+  </div>
+
+
+  <br>
+  <div>
+    <div class="row" style="position: fixed;top: 280px;">
+      <div class="col-1"></div>
+        <div class="col-10">
+
+            <div class="row">
+                <div class="col-3">
+                    <a href="/carpool_index/"><img src="{% static "img/icons/index_carpool.png" %}" style="width:60px;height:60px;display: flex;align-items: center;justify-content: center;overflow: hidden;"></a>
+                    <div style="text-align: center"><small class="form-text text-muted">约出行</small></div>
+                </div>
+                <div class="col-3">
+                    <a href="/study_index/"><img src="{% static "img/icons/index_study.png" %}" style="width:60px;height:60px;display: flex;align-items: center;justify-content: center;overflow: hidden;"></a>
+                    <div style="text-align: center"><small class="form-text text-muted">约学习</small></div>
+                </div>
+                <div class="col-3">
+                    <a href="/sport_index/"><img src="{% static "img/icons/index_sport.png" %}" style="width:60px;height:60px;display: flex;align-items: center;justify-content: center;overflow: hidden;"></a>
+                    <div style="text-align: center"><small class="form-text text-muted">约健身</small></div>
+                </div>
+                <div class="col-3">
+                    <a href="/game_index/"><img src="{% static "img/icons/index_game.png" %}" style="width:60px;height:60px;display: flex;align-items: center;justify-content: center;overflow: hidden;"></a>
+                    <div style="text-align: center"><small class="form-text text-muted">约开黑</small></div>
+                </div>
+            </div>
+
+        </div>
+      <div class="col-1"></div>
+    </div>
+  </div>
+
+  <div style="background-color: #F5F5F5">
+
+  </div>
+
+
+  {% if loged_in %}
+  <div style="position: fixed;top: 400px;">
+      <img alt="" src="{% static "img/background/index_welcome.jpg" %}" style="max-width:100%;height: auto;">
+  </div>
+  {% else %}
+  <div style="position: fixed;top: 380px;left: 10px;right: 10px;">
+      <button class="btn btn-primary btn-lg btn-block" onclick="location.href='/login/'" style="background-color: #FFEA48;border: none;border-radius: 20px;color: #36588D;">我有账号，点击登录</button><br>
+      <div style="text-align:center"><button class="btn btn-primary btn-lg btn-block" onclick="location.href='/register/'" style="background-color: #95A8C5;border: none;border-radius: 20px;color: #36588D;">没有账号，点击注册</button></div><br><br>
+  </div>
+  {% endif %}
+
+<div class="index_footer">
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div class="row">
+                <div class="col-4">
+                    <a href="/index/"><img src="{% static "img/icons/index_nav_home.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;ustify-content: center;overflow: hidden;"></a>
+                    <div style="text-align: center"><small class="form-text text-muted">主页</small></div>
+
+                </div>
+                <div class="col-4">
+
+                    <a href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{% static "img/icons/index_nav_start.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a>
+                    <div style="text-align: center"><small class="form-text text-muted">发起</small></div>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/carpool_index/">约出行</a>
+                    <a class="dropdown-item" href="/study_index/">约学习</a>
+                    <a class="dropdown-item" href="/sport_index/">约健身</a>
+                    <a class="dropdown-item" href="/game_index/">约开黑</a>
+                    </div>
+
+                </div>
+
+
+                <div class="col-4">
+                    <!--a href="/my/"><img src="{% static "img/icons/index_nav_my.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a-->
+                    <!--div style="text-align: center"><small class="form-text text-muted">我的</small></div-->
+
+                    <a href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{% static "img/icons/index_nav_my.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a>
+                    <div style="text-align: center"><small class="form-text text-muted">我的</small></div>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                    <a class="dropdown-item" href="/carpool_my/">我的约出行</a>
+                    <a class="dropdown-item" href="/study_my/">我的约学习</a>
+                    <a class="dropdown-item" href="/sport_my/">我的约健身</a>
+                    <a class="dropdown-item" href="/game_my/">我的约开黑</a>
+                    <a class="dropdown-item" href="/my/">个人信息</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+</div>
+<style>
+  .index_footer {
+    position: fixed;
+    /*position:absolute;*/
+    width: 100%;
+    z-index: 100;
+    bottom: 0;
+    height: 80px;
+    background-color: #FFFFFF;
+    }
+</style>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  </body>
+</html>

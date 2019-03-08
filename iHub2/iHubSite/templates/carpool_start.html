@@ -8,129 +8,175 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static "css/style.css" %}">
+    <!--link rel="stylesheet" href="{% static "css/style.css" %}"-->
     <link rel="stylesheet" href="{% static "css/weui.css" %}">
+    <link rel="stylesheet" href="{% static "css/background_style.css" %}">
 
-    <title>!Hub-约出行</title>
+    <title>!Hub</title>
   </head>
   <body>
 
-  <!--div class="panel panel-default" style="height:120px;background-color:#10316B;">
-    <div class="panel-body" style="font-family: AvenirNext-Bold;font-size: 48px;color: #FFFFFF;text-align: center;padding-top:20px;">
-        发起拼车
-    </div>
-  </div-->
-  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #63C5DA;">
-    <a class="navbar-brand" href="#" style="color: #FEFFFE;font-family: AvenirNext-Bold;">!Hub</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+  <p>&nbsp;</p>
+  <p style="text-align: center;color: #3D5989">约出行</p>
+  <p>&nbsp;</p>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <div style="background-color: #EFEFEF;width: 100%;">
+    <div class="row"><div class="col-1"></div><div class="col-10">
+    <br>
+      <div style="background-color: #95A8C5;border-top-left-radius: 10px;border-top-right-radius: 10px;">
+        <br>
+        <img alt="" src="{% static "img/background/iHub_logo_text.png" %}" style="max-width:100%;height: auto;">
+        <img alt="" src="{% static "img/background/carpool_form.png" %}" style="max-width:100%;height: auto;" align="right">
+      </div>
+      <div style="background-color: #3D5989;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;">
+        <br>
+        <div>
 
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="#" style="color: #FFFFFF;font-family: AvenirNext-Bold;">拼车主页</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" style="color: #FFFFFF;font-family: AvenirNext-Bold;">查看已有拼车</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" style="color: #FFFFFF;font-family: AvenirNext-Bold;">发起拼车</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" style="color: #FFFFFF;font-family: AvenirNext-Bold;">我的拼车信息</a>
-        </li>
-      </ul>
+          <form action="/carpool_start/" method="POST">
+          {% csrf_token %}
+              <div class="row">
+                  <div class="col-1"></div>
+                  <div class="col-10">
 
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="请输入相关拼车信息" aria-label="Search" style="background-color: rgba(0,0,0,0)">
-        <br><br><button class="btn btn-light" type="submit">搜索！</button>
-      </form>
+                      <input type="text" class="form-control" name="from_site_input" id="from_site_input" placeholder="起点" required="" autofocus="" /><br>
+                      <input type="text" class="form-control" name="to_site_input" id="to_site_input" placeholder="终点" required="" /><br>
+                      <input type="number" class="form-control" name="num_need_input" placeholder="除发起者外需要人数" required="" /><br>
+                      <input type="text" class="form-control" name="note_input" placeholder="备注(可不填)" />
 
-    </div>
-  </nav>
-  <br>
+                      <div class="weui-cell">
+                        <div class="weui-cell__hd"><label for="" class="weui-label" style="color: #FFFFFF;">计划出行时间</label></div>
+                        <div class="weui-cell__bd">
+                          <input class="weui-input" type="datetime-local" name="trip_time_input" placeholder="" style="color: #FFFFFF;"/>
+                        </div>
+                      </div>
 
-  <div>
-    <form class="form-signin" method="POST" action="/carpool_start/" style="background-color: rgba(0,0,0,0);border: none">
-      {% csrf_token %}
-      <h3 class="form-signin-heading">发起拼车</h3>
-      <input type="text" class="form-control" name="from_site_input" id="from_site_input" placeholder="起点" required="" autofocus="" />
-      <input type="text" class="form-control" name="to_site_input" id="to_site_input" placeholder="终点" required="" />
-      <input type="number" class="form-control" name="num_need_input" placeholder="除发起者外需要人数" required="" />
+                      <div class="weui-cell">
+                        <div class="weui-cell__hd"><label for="" class="weui-label" style="color: #FFFFFF;">报名截止时间</label></div>
+                        <div class="weui-cell__bd">
+                          <input class="weui-input" type="datetime-local" name="deadline_input" placeholder="" style="color: #FFFFFF;"/>
+                        </div>
+                      </div>
+                      <br>
+
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <label class="input-group-text" for="inputGroupSelect01">标签/分类</label>
+                        </div>
+                        <select class="custom-select" id="inputGroupSelect01" name="category_select">
+                          <option selected>请选择...</option>
+                          <option value="奉贤->徐汇">奉贤->徐汇</option>
+                          <option value="徐汇->奉贤">徐汇->奉贤</option>
+                          <option value="奉贤->市内">奉贤->市内</option>
+                          <option value="市内->奉贤">市内->奉贤</option>
+                          <option value="奉贤<->机场">奉贤<->机场</option>
+                          <option value="奉贤<->车站">奉贤<->车站</option>
+                        </select>
+                      </div>
+
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <label class="input-group-text" for="inputGroupSelect01">出行方式</label>
+                        </div>
+                        <select class="custom-select" id="inputGroupSelect01" name="trip_mode_select">
+                          <option selected>请选择...</option>
+                          <option value="出租车">出租车</option>
+                          <option value="发起者自驾">发起者自驾</option>
+                          <option value="公共交通">公共交通</option>
+                          <option value="其他">其他</option>
+                        </select>
+                      </div>
+
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <label class="input-group-text" for="inputGroupSelect01">允许加入者性别</label>
+                        </div>
+                        <select class="custom-select" id="inputGroupSelect01" name="auth_gender_select">
+                          <option selected>请选择...</option>
+                          <option value="0">均可</option>
+                          <option value="1">仅限男性</option>
+                          <option value="2">仅限女性</option>
+                        </select>
+                      </div>
+
+
+
+
+                      <div style="text-align:center"><button type="submit" class="btn btn-primary btn-lg btn-block" style="background-color: #FFEA48;border: none;border-radius: 20px;color: #36588D;font-size: 14px">发布</button></div><br>
+                      <p>&nbsp;</p>
+
+                  </div>
+                  <div class="col-1"></div>
+              </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div><div class="col-1"></div></div>
       <br>
-      <input type="text" class="form-control" name="note_input" placeholder="备注(可不填)" />
-
-      <div class="weui-cell">
-        <div class="weui-cell__hd"><label for="" class="weui-label">计划出行时间</label></div>
-        <div class="weui-cell__bd">
-          <input class="weui-input" type="datetime-local" name="trip_time_input" placeholder=""/>
-        </div>
-      </div>
-
-      <div class="weui-cell">
-        <div class="weui-cell__hd"><label for="" class="weui-label">报名截止时间</label></div>
-        <div class="weui-cell__bd">
-          <input class="weui-input" type="datetime-local" name="deadline_input" placeholder=""/>
-        </div>
-      </div>
-      <br>
-
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <label class="input-group-text" style="background-color: #63C5DA;border: none" for="inputGroupSelect01">标签/分类</label>
-        </div>
-        <select class="custom-select" id="inputGroupSelect01" name="category_select">
-          <option selected>请选择...</option>
-          <option value="奉贤->徐汇">奉贤->徐汇</option>
-          <option value="徐汇->奉贤">徐汇->奉贤</option>
-          <option value="奉贤->市内">奉贤->市内</option>
-          <option value="市内->奉贤">市内->奉贤</option>
-          <option value="奉贤<->机场">奉贤<->机场</option>
-          <option value="奉贤<->车站">奉贤<->车站</option>
-        </select>
-      </div>
-
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <label class="input-group-text" style="background-color: #63C5DA;border: none" for="inputGroupSelect01">出行方式</label>
-        </div>
-        <select class="custom-select" id="inputGroupSelect01" name="trip_mode_select">
-          <option selected>请选择...</option>
-          <option value="出租车">出租车</option>
-          <option value="发起者自驾">发起者自驾</option>
-          <option value="公共交通">公共交通</option>
-          <option value="其他">其他</option>
-        </select>
-      </div>
-
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <label class="input-group-text" style="background-color: #63C5DA;border: none" for="inputGroupSelect01">允许加入者性别</label>
-        </div>
-        <select class="custom-select" id="inputGroupSelect01" name="auth_gender_select">
-          <option selected>请选择...</option>
-          <option value="0">均可</option>
-          <option value="1">仅限女性</option>
-          <option value="2">仅限男性</option>
-        </select>
-      </div>
-
-      <label class="checkbox">
-        <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> 同意条款
-      </label>
-
-      <button class="btn btn-lg btn-primary btn-block" type="submit" style="background: #F78163;border: none">发布</button>
-
-    </form>
   </div>
 
+<br>
+  <p>&nbsp;</p>
 
 
 
+<div class="index_footer">
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div class="row">
+                <div class="col-4">
+                    <a href="/index/"><img src="{% static "img/icons/index_nav_home.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;ustify-content: center;overflow: hidden;"></a>
+                    <div style="text-align: center"><small class="form-text text-muted">主页</small></div>
+
+                </div>
+                <div class="col-4">
+
+                    <a href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{% static "img/icons/index_nav_start.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a>
+                    <div style="text-align: center"><small class="form-text text-muted">发起</small></div>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/carpool_index/">约出行</a>
+                    <a class="dropdown-item" href="/study_index/">约学习</a>
+                    <a class="dropdown-item" href="/sport_index/">约健身</a>
+                    <a class="dropdown-item" href="/game_index/">约开黑</a>
+                    </div>
+
+                </div>
 
 
+                <div class="col-4">
+                    <!--a href="/my/"><img src="{% static "img/icons/index_nav_my.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a-->
+                    <!--div style="text-align: center"><small class="form-text text-muted">我的</small></div-->
+
+                    <a href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{% static "img/icons/index_nav_my.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a>
+                    <div style="text-align: center"><small class="form-text text-muted">我的</small></div>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                    <a class="dropdown-item" href="/carpool_my/">我的约出行</a>
+                    <a class="dropdown-item" href="/study_my/">我的约学习</a>
+                    <a class="dropdown-item" href="/sport_my/">我的约健身</a>
+                    <a class="dropdown-item" href="/game_my/">我的约开黑</a>
+                    <a class="dropdown-item" href="/my/">个人信息</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+</div>
+<style>
+  .index_footer {
+    position: fixed;
+    /*position:absolute;*/
+    width: 100%;
+    z-index: 100;
+    bottom: 0;
+    height: 80px;
+    background-color: #FFFFFF;
+    }
+</style>
 
 
     <!-- Optional JavaScript -->

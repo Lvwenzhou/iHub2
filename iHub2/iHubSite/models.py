@@ -6,7 +6,7 @@ class Users(models.Model):  # 用户信息
     username = models.CharField(u"用户名", max_length=100)
     password = models.CharField(u"密码", max_length=100, null=True)  # 目前在Django的账户系统中存储密码,这里没必要存,可以为空
     no = models.CharField(u"学号/工号", max_length=100)
-    identity = models.CharField(u"身份", max_length=100)  # 教师、学生、临时学生、临时教职工、外校工作人员等
+    identity = models.CharField(u"身份", max_length=100, null=True)  # 教师、学生、临时学生、临时教职工、外校工作人员等
     name = models.CharField(u"姓名", max_length=100)
     gender = models.CharField(u"性别", max_length=100)
     major = models.CharField(u"专业", max_length=100)
@@ -16,6 +16,7 @@ class Users(models.Model):  # 用户信息
     phone = models.CharField(u"手机号", max_length=100)
     reg_time = models.DateTimeField(u"注册时间", max_length=100)
     credit = models.IntegerField(u"信誉积分", default=100)  # 信誉积分,默认100,取消拼车、退出拼车、预定不取会扣除
+    status = models.CharField(u"个性签名/状态", max_length=255, null=True)  # 个性签名
 
 
 # 以下是拼车相关功能所需表
@@ -65,7 +66,8 @@ class JoinCarpoolPlan(models.Model):  # 参与者与计划的关系表
 
 
 # 以下是约学习相关功能表
-class StudyPlan(models.Model):  # 约学习计划
+class StudyPlans(models.Model):  # 约学习计划
+    intro = models.CharField(u"简介", max_length=200)  # 简介,不超过200字
     category = models.CharField(u"标签/分类", max_length=100)
     # 标签可包括互相监督期末复习、互相励志考研、互相教学、单方面教学、项目求队友、共同研究、各种考证考试备考等
     duration = models.IntegerField(u"时长")  # 短期(小于等于一天一夜)、中期(大于一天一夜小于两个月)、长期(两个月以上)

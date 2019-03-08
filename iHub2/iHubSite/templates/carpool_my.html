@@ -8,68 +8,44 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static "css/style.css" %}">
-    <!--link rel="stylesheet" href="{% static "css/weui.css" %}"-->
+    <!--link rel="stylesheet" href="{% static "css/style.css" %}"-->
+    <link rel="stylesheet" href="{% static "css/weui.css" %}">
+    <link rel="stylesheet" href="{% static "css/background_style.css" %}">
 
-    <title>!Hub-约出行</title>
+    <title>!Hub</title>
   </head>
   <body>
 
-  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgba(0,0,0,0);">
-    <a class="navbar-brand" href="#" style="color: #FFFFFF;font-family: AvenirNext-Bold;">!Hub</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <p style="text-align: center;color: #3D5989;font-family: 黑体;font-weight: bold;font-size: 20px;"><br>我的约出行</p>
 
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="#" style="color: #FFFFFF;font-family: AvenirNext-Bold;">拼车主页</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" style="color: #FFFFFF;font-family: AvenirNext-Bold;">查看已有拼车</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" style="color: #FFFFFF;font-family: AvenirNext-Bold;">发起拼车</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" style="color: #FFFFFF;font-family: AvenirNext-Bold;">我的拼车信息</a>
-        </li>
-      </ul>
 
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="请输入相关拼车信息" aria-label="Search" style="background-color: rgba(0,0,0,0)">
-        <br><br><button class="btn btn-light" type="submit">搜索！</button>
-      </form>
 
-    </div>
-  </nav>
-
-  <p>&nbsp;</p>
-
-  <div class="row">
-  <div class="col-1"></div>
-  <div class="col-10">
-
-  <div class="accordion" id="accordionExample">
-
-  <div class="card" style="background-color: rgba(0,0,0,0.05);border: none">
-    <div class="card-header" id="headingOne">
-      <h2 class="mb-0">
-        <button class="btn" style="color: #FFFFFF" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          我发起的拼车
-        </button>
-      </h2>
-    </div>
-    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-      <div class="card-body">
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true" style="color: #3D5989">我发起的</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false" style="color: #3D5989">我加入的</a>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home" style="background-color: #EFEFEF;" role="tabpanel" aria-labelledby="home-tab">
+      <div class="row"><div class="col-1"></div><div class="col-10">
+      <br>
       {% for plan in my_start %}
-        <div class="shadow p-3 mb-5 bg-white rounded">
-          <p class="font-italic"><strong>{{ plan.from_site }}&nbsp;&rarr;&nbsp;{{ plan.to_site }}</strong></p>
+
+
+        <div class="row" style="background-color: #FFFFFF;border-top-right-radius: 10px;border-top-left-radius: 10px;">
+        <div class="col-1"></div>
+        <div class="col-10">
+        <br>
+        <p><strong>从&nbsp;</strong>{{ plan.from_site }}<br><strong>至&nbsp;</strong>{{ plan.to_site }}</p>
+        <p><strong>计划出行时间&nbsp;</strong>{{ plan.trip_time|date:"Y-m-d H:i" }}</p>
+
 
             <p class="font-weight-normal">
-            参与者<br>
+            <strong>参与者</strong><br>
             {% for j in join_list %}
               {% if j.join_plan_id == plan.id %}
                 用户名:{{ j.join_username }}&nbsp;微信:{{ j.join_wechat }}<br>
@@ -78,7 +54,7 @@
             </p>
 
           {% if plan.note != "" %}
-          <p class="font-weight-light">备注: {{ plan.note }}</p>
+              <p><strong>备注&nbsp;</strong>{{ plan.note }}</p>
           {% endif %}
 
           <span class="badge badge-success">{{ plan.trip_mode }}</span>
@@ -92,30 +68,45 @@
           <span class="badge badge-warning">仅限女性</span>
           {% endif %}
           <span class="badge badge-primary">已有/需要人数: {{ plan.num_have }}/{{ plan.num_need }}</span><br><br>
-          <button type="button" class="btn btn-danger btn-sm" onclick="location.href='/carpool_cancel/?plan_id={{ plan.id }}'">取消此次拼车</button>
-        </div>
-      {% endfor %}
-      </div>
-    </div>
-  </div>
 
-  <div class="card" style="background-color: rgba(0,0,0,0.05);border: none">
-    <div class="card-header" id="headingTwo">
-      <h2 class="mb-0">
-        <button class="btn"  style="color: #FFFFFF"  type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          我加入的拼车
-        </button>
-      </h2>
-    </div>
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-      <div class="card-body">
-        {% for plan in my_join %}
-        <div class="shadow p-3 mb-5 bg-white rounded">
-          <p class="font-italic"><strong>{{ plan.from_site }}&nbsp;&rarr;&nbsp;{{ plan.to_site }}</strong></p>
-          <p class="font-weight-normal">发起者: {{ plan.pub_username }}&nbsp;微信: {{ plan.pub_wechat }}</p>
+            </div>
+            <div class="col-1"></div></div>
+
+
+          <div class="row" style="background-color: #FFEA48;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;">
+                <div class="col-3" style="top: 5px;">
+                    <a href="/carpool_cancel/?plan_id={{ plan.id }}"><img src="{% static "img/icons/cancel.png" %}" style="width:60px;height:60px;border-radius: 100%;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a>
+                </div>
+                <div class="col-9" style="top: 5px;">
+                    <p><strong>发起人&nbsp;</strong>{{ plan.pub_username }}&nbsp;&nbsp;{{ plan.pub_gender }}<br><strong>报名截止&nbsp;</strong>{{ plan.deadline|date:"Y-m-d H:i" }}</p>
+                </div>
+            <br>
+          </div>
+        <br>
+
+      {% endfor %}
+      </div><div class="col-1"></div></div>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+  </div>
+  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+      <div class="row"><div class="col-1"></div><div class="col-10">
+      <br>
+      {% for plan in my_join %}
+
+        <div class="row" style="background-color: #FFFFFF;border-top-right-radius: 10px;border-top-left-radius: 10px;">
+        <div class="col-1"></div>
+        <div class="col-10">
+        <br>
+
+        <br>
+        <p><strong>从&nbsp;</strong>{{ plan.from_site }}<br><strong>至&nbsp;</strong>{{ plan.to_site }}</p>
+        <p><strong>计划出行时间&nbsp;</strong>{{ plan.trip_time|date:"Y-m-d H:i" }}</p>
+
+        <p><strong>发起者&nbsp;</strong>{{ plan.pub_username }}&nbsp;微信: {{ plan.pub_wechat }}</p>
 
           <p class="font-weight-normal">
-            参与者<br>
+          <strong>参与者</strong><br>
             {% for j in join_list %}
               {% if j.join_plan_id == plan.id %}
                 用户名:{{ j.join_username }}&nbsp;微信:{{ j.join_wechat }}<br>
@@ -124,7 +115,7 @@
           </p>
 
           {% if plan.note != "" %}
-          <p class="font-weight-light">备注: {{ plan.note }}</p>
+              <p><strong>备注&nbsp;</strong>{{ plan.note }}</p>
           {% endif %}
 
           <span class="badge badge-success">{{ plan.trip_mode }}</span>
@@ -138,21 +129,93 @@
           <span class="badge badge-warning">仅限女性</span>
           {% endif %}
           <span class="badge badge-primary">已有/需要人数: {{ plan.num_have }}/{{ plan.num_need }}</span><br><br>
-          <button type="button" class="btn btn-danger btn-sm" onclick="location.href='/carpool_quit/?plan_id={{ plan.id }}'">退出此次拼车</button>
+
         </div>
+        <div class="col-1"></div>
+
+          <div class="row" style="background-color: #FFEA48;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;">
+                <div class="col-3" style="top: 5px;">
+                    <a href="/carpool_quit/?plan_id={{ plan.id }}"><img src="{% static "img/icons/quit.png" %}" style="width:60px;height:60px;border-radius: 100%;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a>
+                </div>
+                <div class="col-9" style="top: 5px;">
+                    <p><strong>发起人&nbsp;</strong>{{ plan.pub_username }}&nbsp;&nbsp;{{ plan.pub_gender }}<br><strong>报名截止&nbsp;</strong>{{ plan.deadline|date:"Y-m-d H:i" }}</p>
+                </div>
+            <br>
+          </div>
+          <br>
       {% endfor %}
-      </div>
-    </div>
+      </div><div class="col-1"></div></div>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
   </div>
 </div>
 
 
+  <div class="row">
+      <div class="col-1"></div>
+      <div class="col-10">
+
+      </div>
+      <div class="col-1"></div>
   </div>
-  <div class="col-1"></div>
-  </div>
 
 
+<div class="index_footer">
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div class="row">
+                <div class="col-4">
+                    <a href="/index/"><img src="{% static "img/icons/index_nav_home.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;ustify-content: center;overflow: hidden;"></a>
+                    <div style="text-align: center"><small class="form-text text-muted">主页</small></div>
 
+                </div>
+                <div class="col-4">
+
+                    <a href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{% static "img/icons/index_nav_start.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a>
+                    <div style="text-align: center"><small class="form-text text-muted">发起</small></div>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/carpool_index/">约出行</a>
+                    <a class="dropdown-item" href="/study_index/">约学习</a>
+                    <a class="dropdown-item" href="/sport_index/">约健身</a>
+                    <a class="dropdown-item" href="/game_index/">约开黑</a>
+                    </div>
+
+                </div>
+
+
+                <div class="col-4">
+                    <!--a href="/my/"><img src="{% static "img/icons/index_nav_my.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a-->
+                    <!--div style="text-align: center"><small class="form-text text-muted">我的</small></div-->
+
+                    <a href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{% static "img/icons/index_nav_my.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a>
+                    <div style="text-align: center"><small class="form-text text-muted">我的</small></div>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                    <a class="dropdown-item" href="/carpool_my/">我的约出行</a>
+                    <a class="dropdown-item" href="/study_my/">我的约学习</a>
+                    <a class="dropdown-item" href="/sport_my/">我的约健身</a>
+                    <a class="dropdown-item" href="/game_my/">我的约开黑</a>
+                    <a class="dropdown-item" href="/my/">个人信息</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+</div>
+<style>
+  .index_footer {
+    position: fixed;
+    /*position:absolute;*/
+    width: 100%;
+    z-index: 100;
+    bottom: 0;
+    height: 80px;
+    background-color: #FFFFFF;
+    }
+</style>
 
 
     <!-- Optional JavaScript -->

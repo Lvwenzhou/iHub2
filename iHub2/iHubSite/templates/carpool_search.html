@@ -16,15 +16,16 @@
   </head>
   <body>
 
+  <p style="text-align: center;color: #3D5989;font-family: 黑体;font-weight: bold;font-size: 20px;"><br>匹配结果</p><br>
 
-  <p style="text-align: center;color: #3D5989;font-family: 黑体;font-weight: bold;font-size: 20px;"><br>约出行列表</p><br>
-
-  <div style="background-color: #EFEFEF;width: 100%;top: 80px;">
+  <div style="background-color: #EFEFEF;position: fixed;top: 80px;width: 100%;">
     <div class="row"><div class="col-1"></div><div class="col-10">
     <br>
+        <div style="background-color: #3D5989;border-radius: 20px;">
+            <p style="text-align: center;color: #FFFFFF;font-weight: lighter;">已为您匹配到{{ search_cnt }}个约车单</p>
+        </div>
 
-
-        {% for plan in plan_list %}
+        {% for plan in search_result %}
             <div class="row" style="background-color: #FFFFFF;border-top-right-radius: 10px;border-top-left-radius: 10px;">
                 <div class="col-1"></div>
                 <div class="col-10">
@@ -60,13 +61,11 @@
                 </div>
             <br>
             </div>
-            <br>
         {% endfor %}
 
     </div><div class="col-1"></div></div>
       <br>
   </div>
-  <p>&nbsp;</p>
 <br>
 
 
@@ -77,6 +76,7 @@
       </div>
       <div class="col-1"></div>
   </div>
+
 
 
 <div class="index_footer">
@@ -135,7 +135,6 @@
     background-color: #FFFFFF;
     }
 </style>
-
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

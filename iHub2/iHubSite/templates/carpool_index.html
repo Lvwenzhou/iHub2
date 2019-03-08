@@ -8,78 +8,129 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static "css/style.css" %}">
-    <!--link rel="stylesheet" href="{% static "css/weui.css" %}"-->
+    <!--link rel="stylesheet" href="{% static "css/style.css" %}"-->
+    <link rel="stylesheet" href="{% static "css/weui.css" %}">
+    <link rel="stylesheet" href="{% static "css/background_style.css" %}">
 
-    <title>!Hub-约出行</title>
+    <title>!Hub</title>
   </head>
   <body>
 
-  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgba(0,0,0,0);">
-    <a class="navbar-brand" href="#" style="color: #12414B;font-family: AvenirNext-Bold;">!Hub</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="#" style="color: #FFFFFF;font-family: AvenirNext-Bold;">拼车主页</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" style="color: #FFFFFF;font-family: AvenirNext-Bold;">查看已有拼车</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" style="color: #FFFFFF;font-family: AvenirNext-Bold;">发起拼车</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" style="color: #FFFFFF;font-family: AvenirNext-Bold;">我的拼车信息</a>
-        </li>
-      </ul>
-
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="请输入相关拼车信息" aria-label="Search" style="background-color: rgba(0,0,0,0)">
-        <br><br><button class="btn btn-light" type="submit">搜索！</button>
-      </form>
-
-    </div>
-  </nav>
-
   <p>&nbsp;</p>
+  <p style="text-align: center;color: #3D5989">约出行</p>
 
-  <div class="jumbotron" style="background-color: rgba(0,0,0,0.1)">
-    <h1 style="color: #12414B">!Hub校园服务平台</h1>
-    <p style="color: #12414B">服务校园 自主社区</p>
-  </div>
-
-  <div class="row">
-      <div class="col-1"></div>
-
-      <div class="col-5">
-        <a href="/carpool_start">
-        <div class="shadow p-3 mb-5 rounded" style="background-color: #63C5DA;color: #FEFFFE;font-family: AvenirNext-Bold;text-align: center">
-        <h1>发起</h1>
-        </div></a>
-        <a href="/carpool_map">
-        <div class="shadow p-3 mb-5 rounded" style="background-color: #63C5DA;color: #FEFFFE;font-family: AvenirNext-Bold;text-align: center">
-        <h1>路况</h1>
-        </div></a>
+  <div style="background-color: #EFEFEF;position: fixed;width: 100%;">
+    <div class="row"><div class="col-1"></div><div class="col-10">
+    <br>
+      <div style="background-color: #95A8C5;border-top-left-radius: 10px;border-top-right-radius: 10px;">
+        <br>
+        <nobr><img alt="" src="{% static "img/background/iHub_logo_text.png" %}" style="max-width:100%;height: auto;">
+            <img alt="" src="{% static "img/background/carpool_form.png" %}" style="max-width:30%;height: auto;" align="right"></nobr>
       </div>
+      <div style="background-color: #3D5989;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;">
+        <br>
+        <div>
 
-      <div class="col-5">
-        <a href="/carpool_join">
-        <div class="shadow p-3 mb-5 rounded" style="background-color:  #63C5DA;color: #FEFFFE;font-family: AvenirNext-Bold;text-align: center">
-        <h1>加入</h1>
-        </div></a>
-        <a href="/carpool_my">
-        <div class="shadow p-3 mb-5 rounded" style="background-color: #63C5DA;color: #FEFFFE;font-family: AvenirNext-Bold;text-align: center">
-        <h1>我的</h1>
-        </div></a>
+          <form action="/carpool_search/" method="POST">
+          {% csrf_token %}
+              <div class="row">
+                  <div class="col-1"></div>
+                  <div class="col-10">
+
+                    <div class="form-group">
+                      <input type="text" name="from_site_input" id="from_site_input" class="form-control" placeholder="出发地">
+                    </div>
+                    <div class="form-group">
+                      <input type="text" name="to_site_input" id="to_site_input" class="form-control" placeholder="到达地">
+                    </div>
+
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <label class="input-group-text" style="border: none" for="inputGroupSelect01">性别选择</label>
+                        </div>
+                        <select class="custom-select" id="inputGroupSelect01" name="auth_gender_select">
+                          <option selected>请选择...</option>
+                          <option value="0">均可</option>
+                          <option value="1">仅限女性</option>
+                          <option value="2">仅限男性</option>
+                        </select>
+                      </div>
+                      <div style="text-align:center"><button type="submit" class="btn btn-primary btn-lg btn-block" style="background-color: #FFEA48;border: none;border-radius: 20px;color: #36588D;font-size: 14px">匹配看看</button></div><br>
+
+                      <a href="/carpool_join/"><p style="color: #FFFFFF;text-align: center;">随便看看</p></a>
+                      <a href="/carpool_map/"><p style="color: #FFFFFF;text-align: center;">查看路况</p></a>
+
+                  </div>
+                  <div class="col-1"></div>
+              </div>
+
+          </form>
+
+        </div>
       </div>
-
-      <div class="col-1"></div>
+    </div><div class="col-1"></div></div>
+      <br>
   </div>
+<br>
+
+
+
+<div class="index_footer">
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div class="row">
+                <div class="col-4">
+                    <a href="/index/"><img src="{% static "img/icons/index_nav_home.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;ustify-content: center;overflow: hidden;"></a>
+                    <div style="text-align: center"><small class="form-text text-muted">主页</small></div>
+
+                </div>
+                <div class="col-4">
+
+                    <a href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{% static "img/icons/index_nav_start.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a>
+                    <div style="text-align: center"><small class="form-text text-muted">发起</small></div>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/carpool_index/">约出行</a>
+                    <a class="dropdown-item" href="/study_index/">约学习</a>
+                    <a class="dropdown-item" href="/sport_index/">约健身</a>
+                    <a class="dropdown-item" href="/game_index/">约开黑</a>
+                    </div>
+
+                </div>
+
+
+                <div class="col-4">
+                    <!--a href="/my/"><img src="{% static "img/icons/index_nav_my.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a-->
+                    <!--div style="text-align: center"><small class="form-text text-muted">我的</small></div-->
+
+                    <a href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{% static "img/icons/index_nav_my.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a>
+                    <div style="text-align: center"><small class="form-text text-muted">我的</small></div>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                    <a class="dropdown-item" href="/carpool_my/">我的约出行</a>
+                    <a class="dropdown-item" href="/study_my/">我的约学习</a>
+                    <a class="dropdown-item" href="/sport_my/">我的约健身</a>
+                    <a class="dropdown-item" href="/game_my/">我的约开黑</a>
+                    <a class="dropdown-item" href="/my/">个人信息</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+</div>
+<style>
+  .index_footer {
+    position: fixed;
+    /*position:absolute;*/
+    width: 100%;
+    z-index: 100;
+    bottom: 0;
+    height: 80px;
+    background-color: #FFFFFF;
+    }
+</style>
 
 
     <!-- Optional JavaScript -->
@@ -87,6 +138,25 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <!-- 以下为高德地图API的js -->
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.11&key=89dda6ed9e52545d6067c54bc1c9a7c8&plugin=AMap.Autocomplete"></script>
+    <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
+    <script type="text/javascript">
+        /*
+        //地图
+        var map = new AMap.Map("container", {
+            resizeEnable: true
+        });*/
+        //输入提示
+        var auto1 = new AMap.Autocomplete({
+            input: "from_site_input",
+        });
+        var auto2 = new AMap.Autocomplete({
+            input: "to_site_input",
+        });
+    </script>
+
+
 
   </body>
 </html>
