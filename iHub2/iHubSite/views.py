@@ -24,9 +24,9 @@ def my(request):
         if request.user.is_authenticated:
             user_no = request.user.username
             user = Users.objects.get(no=user_no)
-            return render(request, 'my.html', {'user': user, 'not_log_in': False})
+            return render(request, 'my.html', {'user': user})
         else:
-            return render(request, 'my.html', {'not_log_in': True})
+            return HttpResponseRedirect('/login/')
 
 
 def login(request):  # 登录
@@ -44,7 +44,7 @@ def login(request):  # 登录
         # 用于以后在调用每个视图函数前，auth中间件会根据每次访问视图前请求所带的SEESION里面的ID，去数据库找用户对像，并将对象保存在request.user属性中
         # 中间件执行完后，再执行视图函数
         if user:
-            return redirect('/my/')  # 登录成功，返回至主页
+            return redirect('/index/')  # 登录成功，返回至主页
         else:
             return render(request, 'login.html', {'wrong': True})  # 密码或用户名错误，反正没登陆成功
         # 这段登录的代码我也是借鉴的。反正就是用auth模块实现的登录
@@ -103,7 +103,7 @@ def logout(request):  # 登出
     if request.method == 'GET':
         # 以下一句为Django的账户系统
         auth.logout(request)
-        response = HttpResponseRedirect('/my/')
+        response = HttpResponseRedirect('/index/')
         response.delete_cookie('ticket')
         return response
 
