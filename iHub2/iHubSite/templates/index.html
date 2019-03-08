@@ -1,6 +1,6 @@
 <!doctype html>
 {% load staticfiles %}
-<html lang="en">
+<html lang="en" style="overflow-x: hidden;">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
 
     <title>!Hub</title>
   </head>
-  <body>
+  <body style="overflow-x: hidden;">
 
-  <div style="background-color: #3D5989;width: 100%;position: fixed">
+  <div style="background-color: #3D5989;">
     <p>&nbsp;</p>
     <form action="/search/" method="POST">
       <div class="row">
@@ -34,7 +34,7 @@
 
   <br>
   <div>
-    <div class="row" style="position: fixed;top: 280px;">
+    <div class="row">
       <div class="col-1"></div>
         <div class="col-10">
 
@@ -68,11 +68,11 @@
 
 
   {% if loged_in %}
-  <div style="position: fixed;top: 400px;">
+  <div>
       <img alt="" src="{% static "img/background/index_welcome.jpg" %}" style="max-width:100%;height: auto;">
   </div>
   {% else %}
-  <div style="position: fixed;top: 380px;left: 10px;right: 10px;">
+  <div style="left: 10px;right: 10px;">
       <button class="btn btn-primary btn-lg btn-block" onclick="location.href='/login/'" style="background-color: #FFEA48;border: none;border-radius: 20px;color: #36588D;">我有账号，点击登录</button><br>
       <div style="text-align:center"><button class="btn btn-primary btn-lg btn-block" onclick="location.href='/register/'" style="background-color: #95A8C5;border: none;border-radius: 20px;color: #36588D;">没有账号，点击注册</button></div><br><br>
   </div>

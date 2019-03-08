@@ -1,6 +1,6 @@
 <!doctype html>
 {% load staticfiles %}
-<html lang="en">
+<html lang="en" style="overflow-x: hidden;">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -20,13 +20,13 @@
   <p style="text-align: center;color: #3D5989">约出行</p>
   <p>&nbsp;</p>
 
-  <div style="background-color: #EFEFEF;width: 100%;">
+  <div style="background-color: #EFEFEF;width: 100%;overflow-x: hidden;">
     <div class="row"><div class="col-1"></div><div class="col-10">
     <br>
       <div style="background-color: #95A8C5;border-top-left-radius: 10px;border-top-right-radius: 10px;">
         <br>
-        <img alt="" src="{% static "img/background/iHub_logo_text.png" %}" style="max-width:100%;height: auto;">
-        <img alt="" src="{% static "img/background/carpool_form.png" %}" style="max-width:100%;height: auto;" align="right">
+        <nobr><img alt="" src="{% static "img/background/iHub_logo_text.png" %}" style="max-width:100%;height: auto;">
+            <img alt="" src="{% static "img/background/carpool_form.png" %}" style="max-width:30%;height: auto;" align="right"></nobr>
       </div>
       <div style="background-color: #3D5989;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;">
         <br>
