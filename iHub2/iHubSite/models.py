@@ -70,7 +70,7 @@ class StudyPlans(models.Model):  # 约学习计划
     intro = models.CharField(u"简介", max_length=200)  # 简介,不超过200字
     category = models.CharField(u"标签/分类", max_length=100)
     # 标签可包括互相监督期末复习、互相励志考研、互相教学、单方面教学、项目求队友、共同研究、各种考证考试备考等
-    duration = models.IntegerField(u"时长")  # 短期(小于等于一天一夜)、中期(大于一天一夜小于两个月)、长期(两个月以上)
+    duration = models.CharField(u"时长", max_length=100)  # 短期(小于等于一天一夜)、中期(大于一天一夜小于两个月)、长期(两个月以上)
     study_mode = models.CharField(u"学习方式", max_length=100, null=True)  # 主要为讲解、主要为安静学习等
     study_place = models.CharField(u"学习地点", max_length=100, null=True)
     start_time = models.DateTimeField(u"计划开始时间", auto_now=False)
@@ -81,6 +81,7 @@ class StudyPlans(models.Model):  # 约学习计划
     pub_no = models.CharField(u"发布者学号/工号", max_length=100)
     pub_wechat = models.CharField(u"发布者微信ID", max_length=100)
     pub_gender = models.CharField(u"发布者性别", max_length=100)
+    pub_time = models.DateTimeField(u"发布日期", auto_now=True)  # 该条计划发布时间
     note = models.CharField(u"备注", max_length=255, null=True)
     num_need = models.IntegerField(u"需要人数")  # 除发起者外的需要人数
     num_have = models.IntegerField(u"已有人数", default=0)  # 默认已有0人

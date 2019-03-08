@@ -33,4 +33,12 @@ urlpatterns = [
     path('carpool_take_part/', site_view.carpool_take_part),
     path('carpool_map/', site_view.carpool_map),
     path('carpool_search/', site_view.carpool_search),
+    path('study_index/', site_view.study_index),
+    path('study_join/', site_view.study_join),
+    path('study_my/', site_view.study_my),
+    path('study_start/', site_view.study_start),
+    path('study_quit/', site_view.study_quit),
+    path('study_cancel/', site_view.study_cancel),
+    path('study_take_part/', site_view.study_take_part),
+    path('study_search/', site_view.study_search),
 ]

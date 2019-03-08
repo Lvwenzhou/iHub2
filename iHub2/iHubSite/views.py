@@ -114,7 +114,7 @@ def carpool_index(request):
     if request.method == 'GET':
         return render(request, 'carpool_index.html')
     if request.method == 'POST':
-        return render
+        pass
 
 
 # 搜索结果页
@@ -127,7 +127,7 @@ def carpool_search(request):
         auth_gender_select = request.POST.get('auth_gender_select')
         if len(from_site_input) == 0 or len(to_site_input) == 0 or len(auth_gender_select) == 0:
             return render(request, 'carpool_index.html', {'incomplete_input': True})
-        search_result = CarpoolPlans.objects.filter(Q(from_site=from_site_input) & Q(to_site=to_site_input) & Q(auth_gender=auth_gender_select))
+        search_result = CarpoolPlans.objects.filter(Q(ended=False) & Q(full=False) & Q(from_site=from_site_input) & Q(to_site=to_site_input) & Q(auth_gender=auth_gender_select))
         search_cnt = len(search_result)
         return render(request, 'carpool_search.html', {'search_result': search_result, 'search_cnt': search_cnt})
 
@@ -288,6 +288,23 @@ def carpool_quit(request):
 def study_index(request):
     if request.method == 'GET':
         return render(request, 'study_index.html')
+    if request.method == 'POST':
+        pass
+
+
+def study_search(request):
+    if request.method == 'GET':
+        return render(request, 'study_search.html')
+    if request.method == 'POST':
+        category_select = request.POST.get('category_select')
+        duration_select = request.POST.get('duration_select')
+        study_mode_select = request.POST.get('study_mode_select')
+        auth_gender_select = request.POST.get('auth_gender_select')
+        if len(category_select) == 0 or len(duration_select) == 0 or len(study_mode_select) == 0 or len(auth_gender_select) == 0:
+            return render(request, 'study_index.html', {'incomplete_input': True})
+        search_result = StudyPlans.objects.filter(Q(ended=False) & Q(full=False) & Q(category=category_select) & Q(duration=duration_select) & Q(study_mode=study_mode_select) & Q(auth_gender=auth_gender_select))
+        search_cnt = len(search_result)
+        return render(request, 'study_search.html', {'search_result': search_result, 'search_cnt': search_cnt})
 
 
 # 发起
@@ -325,7 +342,7 @@ def study_start(request):
             return render(request, 'study_start.html', {'no_input': True})  # 未输入完整
         else:
             StudyPlans.objects.create(intro=intro, category=category, duration=duration,
-                                      study_mode=study_mode, study_place=study_mode,
+                                      study_mode=study_mode, study_place=study_place,
                                       start_time=start_time, end_time=end_time, deadline=deadline,
                                       note=note, num_need=num_need,
                                       auth_gender=auth_gender, pub_time=pub_time,
