@@ -103,3 +103,28 @@ class JoinStudyPlan(models.Model):  # 参与者与计划的关系表
     ended = models.BooleanField(default=False)  # 计划结束(同Plan表中的ended) 默认False, 未结束
     canceled = models.BooleanField(default=False)  # 是否已取消(指学习计划是否已取消) 默认False, 未取消
     quitted = models.BooleanField(default=False)  # 是否已退出 默认False, 未退出
+
+
+# 以下是约健身相关功能表
+class SportPlans(models.Model):
+    intro = models.CharField(u"简介", max_length=200)  # 简介,不超过200字
+    category = models.CharField(u"标签/分类", max_length=100)  # 标签包括兴趣爱好、健美、减肥、养生等
+    duration = models.CharField(u"时长", max_length=100)  # 短期(小于等于一天一夜)、中期(大于一天一夜小于两个月)、长期(两个月以上)
+    study_mode = models.CharField(u"学习方式", max_length=100, null=True)  # 主要为讲解、主要为安静学习等
+    study_place = models.CharField(u"学习地点", max_length=100, null=True)
+    start_time = models.DateTimeField(u"计划开始时间", auto_now=False)
+    end_time = models.DateTimeField(u"计划结束时间", auto_now=False, null=True)  # 有些计划结束时间可以不写，为空
+    deadline = models.DateTimeField(u"报名截止时间", auto_now=False, null=True)  # 在此时间前加入，若为空则为计划开始时间
+    pub_username = models.CharField(u"发布者昵称", max_length=100)
+    pub_name = models.CharField(u"发布者姓名", max_length=100)
+    pub_no = models.CharField(u"发布者学号/工号", max_length=100)
+    pub_wechat = models.CharField(u"发布者微信ID", max_length=100)
+    pub_gender = models.CharField(u"发布者性别", max_length=100)
+    pub_time = models.DateTimeField(u"发布日期", auto_now=True)  # 该条计划发布时间
+    note = models.CharField(u"备注", max_length=255, null=True)
+    num_need = models.IntegerField(u"需要人数")  # 除发起者外的需要人数
+    num_have = models.IntegerField(u"已有人数", default=0)  # 默认已有0人
+    full = models.BooleanField(u"是否人数已满", default=False)  # 默认False未满,当num_have==num_need时为True
+    ended = models.BooleanField(u"是否已结束", default=False)  # 默认未结束(取消、已过出行时间、用户主动标记为结束,都算结束)
+    canceled = models.BooleanField(u"是否已取消", default=False)  # 默认未取消(指用户主动取消此次行程)
+    auth_gender = models.IntegerField(u"允许加入者性别")  # 0-均可加入,1-仅男性,2-仅女性
