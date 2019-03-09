@@ -1,0 +1,200 @@
+<!doctype html>
+{% load staticfiles %}
+<html lang="en" style="overflow-x: hidden;">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--link rel="stylesheet" href="{% static "css/style.css" %}"-->
+    <link rel="stylesheet" href="{% static "css/weui.css" %}">
+    <link rel="stylesheet" href="{% static "css/background_style.css" %}">
+
+    <title>!Hub</title>
+  </head>
+  <body>
+
+  <p>&nbsp;</p>
+  <p style="text-align: center;color: #3D5989">约游戏</p>
+  <p>&nbsp;</p>
+
+  <div style="background-color: #EFEFEF;width: 100%;overflow-x: hidden;">
+    <div class="row"><div class="col-1"></div><div class="col-10">
+    <br>
+      <div style="background-color: #95A8C5;border-top-left-radius: 10px;border-top-right-radius: 10px;">
+        <br>
+        <nobr><img alt="" src="{% static "img/background/iHub_logo_text.png" %}" style="max-width:100%;height: auto;">
+            <img alt="" src="{% static "img/background/study_form.png" %}" style="max-width:30%;height: auto;" align="right"></nobr>
+      </div>
+      <div style="background-color: #3D5989;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;">
+        <br>
+        <div>
+
+          <form action="/game_start/" method="POST">
+          {% csrf_token %}
+              <div class="row">
+                  <div class="col-1"></div>
+                  <div class="col-10">
+
+                      <input type="text" class="form-control" name="name_input" placeholder="简介" required="" autofocus="" /><br>
+                      <input type="text" class="form-control" name="study_place_input" placeholder="学习地点" required="" /><br>
+                      <input type="number" class="form-control" name="num_need_input" placeholder="除发起者外需要人数" required="" /><br>
+                      <input type="text" class="form-control" name="note_input" placeholder="备注(可不填)" />
+
+                      <div class="weui-cell">
+                        <div class="weui-cell__hd"><label for="" class="weui-label" style="color: #FFFFFF;">计划开始时间</label></div>
+                        <div class="weui-cell__bd">
+                          <input class="weui-input" type="datetime-local" name="start_time_input" placeholder="" style="color: #FFFFFF;"/>
+                        </div>
+                      </div>
+
+                      <div class="weui-cell">
+                        <div class="weui-cell__hd"><label for="" class="weui-label" style="color: #FFFFFF;">报名截止时间</label></div>
+                        <div class="weui-cell__bd">
+                          <input class="weui-input" type="datetime-local" name="deadline_input" placeholder="" style="color: #FFFFFF;"/>
+                        </div>
+                      </div>
+                      <br>
+
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <label class="input-group-text" for="inputGroupSelect01">标签/分类</label>
+                        </div>
+                        <select class="custom-select" id="inputGroupSelect01" name="category_select">
+                          <option selected>请选择...</option>
+                          <option value="单机游戏">单机游戏</option>
+                          <option value="多人游戏">多人游戏</option>
+                          <option value="多人在线">多人在线</option>
+                          <option value="非电子游戏">多电子游戏</option>
+                          <option value="其他">其他</option>
+                        </select>
+                      </div>
+
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <label class="input-group-text" for="inputGroupSelect01">持续时间</label>
+                        </div>
+                        <select class="custom-select" id="inputGroupSelect01" name="duration_select">
+                          <option selected>请选择...</option>
+                          <option value="短期">短期(小于等于一天一夜)</option>
+                          <option value="中期">中期(大于一天一夜小于两个月)</option>
+                          <option value="长期">长期(两个月以上)</option>
+                        </select>
+                      </div>
+
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <label class="input-group-text" for="inputGroupSelect01">学习方式</label>
+                        </div>
+                        <select class="custom-select" id="inputGroupSelect01" name="game_mode_select">
+                          <option selected>请选择...</option>
+                          <option value="手机">手机</option>
+                          <option value="PC">PC</option>
+                          <option value="主机">主机</option>
+                          <option value="桌游">桌游</option>
+                          <option value="其他">其他</option>
+                        </select>
+                      </div>
+
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <label class="input-group-text" for="inputGroupSelect01">允许加入者性别</label>
+                        </div>
+                        <select class="custom-select" id="inputGroupSelect01" name="auth_gender_select">
+                          <option selected>请选择...</option>
+                          <option value="0">均可</option>
+                          <option value="1">仅限男性</option>
+                          <option value="2">仅限女性</option>
+                        </select>
+                      </div>
+
+
+
+
+                      <div style="text-align:center"><button type="submit" class="btn btn-primary btn-lg btn-block" style="background-color: #FFEA48;border: none;border-radius: 20px;color: #36588D;font-size: 14px">发布</button></div><br>
+                      <p>&nbsp;</p>
+
+                  </div>
+                  <div class="col-1"></div>
+              </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div><div class="col-1"></div></div>
+      <br>
+  </div>
+
+<br>
+  <p>&nbsp;</p>
+
+
+
+<div class="index_footer">
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div class="row">
+                <div class="col-4">
+                    <a href="/index/"><img src="{% static "img/icons/index_nav_home.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;ustify-content: center;overflow: hidden;"></a>
+                    <div style="text-align: center"><small class="form-text text-muted">主页</small></div>
+
+                </div>
+                <div class="col-4">
+
+                    <a href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{% static "img/icons/index_nav_start.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a>
+                    <div style="text-align: center"><small class="form-text text-muted">发起</small></div>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/carpool_start/">约出行</a>
+                    <a class="dropdown-item" href="/study_start/">约学习</a>
+                    <a class="dropdown-item" href="/sport_start/">约健身</a>
+                    <a class="dropdown-item" href="/game_start/">约开黑</a>
+                    </div>
+
+                </div>
+
+
+                <div class="col-4">
+                    <!--a href="/my/"><img src="{% static "img/icons/index_nav_my.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a-->
+                    <!--div style="text-align: center"><small class="form-text text-muted">我的</small></div-->
+
+                    <a href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{% static "img/icons/index_nav_my.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a>
+                    <div style="text-align: center"><small class="form-text text-muted">我的</small></div>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                    <a class="dropdown-item" href="/carpool_my/">我的约出行</a>
+                    <a class="dropdown-item" href="/study_my/">我的约学习</a>
+                    <a class="dropdown-item" href="/sport_my/">我的约健身</a>
+                    <a class="dropdown-item" href="/game_my/">我的约开黑</a>
+                    <a class="dropdown-item" href="/my/">个人信息</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+</div>
+<style>
+  .index_footer {
+    position: fixed;
+    /*position:absolute;*/
+    width: 100%;
+    z-index: 100;
+    bottom: 0;
+    height: 80px;
+    background-color: #FFFFFF;
+    }
+</style>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  </body>
+</html>

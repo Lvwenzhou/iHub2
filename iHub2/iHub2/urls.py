@@ -53,4 +53,14 @@ urlpatterns = [
     path('sport_cancel/', site_view.sport_cancel),
     path('sport_take_part/', site_view.sport_take_part),
     path('sport_search/', site_view.sport_search),
+
+    path('game_index/', site_view.game_index),
+    path('game_join/', site_view.game_join),
+    path('game_my/', site_view.game_my),
+    path('game_start/', site_view.game_start),
+    path('game_quit/', site_view.game_quit),
+    path('game_cancel/', site_view.game_cancel),
+    path('game_take_part/', site_view.game_take_part),
+    path('game_search/', site_view.game_search),
+
 ]

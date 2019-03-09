@@ -141,3 +141,40 @@ class JoinSportPlan(models.Model):  # 参与者与计划的关系表
     ended = models.BooleanField(default=False)  # 计划结束(同Plan表中的ended) 默认False, 未结束
     canceled = models.BooleanField(default=False)  # 是否已取消(指学习计划是否已取消) 默认False, 未取消
     quitted = models.BooleanField(default=False)  # 是否已退出 默认False, 未退出
+
+
+# 以下是约游戏相关功能表
+class GamePlans(models.Model):
+    game_name = models.CharField(u"游戏名称", max_length=100)  # 游戏名称
+    category = models.CharField(u"标签/分类", max_length=100)  # 标签包括单机游戏、多人游戏、多人在线、非电子游戏、其他
+    game_mode = models.CharField(u"游戏方式", max_length=100)  # 手机、PC、主机、桌游、其他
+    place = models.CharField(u"游戏地点", max_length=100, null=True)
+    start_time = models.DateTimeField(u"游戏开始时间", auto_now=False)
+    deadline = models.DateTimeField(u"报名截止时间", auto_now=False, null=True)  # 在此时间前加入，若为空则为计划开始时间
+    pub_username = models.CharField(u"发布者昵称", max_length=100)
+    pub_name = models.CharField(u"发布者姓名", max_length=100)
+    pub_no = models.CharField(u"发布者学号/工号", max_length=100)
+    pub_wechat = models.CharField(u"发布者微信ID", max_length=100)
+    pub_gender = models.CharField(u"发布者性别", max_length=100)
+    pub_time = models.DateTimeField(u"发布日期", auto_now=True)  # 该条计划发布时间
+    note = models.CharField(u"备注", max_length=255, null=True)
+    num_need = models.IntegerField(u"需要人数")  # 除发起者外的需要人数
+    num_have = models.IntegerField(u"已有人数", default=0)  # 默认已有0人
+    full = models.BooleanField(u"是否人数已满", default=False)  # 默认False未满,当num_have==num_need时为True
+    ended = models.BooleanField(u"是否已结束", default=False)  # 默认未结束(取消、已过计划时间、用户主动标记为结束,都算结束)
+    canceled = models.BooleanField(u"是否已取消", default=False)  # 默认未取消(指用户主动取消此次计划)
+    auth_gender = models.IntegerField(u"允许加入者性别")  # 0-均可加入,1-仅男性,2-仅女性
+
+
+class JoinGamePlan(models.Model):  # 参与者与计划的关系表
+    join_no = models.CharField(u"参加者的学号/工号", max_length=100)
+    join_username = models.CharField(u"参加者的昵称", max_length=100)
+    join_name = models.CharField(u"参加者的姓名", max_length=100)
+    join_wechat = models.CharField(u"参加者的微信ID", max_length=100)
+    join_gender = models.CharField(u"参加者的性别", max_length=100)
+    join_plan_id = models.IntegerField(u"所参加事件在Plan表中的序号")
+    # 为了保证序号join_plan_id正确，Plan表中的数据不删除，可以改变ended的值来表示
+    join_time = models.DateTimeField(auto_now=True)  # 加入时的时间
+    ended = models.BooleanField(default=False)  # 计划结束(同Plan表中的ended) 默认False, 未结束
+    canceled = models.BooleanField(default=False)  # 是否已取消(指学习计划是否已取消) 默认False, 未取消
+    quitted = models.BooleanField(default=False)  # 是否已退出 默认False, 未退出

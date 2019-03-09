@@ -8,7 +8,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 
 # Create your views here.
-from iHubSite.models import Users, CarpoolPlans, JoinCarpoolPlan, StudyPlans, JoinStudyPlan, SportPlans, JoinSportPlan
+from iHubSite.models import Users, CarpoolPlans, JoinCarpoolPlan, StudyPlans, JoinStudyPlan, SportPlans, JoinSportPlan, \
+    GamePlans, JoinGamePlan
 
 
 def index(request):
@@ -127,7 +128,9 @@ def carpool_search(request):
         auth_gender_select = request.POST.get('auth_gender_select')
         if len(from_site_input) == 0 or len(to_site_input) == 0 or len(auth_gender_select) == 0:
             return render(request, 'carpool_index.html', {'incomplete_input': True})
-        search_result = CarpoolPlans.objects.filter(Q(ended=False) & Q(full=False) & Q(from_site=from_site_input) & Q(to_site=to_site_input) & Q(auth_gender=auth_gender_select))
+        search_result = CarpoolPlans.objects.filter(
+            Q(ended=False) & Q(full=False) & Q(from_site=from_site_input) & Q(to_site=to_site_input) & Q(
+                auth_gender=auth_gender_select))
         search_cnt = len(search_result)
         return render(request, 'carpool_search.html', {'search_result': search_result, 'search_cnt': search_cnt})
 
@@ -205,7 +208,7 @@ def carpool_take_part(request):
             if (join_gender == 'male' and join_plan_auth_gender == 2) or (
                     join_gender == 'female' and join_plan_auth_gender == 1):
                 plan_list = CarpoolPlans.objects.filter(Q(ended=False) & Q(full=False))
-                return render(request, 'carpool_join.html',  {'have_no_gender_auth': True, 'plan_list': plan_list})
+                return render(request, 'carpool_join.html', {'have_no_gender_auth': True, 'plan_list': plan_list})
 
             # 不可参加自己发起的事件
             if plan_to_join.pub_no == join_user.no:
@@ -308,9 +311,12 @@ def study_search(request):
         duration_select = request.POST.get('duration_select')
         study_mode_select = request.POST.get('study_mode_select')
         auth_gender_select = request.POST.get('auth_gender_select')
-        if len(category_select) == 0 or len(duration_select) == 0 or len(study_mode_select) == 0 or len(auth_gender_select) == 0:
+        if len(category_select) == 0 or len(duration_select) == 0 or len(study_mode_select) == 0 or len(
+                auth_gender_select) == 0:
             return render(request, 'study_index.html', {'incomplete_input': True})
-        search_result = StudyPlans.objects.filter(Q(ended=False) & Q(full=False) & Q(category=category_select) & Q(duration=duration_select) & Q(study_mode=study_mode_select) & Q(auth_gender=auth_gender_select))
+        search_result = StudyPlans.objects.filter(
+            Q(ended=False) & Q(full=False) & Q(category=category_select) & Q(duration=duration_select) & Q(
+                study_mode=study_mode_select) & Q(auth_gender=auth_gender_select))
         search_cnt = len(search_result)
         return render(request, 'study_search.html', {'search_result': search_result, 'search_cnt': search_cnt})
 
@@ -483,6 +489,7 @@ def sport_index(request):
         pass
 
 
+# 搜索结果页
 def sport_search(request):
     if request.method == 'GET':
         return render(request, 'sport_search.html')
@@ -492,7 +499,9 @@ def sport_search(request):
         auth_gender_select = request.POST.get('auth_gender_select')
         if len(category_select) == 0 or len(duration_select) == 0 or len(auth_gender_select) == 0:
             return render(request, 'sport_index.html', {'incomplete_input': True})
-        search_result = SportPlans.objects.filter(Q(ended=False) & Q(full=False) & Q(category=category_select) & Q(duration=duration_select) & Q(auth_gender=auth_gender_select))
+        search_result = SportPlans.objects.filter(
+            Q(ended=False) & Q(full=False) & Q(category=category_select) & Q(duration=duration_select) & Q(
+                auth_gender=auth_gender_select))
         search_cnt = len(search_result)
         return render(request, 'sport_search.html', {'search_result': search_result, 'search_cnt': search_cnt})
 
@@ -652,4 +661,182 @@ def sport_quit(request):
 
         return redirect('/sport_my/')
 
+
+# 以下是约游戏相关功能的函数:
+# 约游戏功能首页
+def game_index(request):
+    if request.method == 'GET':
+        return render(request, 'game_index.html')
+    if request.method == 'POST':
+        pass
+
+
+# 搜索结果页
+def game_search(request):
+    if request.method == 'GET':
+        return render(request, 'game_search.html')
+    if request.method == 'POST':
+        category_select = request.POST.get('category_select')
+        game_mode_select = request.POST.get('game_mode_select')
+        auth_gender_select = request.POST.get('auth_gender_select')
+        if len(category_select) == 0 or len(auth_gender_select) or len(game_mode_select) == 0:
+            return render(request, 'game_index.html', {'incomplete_input': True})
+        search_result = GamePlans.objects.filter(Q(ended=False) & Q(full=False) & Q(game_mode=game_mode_select) & Q(category=category_select) & Q(auth_gender=auth_gender_select))
+        search_cnt = len(search_result)
+        return render(request, 'game_search.html', {'search_result': search_result, 'search_cnt': search_cnt})
+
+
+# 发起
+def game_start(request):
+    if request.method == 'GET':
+        # 登录了才能发帖
+        if not request.user.is_authenticated:
+            return render(request, 'my.html', {'not_log_in': True})  # 未登录,跳转至个人主页去登录
+        else:
+            return render(request, 'game_start.html')  # 已登录，跳转至发起拼车页面
+    if request.method == 'POST':
+        game_name = request.POST.get('name_input')  # 输入游戏名称
+        category = request.POST.get('category_select')  # 选择标签/分类
+        game_mode = request.POST.get('game_mode_select')  # 选择游戏方式
+        place = request.POST.get('place_input')  # 输入游戏地点
+        start_time = request.POST.get('start_time_input')  # 输入计划开始时间
+        deadline = request.POST.get('deadline_input')  # 输入截止时间
+        note = request.POST.get('note_input')  # 输入备注
+        num_need = request.POST.get('num_need_input')  # 输入除发起者外需要人数
+        auth_gender = request.POST.get('auth_gender_select')  # 选择允许加入者性别(男性、女性、两者)
+        pub_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")  # 自动生成的发布时间
+
+        user_no_now = request.user.username
+        user_now = Users.objects.get(no=user_no_now)
+        pub_username = user_now.username
+        pub_name = user_now.name
+        pub_no = user_now.no
+        pub_wechat = user_now.weChat_id
+        pub_gender = user_now.gender
+
+        if len(game_name) == 0 or len(place) == 0 or len(start_time) == 0 or len(num_need) == 0:
+            return render(request, 'game_start.html', {'no_input': True})  # 未输入完整
+        else:
+            GamePlans.objects.create(game_name=game_name, category=category, game_mode=game_mode, place=place,
+                                     start_time=start_time, deadline=deadline,
+                                     note=note, num_need=num_need,
+                                     auth_gender=auth_gender, pub_time=pub_time,
+                                     pub_username=pub_username, pub_name=pub_name, pub_no=pub_no,
+                                     pub_wechat=pub_wechat, pub_gender=pub_gender)
+            return HttpResponseRedirect('/game_join/')  # 发起成功，返回查看页面
+
+
+# 查看已有
+def game_join(request):
+    if request.method == 'GET':
+        plan_list = GamePlans.objects.filter(Q(ended=False) & Q(full=False))
+        return render(request, 'game_join.html', {'plan_list': plan_list})
+
+
+# 加入(加入按钮)
+def game_take_part(request):
+    if request.method == 'GET':
+        if not request.user.is_authenticated:  # 若未登录
+            plan_list = GamePlans.objects.filter(Q(ended=False) & Q(full=False))
+            return render(request, 'game_join.html', {'not_log_in': True, 'plan_list': plan_list})  # 返回查看拼车信息页面
+        else:
+            join_user_now = request.user.username
+            join_user = Users.objects.get(no=join_user_now)
+
+            join_plan_id = request.GET.get('plan_id')  # 返回参与事件在表Plan中的id
+            join_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+            join_no = join_user.no
+            join_username = join_user.username
+            join_name = join_user.name
+            join_wechat = join_user.weChat_id
+            join_gender = join_user.gender
+
+            plan_to_join = GamePlans.objects.get(id=join_plan_id)
+            join_plan_auth_gender = plan_to_join.auth_gender
+
+            # 不可参加性别权限不符的事件
+            if (join_gender == 'male' and join_plan_auth_gender == 2) or (
+                    join_gender == 'female' and join_plan_auth_gender == 1):
+                plan_list = GamePlans.objects.filter(Q(ended=False) & Q(full=False))
+                return render(request, 'game_join.html', {'have_no_gender_auth': True, 'plan_list': plan_list})
+
+            # 不可参加自己发起的事件
+            plan_to_join = GamePlans.objects.get(id=join_plan_id)
+            if plan_to_join.pub_no == join_user.no:
+                plan_list = GamePlans.objects.filter(Q(ended=False) & Q(full=False))
+                return render(request, 'game_join.html', {'join_self': True, 'plan_list': plan_list})  # 返回查看拼车信息页面
+
+            # 同一事件不可参加多次
+            tmp = JoinGamePlan.objects.filter(Q(join_plan_id=join_plan_id) & Q(join_no=join_no))
+            if len(tmp) != 0:
+                plan_list = GamePlans.objects.filter(Q(ended=False) & Q(full=False))
+                return render(request, 'game_join.html', {'have_joined': True, 'plan_list': plan_list})  # 返回查看拼车信息页面
+
+            JoinGamePlan.objects.create(join_no=join_no, join_username=join_username, join_name=join_name,
+                                        join_wechat=join_wechat, join_gender=join_gender, join_plan_id=join_plan_id,
+                                        join_time=join_time)
+
+            plan_to_join.num_have = plan_to_join.num_have + 1  # 该事件参与人数加一
+            plan_to_join.save()
+            if plan_to_join.num_have == plan_to_join.num_need:  # 若该事件参与人数等于所需人数,full变为True,人数已满
+                plan_to_join.full = True
+                plan_to_join.save()
+
+            return redirect('/game_my/')  # 参与成功，返回个人信息页面
+
+
+# 查看我的信息
+def game_my(request):
+    if request.method == 'GET':
+        if not request.user.is_authenticated:
+            return render(request, 'game_my.html', {'not_logged_in': True})
+        user = request.user.username
+        my_start = GamePlans.objects.filter(pub_no=user)  # 我发起的
+        my_join_tmp = JoinGamePlan.objects.filter(join_no=user)
+        my_join = []  # 我加入的
+        for i in my_join_tmp:
+            if not i.canceled and not i.quitted:
+                join_id = i.join_plan_id
+                join_plan = GamePlans.objects.get(id=join_id)
+                my_join.append(join_plan)
+        join_list = JoinGamePlan.objects.all()
+        return render(request, 'game_my.html', {'not_logged_in': False, 'join_list': join_list,
+                                                'my_start': my_start, 'my_join': my_join})
+
+
+# 取消已发起的
+def game_cancel(request):
+    if request.method == 'GET':
+        plan_id = request.GET.get('plan_id')  # 返回这一事件在Plan表中的id
+        plan_to_cancel = GamePlans.objects.get(id=plan_id)
+        plan_to_cancel.ended = True
+        plan_to_cancel.canceled = True
+        plan_to_cancel.save()
+        related = JoinGamePlan.objects.filter(join_plan_id=plan_id)
+        for item in related:  # 此处不知道对不对,PyCharm没给提示,还需测试
+            item.canceled = True
+            item.ended = True
+            item.save()
+        return redirect('/game_my/')
+
+
+# 退出已加入的
+def game_quit(request):
+    if request.method == 'GET':
+        plan_id = request.GET.get('plan_id')  # 返回这一事件在Plan表中的id
+        user_no = request.user.username
+
+        plan_to_quit = GamePlans.objects.get(id=plan_id)
+        plan_to_quit.num_have = plan_to_quit.num_have - 1
+        plan_to_quit.save()
+        if plan_to_quit.full:
+            plan_to_quit.full = False
+        plan_to_quit.save()
+
+        related = JoinGamePlan.objects.get(Q(join_plan_id=plan_id) & Q(join_no=user_no))
+        related.quitted = True
+        related.save()
+
+        return redirect('/game_my/')
 
