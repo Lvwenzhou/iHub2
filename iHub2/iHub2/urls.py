@@ -19,11 +19,13 @@ import iHubSite.views as site_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    
     path('login/', site_view.login),
     path('logout/', site_view.logout),
     path('register/', site_view.register),
     path('index/', site_view.index),
     path('my/', site_view.my),
+
     path('carpool_index/', site_view.carpool_index),
     path('carpool_join/', site_view.carpool_join),
     path('carpool_my/', site_view.carpool_my),
@@ -33,6 +35,7 @@ urlpatterns = [
     path('carpool_take_part/', site_view.carpool_take_part),
     path('carpool_map/', site_view.carpool_map),
     path('carpool_search/', site_view.carpool_search),
+
     path('study_index/', site_view.study_index),
     path('study_join/', site_view.study_join),
     path('study_my/', site_view.study_my),
@@ -41,4 +44,13 @@ urlpatterns = [
     path('study_cancel/', site_view.study_cancel),
     path('study_take_part/', site_view.study_take_part),
     path('study_search/', site_view.study_search),
+
+    path('sport_index/', site_view.sport_index),
+    path('sport_join/', site_view.sport_join),
+    path('sport_my/', site_view.sport_my),
+    path('sport_start/', site_view.sport_start),
+    path('sport_quit/', site_view.sport_quit),
+    path('sport_cancel/', site_view.sport_cancel),
+    path('sport_take_part/', site_view.sport_take_part),
+    path('sport_search/', site_view.sport_search),
 ]

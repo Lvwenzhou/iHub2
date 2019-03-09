@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 
 # Create your views here.
-from iHubSite.models import Users, CarpoolPlans, JoinCarpoolPlan, StudyPlans, JoinStudyPlan
+from iHubSite.models import Users, CarpoolPlans, JoinCarpoolPlan, StudyPlans, JoinStudyPlan, SportPlans, JoinSportPlan
 
 
 def index(request):
@@ -40,10 +40,10 @@ def login(request):  # 登录
         user = auth.authenticate(username=user_no, password=password)
         # 这里的username指的是User表中的学号，在Django的auth_user表中的username使用学号
         # 我们的superuser也是在auth_user表中，superuser的is_staff字段是1，这些普通的用户is_staff字段为0
-        auth.login(request, user)
-        # 用于以后在调用每个视图函数前，auth中间件会根据每次访问视图前请求所带的SEESION里面的ID，去数据库找用户对像，并将对象保存在request.user属性中
-        # 中间件执行完后，再执行视图函数
         if user:
+            auth.login(request, user)
+            # 用于以后在调用每个视图函数前，auth中间件会根据每次访问视图前请求所带的SEESION里面的ID，去数据库找用户对像，并将对象保存在request.user属性中
+            # 中间件执行完后，再执行视图函数
             return redirect('/index/')  # 登录成功，返回至主页
         else:
             return render(request, 'login.html', {'wrong': True})  # 密码或用户名错误，反正没登陆成功
@@ -104,11 +104,11 @@ def logout(request):  # 登出
         # 以下一句为Django的账户系统
         auth.logout(request)
         response = HttpResponseRedirect('/index/')
-        response.delete_cookie('ticket')
+        # response.delete_cookie('ticket')
         return response
 
 
-# 以下是拼车相关功能的函数:
+# 以下是约出行相关功能的函数:
 # 拼车功能首页
 def carpool_index(request):
     if request.method == 'GET':
@@ -198,8 +198,16 @@ def carpool_take_part(request):
             join_wechat = join_user.weChat_id
             join_gender = join_user.gender
 
-            # 不可参加自己发起的事件
             plan_to_join = CarpoolPlans.objects.get(id=join_plan_id)
+            join_plan_auth_gender = plan_to_join.auth_gender
+
+            # 不可参加性别权限不符的事件
+            if (join_gender == 'male' and join_plan_auth_gender == 2) or (
+                    join_gender == 'female' and join_plan_auth_gender == 1):
+                plan_list = CarpoolPlans.objects.filter(Q(ended=False) & Q(full=False))
+                return render(request, 'carpool_join.html',  {'have_no_gender_auth': True, 'plan_list': plan_list})
+
+            # 不可参加自己发起的事件
             if plan_to_join.pub_no == join_user.no:
                 plan_list = CarpoolPlans.objects.filter(Q(ended=False) & Q(full=False))
                 return render(request, 'carpool_join.html', {'join_self': True, 'plan_list': plan_list})  # 返回查看拼车信息页面
@@ -377,6 +385,15 @@ def study_take_part(request):
             join_wechat = join_user.weChat_id
             join_gender = join_user.gender
 
+            plan_to_join = StudyPlans.objects.get(id=join_plan_id)
+            join_plan_auth_gender = plan_to_join.auth_gender
+
+            # 不可参加性别权限不符的事件
+            if (join_gender == 'male' and join_plan_auth_gender == 2) or (
+                    join_gender == 'female' and join_plan_auth_gender == 1):
+                plan_list = StudyPlans.objects.filter(Q(ended=False) & Q(full=False))
+                return render(request, 'study_join.html', {'have_no_gender_auth': True, 'plan_list': plan_list})
+
             # 不可参加自己发起的事件
             plan_to_join = StudyPlans.objects.get(id=join_plan_id)
             if plan_to_join.pub_no == join_user.no:
@@ -455,3 +472,184 @@ def study_quit(request):
         related.save()
 
         return redirect('/study_my/')
+
+
+# 以下是约健身相关功能的函数:
+# 约健身功能首页
+def sport_index(request):
+    if request.method == 'GET':
+        return render(request, 'sport_index.html')
+    if request.method == 'POST':
+        pass
+
+
+def sport_search(request):
+    if request.method == 'GET':
+        return render(request, 'sport_search.html')
+    if request.method == 'POST':
+        category_select = request.POST.get('category_select')
+        duration_select = request.POST.get('duration_select')
+        auth_gender_select = request.POST.get('auth_gender_select')
+        if len(category_select) == 0 or len(duration_select) == 0 or len(auth_gender_select) == 0:
+            return render(request, 'sport_index.html', {'incomplete_input': True})
+        search_result = SportPlans.objects.filter(Q(ended=False) & Q(full=False) & Q(category=category_select) & Q(duration=duration_select) & Q(auth_gender=auth_gender_select))
+        search_cnt = len(search_result)
+        return render(request, 'sport_search.html', {'search_result': search_result, 'search_cnt': search_cnt})
+
+
+# 发起
+def sport_start(request):
+    if request.method == 'GET':
+        # 登录了才能发帖
+        if not request.user.is_authenticated:
+            return render(request, 'my.html', {'not_log_in': True})  # 未登录,跳转至个人主页去登录
+        else:
+            return render(request, 'sport_start.html')  # 已登录，跳转至发起拼车页面
+    if request.method == 'POST':
+        intro = request.POST.get('intro_input')  # 输入简介
+        category = request.POST.get('category_select')  # 选择标签/分类
+        duration = request.POST.get('duration_select')  # 选择持续时间
+        place = request.POST.get('place_input')  # 输入学习地点
+        start_time = request.POST.get('start_time_input')  # 输入计划开始时间
+        end_time = request.POST.get('end_time_input')  # 输入计划结束时间(可不填)
+        deadline = request.POST.get('deadline_input')  # 输入截止时间
+        note = request.POST.get('note_input')  # 输入备注
+        num_need = request.POST.get('num_need_input')  # 输入除发起者外需要人数
+        auth_gender = request.POST.get('auth_gender_select')  # 选择允许加入者性别(男性、女性、两者)
+        pub_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")  # 自动生成的发布时间
+
+        user_no_now = request.user.username
+        user_now = Users.objects.get(no=user_no_now)
+        pub_username = user_now.username
+        pub_name = user_now.name
+        pub_no = user_now.no
+        pub_wechat = user_now.weChat_id
+        pub_gender = user_now.gender
+
+        if len(intro) == 0 or len(place) == 0 or len(start_time) == 0 or len(num_need) == 0:
+            return render(request, 'sport_start.html', {'no_input': True})  # 未输入完整
+        else:
+            SportPlans.objects.create(intro=intro, category=category, duration=duration, place=place,
+                                      start_time=start_time, end_time=end_time, deadline=deadline,
+                                      note=note, num_need=num_need,
+                                      auth_gender=auth_gender, pub_time=pub_time,
+                                      pub_username=pub_username, pub_name=pub_name, pub_no=pub_no,
+                                      pub_wechat=pub_wechat, pub_gender=pub_gender)
+            return HttpResponseRedirect('/sport_join/')  # 发起成功，返回查看页面
+
+
+# 查看已有
+def sport_join(request):
+    if request.method == 'GET':
+        plan_list = SportPlans.objects.filter(Q(ended=False) & Q(full=False))
+        return render(request, 'sport_join.html', {'plan_list': plan_list})
+
+
+# 加入(加入按钮)
+def sport_take_part(request):
+    if request.method == 'GET':
+        if not request.user.is_authenticated:  # 若未登录
+            plan_list = SportPlans.objects.filter(Q(ended=False) & Q(full=False))
+            return render(request, 'sport_join.html', {'not_log_in': True, 'plan_list': plan_list})  # 返回查看拼车信息页面
+        else:
+            join_user_now = request.user.username
+            join_user = Users.objects.get(no=join_user_now)
+
+            join_plan_id = request.GET.get('plan_id')  # 返回参与事件在表Plan中的id
+            join_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+            join_no = join_user.no
+            join_username = join_user.username
+            join_name = join_user.name
+            join_wechat = join_user.weChat_id
+            join_gender = join_user.gender
+
+            plan_to_join = SportPlans.objects.get(id=join_plan_id)
+            join_plan_auth_gender = plan_to_join.auth_gender
+
+            # 不可参加性别权限不符的事件
+            if (join_gender == 'male' and join_plan_auth_gender == 2) or (
+                    join_gender == 'female' and join_plan_auth_gender == 1):
+                plan_list = SportPlans.objects.filter(Q(ended=False) & Q(full=False))
+                return render(request, 'sport_join.html', {'have_no_gender_auth': True, 'plan_list': plan_list})
+
+            # 不可参加自己发起的事件
+            plan_to_join = SportPlans.objects.get(id=join_plan_id)
+            if plan_to_join.pub_no == join_user.no:
+                plan_list = SportPlans.objects.filter(Q(ended=False) & Q(full=False))
+                return render(request, 'sport_join.html', {'join_self': True, 'plan_list': plan_list})  # 返回查看拼车信息页面
+
+            # 同一事件不可参加多次
+            tmp = JoinSportPlan.objects.filter(Q(join_plan_id=join_plan_id) & Q(join_no=join_no))
+            if len(tmp) != 0:
+                plan_list = SportPlans.objects.filter(Q(ended=False) & Q(full=False))
+                return render(request, 'sport_join.html', {'have_joined': True, 'plan_list': plan_list})  # 返回查看拼车信息页面
+
+            JoinSportPlan.objects.create(join_no=join_no, join_username=join_username, join_name=join_name,
+                                         join_wechat=join_wechat, join_gender=join_gender, join_plan_id=join_plan_id,
+                                         join_time=join_time)
+
+            plan_to_join.num_have = plan_to_join.num_have + 1  # 该事件参与人数加一
+            plan_to_join.save()
+            if plan_to_join.num_have == plan_to_join.num_need:  # 若该事件参与人数等于所需人数,full变为True,人数已满
+                plan_to_join.full = True
+                plan_to_join.save()
+
+            return redirect('/sport_my/')  # 参与成功，返回个人信息页面
+
+
+# 查看我的信息
+def sport_my(request):
+    if request.method == 'GET':
+        if not request.user.is_authenticated:
+            return render(request, 'sport_my.html', {'not_logged_in': True})
+        user = request.user.username
+        my_start = SportPlans.objects.filter(pub_no=user)  # 我发起的
+        my_join_tmp = JoinSportPlan.objects.filter(join_no=user)
+        my_join = []  # 我加入的
+        for i in my_join_tmp:
+            if not i.canceled and not i.quitted:
+                join_id = i.join_plan_id
+                join_plan = SportPlans.objects.get(id=join_id)
+                my_join.append(join_plan)
+        join_list = JoinSportPlan.objects.all()
+        return render(request, 'sport_my.html', {'not_logged_in': False, 'join_list': join_list,
+                                                 'my_start': my_start, 'my_join': my_join})
+
+
+# 取消已发起的
+def sport_cancel(request):
+    if request.method == 'GET':
+        plan_id = request.GET.get('plan_id')  # 返回这一事件在Plan表中的id
+        plan_to_cancel = SportPlans.objects.get(id=plan_id)
+        plan_to_cancel.ended = True
+        plan_to_cancel.canceled = True
+        plan_to_cancel.save()
+        related = JoinSportPlan.objects.filter(join_plan_id=plan_id)
+        for item in related:  # 此处不知道对不对,PyCharm没给提示,还需测试
+            item.canceled = True
+            item.ended = True
+            item.save()
+        return redirect('/sport_my/')
+
+
+# 退出已加入的
+def sport_quit(request):
+    if request.method == 'GET':
+        plan_id = request.GET.get('plan_id')  # 返回这一事件在Plan表中的id
+        user_no = request.user.username
+
+        plan_to_quit = SportPlans.objects.get(id=plan_id)
+        plan_to_quit.num_have = plan_to_quit.num_have - 1
+        plan_to_quit.save()
+        if plan_to_quit.full:
+            plan_to_quit.full = False
+        plan_to_quit.save()
+
+        related = JoinSportPlan.objects.get(Q(join_plan_id=plan_id) & Q(join_no=user_no))
+        related.quitted = True
+        related.save()
+
+        return redirect('/sport_my/')
+
+
