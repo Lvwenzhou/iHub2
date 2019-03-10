@@ -25,6 +25,7 @@ urlpatterns = [
     path('register/', site_view.register),
     path('index/', site_view.index),
     path('my/', site_view.my),
+    path('search/', site_view.search),
 
     path('carpool_index/', site_view.carpool_index),
     path('carpool_join/', site_view.carpool_join),

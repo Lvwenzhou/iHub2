@@ -21,6 +21,24 @@
   <p>&nbsp;</p>
 
   <div style="background-color: #EFEFEF;width: 100%;overflow-x: hidden;">
+
+    {% if no_input %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <strong>&nbsp;&nbsp;&nbsp;请输入完整！</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endif %}
+    {% if invaild_num %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <strong>&nbsp;&nbsp;&nbsp;请认真填写所需人数！</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endif %}
+
     <div class="row"><div class="col-1"></div><div class="col-10">
     <br>
       <div style="background-color: #95A8C5;border-top-left-radius: 10px;border-top-right-radius: 10px;">
@@ -70,8 +88,7 @@
                           <label class="input-group-text" for="inputGroupSelect01">标签/分类</label>
                         </div>
                         <select class="custom-select" id="inputGroupSelect01" name="category_select">
-                          <option selected>请选择...</option>
-                          <option value="兴趣爱好">兴趣爱好</option>
+                          <option value="兴趣爱好" selected>兴趣爱好</option>
                           <option value="健美">健美</option>
                           <option value="减肥">减肥</option>
                           <option value="养生">养生</option>
@@ -84,8 +101,7 @@
                           <label class="input-group-text" for="inputGroupSelect01">持续时间</label>
                         </div>
                         <select class="custom-select" id="inputGroupSelect01" name="duration_select">
-                          <option selected>请选择...</option>
-                          <option value="短期">短期(小于等于一天一夜)</option>
+                          <option value="短期" selected>短期(小于等于一天一夜)</option>
                           <option value="中期">中期(大于一天一夜小于两个月)</option>
                           <option value="长期">长期(两个月以上)</option>
                         </select>
@@ -97,8 +113,7 @@
                           <label class="input-group-text" for="inputGroupSelect01">允许加入者性别</label>
                         </div>
                         <select class="custom-select" id="inputGroupSelect01" name="auth_gender_select">
-                          <option selected>请选择...</option>
-                          <option value="0">均可</option>
+                          <option value="0" selected>均可</option>
                           <option value="1">仅限男性</option>
                           <option value="2">仅限女性</option>
                         </select>

@@ -1,10 +1,309 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<!doctype html>
+{% load staticfiles %}
+<html lang="en" style="overflow-x: hidden;">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-</body>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--link rel="stylesheet" href="{% static "css/style.css" %}"-->
+    <link rel="stylesheet" href="{% static "css/weui.css" %}">
+    <link rel="stylesheet" href="{% static "css/background_style.css" %}">
+
+    <title>!Hub</title>
+  </head>
+  <body style="overflow-x: hidden;">
+
+
+  <p style="text-align: center;color: #3D5989;font-family: 黑体;font-weight: bold;font-size: 20px;"><br>"{{ key_word }}"的搜索结果</p>
+
+
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="carpool-tab" data-toggle="tab" href="#carpool" role="tab" aria-controls="carpool" aria-selected="true" style="color: #3D5989">约出行</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="study-tab" data-toggle="tab" href="#study" role="tab" aria-controls="study" aria-selected="false" style="color: #3D5989">约学习</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="sport-tab" data-toggle="tab" href="#sport" role="tab" aria-controls="sport" aria-selected="false" style="color: #3D5989">约健身</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="game-tab" data-toggle="tab" href="#game" role="tab" aria-controls="game" aria-selected="false" style="color: #3D5989">我游戏</a>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="carpool" style="background-color: #EFEFEF;" role="tabpanel" aria-labelledby="carpool-tab">
+      <div class="row"><div class="col-1"></div><div class="col-10">
+      <br>
+      {% for plan in carpool_list %}
+
+
+        <div class="row" style="background-color: #FFFFFF;border-top-right-radius: 10px;border-top-left-radius: 10px;">
+        <div class="col-1"></div>
+        <div class="col-10">
+        <br>
+        <p><strong>从&nbsp;</strong>{{ plan.from_site }}<br><strong>至&nbsp;</strong>{{ plan.to_site }}</p>
+                    <p><strong>计划出行时间&nbsp;</strong>{{ plan.trip_time|date:"Y-m-d H:i" }}</p>
+
+                    {% if plan.note != "" %}
+                    <p><strong>备注&nbsp;</strong>{{ plan.note }}</p>
+                    {% endif %}
+
+                    <span class="badge badge-success">{{ plan.trip_mode }}</span>
+                    <span class="badge badge-info">{{ plan.category }}</span>
+                    <br>
+                    {% if plan.auth_gender == 0 %}
+                    <span class="badge badge-warning">男女均可</span>
+                    {% elif plan.auth_gender == 1 %}
+                    <span class="badge badge-warning">仅限男性</span>
+                    {% elif plan.auth_gender == 2 %}
+                    <span class="badge badge-warning">仅限女性</span>
+                    {% endif %}
+                    <span class="badge badge-primary">已有/需要人数: {{ plan.num_have }}/{{ plan.num_need }}</span><br>
+                    <p>&nbsp;</p>
+            </div>
+            <div class="col-1"></div></div>
+
+
+          <div class="row" style="background-color: #FFEA48;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;">
+                <div class="col-3" style="top: 5px;">
+                    <a href="/carpool_take_part/?plan_id={{ plan.id }}"><img src="{% static "img/icons/join.png" %}" style="width:60px;height:60px;border-radius: 100%;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a>
+                </div>
+                <div class="col-9" style="top: 5px;">
+                    <p><strong>发起人&nbsp;</strong>{{ plan.pub_username }}&nbsp;&nbsp;{{ plan.pub_gender }}<br><strong>报名截止&nbsp;</strong>{{ plan.deadline|date:"Y-m-d H:i" }}</p>
+                </div>
+            <br>
+          </div>
+        <br>
+
+      {% endfor %}
+      </div><div class="col-1"></div></div>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+  </div>
+  <div class="tab-pane fade" id="study" style="background-color: #EFEFEF;" role="tabpanel" aria-labelledby="study-tab">
+      <div class="row"><div class="col-1"></div><div class="col-10">
+      <br>
+      {% for plan in study_list %}
+
+        <div class="row" style="background-color: #FFFFFF;border-top-right-radius: 10px;border-top-left-radius: 10px;">
+        <div class="col-1"></div>
+        <div class="col-10">
+        <br>
+
+        <p><strong>简介&nbsp;</strong>{{ plan.intro }}</p>
+        <p><strong>计划开始时间&nbsp;</strong>{{ plan.start_time|date:"Y-m-d H:i" }}<br><strong>计划结束时间&nbsp;</strong>{{ plan.end_time|date:"Y-m-d H:i" }}<br><strong>学习地点&nbsp;</strong>{{ plan.study_place }}</p>
+        {% if plan.note != "" %}
+        <p><strong>备注&nbsp;</strong>{{ plan.note }}</p>
+        {% endif %}
+
+        <span class="badge badge-success">{{ plan.study_mode }}</span>
+        <span class="badge badge-info">{{ plan.category }}</span>
+        <span class="badge badge-secondary">{{ plan.duration }}</span>
+        <br>
+        {% if plan.auth_gender == 0 %}
+        <span class="badge badge-warning">男女均可</span>
+        {% elif plan.auth_gender == 1 %}
+        <span class="badge badge-warning">仅限男性</span>
+        {% elif plan.auth_gender == 2 %}
+        <span class="badge badge-warning">仅限女性</span>
+        {% endif %}
+        <span class="badge badge-primary">已有/需要人数: {{ plan.num_have }}/{{ plan.num_need }}</span><br>
+        <p>&nbsp;</p>
+
+
+        </div>
+        <div class="col-1"></div>
+
+          <div class="row" style="background-color: #FFEA48;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;">
+                <div class="col-3" style="top: 5px;">
+                    <a href="/study_take_part/?plan_id={{ plan.id }}"><img src="{% static "img/icons/join.png" %}" style="width:60px;height:60px;border-radius: 100%;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a>
+                </div>
+                <div class="col-9" style="top: 5px;">
+                    <p><strong>发起人&nbsp;</strong>{{ plan.pub_username }}&nbsp;&nbsp;{{ plan.pub_gender }}<br><strong>报名截止&nbsp;</strong>{{ plan.deadline|date:"Y-m-d H:i" }}</p>
+                </div>
+            <br>
+          </div>
+          <br>
+      {% endfor %}
+      </div><div class="col-1"></div></div>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+  </div>
+</div>
+  <div class="tab-pane fade" id="sport" style="background-color: #EFEFEF;" role="tabpanel" aria-labelledby="sport-tab">
+      <div class="row"><div class="col-1"></div><div class="col-10">
+      <br>
+      {% for plan in sport_list %}
+
+        <div class="row" style="background-color: #FFFFFF;border-top-right-radius: 10px;border-top-left-radius: 10px;">
+        <div class="col-1"></div>
+        <div class="col-10">
+        <br>
+
+        <p><strong>简介&nbsp;</strong>{{ plan.intro }}</p>
+        <p><strong>计划开始时间&nbsp;</strong>{{ plan.start_time|date:"Y-m-d H:i" }}<br><strong>计划结束时间&nbsp;</strong>{{ plan.end_time|date:"Y-m-d H:i" }}<br><strong>健身地点&nbsp;</strong>{{ plan.place }}</p>
+        {% if plan.note != "" %}
+        <p><strong>备注&nbsp;</strong>{{ plan.note }}</p>
+        {% endif %}
+
+        <span class="badge badge-info">{{ plan.category }}</span>
+        <span class="badge badge-secondary">{{ plan.duration }}</span>
+        <br>
+        {% if plan.auth_gender == 0 %}
+        <span class="badge badge-warning">男女均可</span>
+        {% elif plan.auth_gender == 1 %}
+        <span class="badge badge-warning">仅限男性</span>
+        {% elif plan.auth_gender == 2 %}
+        <span class="badge badge-warning">仅限女性</span>
+        {% endif %}
+        <span class="badge badge-primary">已有/需要人数: {{ plan.num_have }}/{{ plan.num_need }}</span><br>
+        <p>&nbsp;</p>
+
+        </div>
+        <div class="col-1"></div>
+
+          <div class="row" style="background-color: #FFEA48;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;">
+                <div class="col-3" style="top: 5px;">
+                    <a href="/sport_take_part/?plan_id={{ plan.id }}"><img src="{% static "img/icons/join.png" %}" style="width:60px;height:60px;border-radius: 100%;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a>
+                </div>
+                <div class="col-9" style="top: 5px;">
+                    <p><strong>发起人&nbsp;</strong>{{ plan.pub_username }}&nbsp;&nbsp;{{ plan.pub_gender }}<br><strong>报名截止&nbsp;</strong>{{ plan.deadline|date:"Y-m-d H:i" }}</p>
+                </div>
+            <br>
+          </div>
+          <br>
+      {% endfor %}
+      </div><div class="col-1"></div></div>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+  </div>
+</div>
+  <div class="tab-pane fade" id="game" style="background-color: #EFEFEF;" role="tabpanel" aria-labelledby="game-tab">
+      <div class="row"><div class="col-1"></div><div class="col-10">
+      <br>
+      {% for plan in game_list %}
+
+        <div class="row" style="background-color: #FFFFFF;border-top-right-radius: 10px;border-top-left-radius: 10px;">
+        <div class="col-1"></div>
+        <div class="col-10">
+        <br>
+
+        <p><strong>游戏名称&nbsp;</strong>{{ plan.game_name }}</p>
+        <p><strong>计划开始时间&nbsp;</strong>{{ plan.start_time|date:"Y-m-d H:i" }}<br><strong>游戏地点&nbsp;</strong>{{ plan.place }}</p>
+        {% if plan.note != "" %}
+        <p><strong>备注&nbsp;</strong>{{ plan.note }}</p>
+        {% endif %}
+
+        <span class="badge badge-success">{{ plan.game_mode }}</span>
+        <span class="badge badge-info">{{ plan.category }}</span>
+        <br>
+        {% if plan.auth_gender == 0 %}
+        <span class="badge badge-warning">男女均可</span>
+        {% elif plan.auth_gender == 1 %}
+        <span class="badge badge-warning">仅限男性</span>
+        {% elif plan.auth_gender == 2 %}
+        <span class="badge badge-warning">仅限女性</span>
+        {% endif %}
+        <span class="badge badge-primary">已有/需要人数: {{ plan.num_have }}/{{ plan.num_need }}</span><br>
+        <p>&nbsp;</p>
+
+        </div>
+        <div class="col-1"></div>
+
+          <div class="row" style="background-color: #FFEA48;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;">
+                <div class="col-3" style="top: 5px;">
+                    <a href="/game_take_part/?plan_id={{ plan.id }}"><img src="{% static "img/icons/join.png" %}" style="width:60px;height:60px;border-radius: 100%;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a>
+                </div>
+                <div class="col-9" style="top: 5px;">
+                    <p><strong>发起人&nbsp;</strong>{{ plan.pub_username }}&nbsp;&nbsp;{{ plan.pub_gender }}<br><strong>报名截止&nbsp;</strong>{{ plan.deadline|date:"Y-m-d H:i" }}</p>
+                </div>
+            <br>
+          </div>
+          <br>
+      {% endfor %}
+      </div><div class="col-1"></div></div>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+  </div>
+</div>
+</div>
+
+  <div class="row">
+      <div class="col-1"></div>
+      <div class="col-10">
+
+      </div>
+      <div class="col-1"></div>
+  </div>
+
+
+<div class="index_footer">
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div class="row">
+                <div class="col-4">
+                    <a href="/index/"><img src="{% static "img/icons/index_nav_home.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;ustify-content: center;overflow: hidden;"></a>
+                    <div style="text-align: center"><small class="form-text text-muted">主页</small></div>
+
+                </div>
+                <div class="col-4">
+
+                    <a href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{% static "img/icons/index_nav_start.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a>
+                    <div style="text-align: center"><small class="form-text text-muted">发起</small></div>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/carpool_start/">约出行</a>
+                    <a class="dropdown-item" href="/study_start/">约学习</a>
+                    <a class="dropdown-item" href="/sport_start/">约健身</a>
+                    <a class="dropdown-item" href="/game_start/">约开黑</a>
+                    </div>
+
+                </div>
+
+
+                <div class="col-4">
+                    <!--a href="/my/"><img src="{% static "img/icons/index_nav_my.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a-->
+                    <!--div style="text-align: center"><small class="form-text text-muted">我的</small></div-->
+
+                    <a href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{% static "img/icons/index_nav_my.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a>
+                    <div style="text-align: center"><small class="form-text text-muted">我的</small></div>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                    <a class="dropdown-item" href="/carpool_my/">我的约出行</a>
+                    <a class="dropdown-item" href="/study_my/">我的约学习</a>
+                    <a class="dropdown-item" href="/sport_my/">我的约健身</a>
+                    <a class="dropdown-item" href="/game_my/">我的约开黑</a>
+                    <a class="dropdown-item" href="/my/">个人信息</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+</div>
+<style>
+  .index_footer {
+    position: fixed;
+    /*position:absolute;*/
+    width: 100%;
+    z-index: 100;
+    bottom: 0;
+    height: 80px;
+    background-color: #FFFFFF;
+    }
+</style>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  </body>
 </html>

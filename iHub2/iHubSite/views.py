@@ -75,7 +75,7 @@ def register(request):  # 注册
         # 还有头像……还不会做，先放着，以后再说
 
         if len(name) == 0 or len(no) == 0 or len(username) == 0 or len(password) == 0 or len(
-                password_again) == 0 or len(gender) == 0 or len(mail) == 0 or len(wechatid) == 0 or len(major) == 0:
+                password_again) == 0 or len(gender) == 0 or len(mail) == 0 or len(wechatid) == 0 or len(major) == 0 or len(phone) == 0:
             return render(request, 'register.html', {'not_full': True})  # 填写信息不够完整,重来
 
         # 不允许一个学号/工号多次注册
@@ -109,6 +109,20 @@ def logout(request):  # 登出
         return response
 
 
+def search(request):
+    if request.method == 'GET':
+        return redirect('/index/')
+    if request.method == 'POST':
+        search_word = request.POST.get('word_for_search')
+        if len(search_word) == 0:
+            return redirect('/index/')
+        carpool_list = CarpoolPlans.objects.filter(Q(from_site=search_word) | Q(to_site=search_word) | Q(note=search_word) | Q(category=search_word))
+        study_list = StudyPlans.objects.filter(Q(intro=search_word) | Q(category=search_word) | Q(study_mode=search_word) | Q(note=search_word))
+        sport_list = SportPlans.objects.filter(Q(intro=search_word) | Q(category=search_word) | Q(note=search_word))
+        game_list = GamePlans.objects.filter(Q(game_name=search_word) | Q(category=search_word) | Q(game_mode=search_word) | Q(note=search_word))
+        return render(request, 'search.html', {'key_word': search_word, 'carpool_list': carpool_list, 'study_list': study_list, 'sport_list': sport_list, 'game_list': game_list})
+
+
 # 以下是约出行相关功能的函数:
 # 拼车功能首页
 def carpool_index(request):
@@ -140,7 +154,7 @@ def carpool_start(request):
     if request.method == 'GET':
         # 登录了才能发帖
         if not request.user.is_authenticated:
-            return render(request, 'my.html', {'not_log_in': True})  # 未登录,跳转至个人主页去登录
+            return redirect('/login/')
         else:
             return render(request, 'carpool_start.html')  # 已登录，跳转至发起拼车页面
     if request.method == 'POST':
@@ -163,9 +177,17 @@ def carpool_start(request):
         pub_wechat = user_now.weChat_id
         pub_gender = user_now.gender
 
-        if len(from_site) == 0 or len(to_site) == 0 or len(trip_mode) == 0 or len(trip_time) == 0 or len(num_need) == 0:
+        # 不允许输入小于等于零的需要人数
+        if int(num_need) <= 0:
+            return render(request, 'carpool_start.html', {'invaild_num': True})
+
+        if len(from_site) == 0 or len(to_site) == 0 or len(trip_mode) == 0 or len(category) == 0 or len(trip_time) == 0 or len(num_need) == 0 or len(auth_gender) == 0:
             return render(request, 'carpool_start.html', {'no_input': True})  # 未输入完整
         else:
+            if len(deadline) == 0:
+                deadline = trip_time
+            if len(note) == 0:
+                note = ""
             CarpoolPlans.objects.create(from_site=from_site, to_site=to_site, category=category, trip_mode=trip_mode,
                                         pub_time=pub_time, deadline=deadline, trip_time=trip_time, note=note,
                                         num_need=num_need,
@@ -186,8 +208,7 @@ def carpool_join(request):
 def carpool_take_part(request):
     if request.method == 'GET':
         if not request.user.is_authenticated:  # 若未登录
-            plan_list = CarpoolPlans.objects.filter(Q(ended=False) & Q(full=False))
-            return render(request, 'carpool_join.html', {'not_log_in': True, 'plan_list': plan_list})  # 返回查看拼车信息页面
+            return redirect('/login/')
         else:
             join_user_now = request.user.username
             join_user = Users.objects.get(no=join_user_now)
@@ -243,7 +264,7 @@ def carpool_map(request):
 def carpool_my(request):
     if request.method == 'GET':
         if not request.user.is_authenticated:
-            return render(request, 'carpool_my.html', {'not_logged_in': True})
+            return redirect('/login/')
         user = request.user.username
         my_start = CarpoolPlans.objects.filter(pub_no=user)  # 我发起的拼车
         my_join_tmp = JoinCarpoolPlan.objects.filter(join_no=user)
@@ -326,7 +347,7 @@ def study_start(request):
     if request.method == 'GET':
         # 登录了才能发帖
         if not request.user.is_authenticated:
-            return render(request, 'my.html', {'not_log_in': True})  # 未登录,跳转至个人主页去登录
+            return redirect('/login/')
         else:
             return render(request, 'study_start.html')  # 已登录，跳转至发起拼车页面
     if request.method == 'POST':
@@ -351,10 +372,17 @@ def study_start(request):
         pub_wechat = user_now.weChat_id
         pub_gender = user_now.gender
 
-        if len(intro) == 0 or len(study_place) == 0 or len(study_mode) == 0 or len(start_time) == 0 or len(
-                num_need) == 0:
+        # 不允许输入小于等于零的需要人数
+        if int(num_need) <= 0:
+            return render(request, 'carpool_start.html', {'invaild_num': True})
+
+        if len(intro) == 0 or len(study_place) == 0 or len(duration) == 0 or len(study_mode) == 0 or len(start_time) == 0 or len(num_need) == 0 or len(category) == 0 or len(start_time) == 0 or len(end_time) == 0 or len(auth_gender) == 0:
             return render(request, 'study_start.html', {'no_input': True})  # 未输入完整
         else:
+            if len(deadline) == 0:
+                deadline = start_time
+            if len(note) == 0:
+                note = ""
             StudyPlans.objects.create(intro=intro, category=category, duration=duration,
                                       study_mode=study_mode, study_place=study_place,
                                       start_time=start_time, end_time=end_time, deadline=deadline,
@@ -376,8 +404,7 @@ def study_join(request):
 def study_take_part(request):
     if request.method == 'GET':
         if not request.user.is_authenticated:  # 若未登录
-            plan_list = StudyPlans.objects.filter(Q(ended=False) & Q(full=False))
-            return render(request, 'study_join.html', {'not_log_in': True, 'plan_list': plan_list})  # 返回查看拼车信息页面
+            return redirect('/login/')
         else:
             join_user_now = request.user.username
             join_user = Users.objects.get(no=join_user_now)
@@ -429,7 +456,7 @@ def study_take_part(request):
 def study_my(request):
     if request.method == 'GET':
         if not request.user.is_authenticated:
-            return render(request, 'study_my.html', {'not_logged_in': True})
+            return redirect('/login/')
         user = request.user.username
         my_start = StudyPlans.objects.filter(pub_no=user)  # 我发起的
         my_join_tmp = JoinStudyPlan.objects.filter(join_no=user)
@@ -511,7 +538,7 @@ def sport_start(request):
     if request.method == 'GET':
         # 登录了才能发帖
         if not request.user.is_authenticated:
-            return render(request, 'my.html', {'not_log_in': True})  # 未登录,跳转至个人主页去登录
+            return redirect('/login/')
         else:
             return render(request, 'sport_start.html')  # 已登录，跳转至发起拼车页面
     if request.method == 'POST':
@@ -535,9 +562,17 @@ def sport_start(request):
         pub_wechat = user_now.weChat_id
         pub_gender = user_now.gender
 
-        if len(intro) == 0 or len(place) == 0 or len(start_time) == 0 or len(num_need) == 0:
+        # 不允许输入小于等于零的需要人数
+        if int(num_need) <= 0:
+            return render(request, 'carpool_start.html', {'invaild_num': True})
+
+        if len(intro) == 0 or len(place) == 0 or len(start_time) == 0 or len(end_time) == 0 or len(num_need) == 0 or len(category) == 0 or len(duration) == 0 or len(duration) == 0:
             return render(request, 'sport_start.html', {'no_input': True})  # 未输入完整
         else:
+            if len(deadline) == 0:
+                deadline = start_time
+            if len(note) == 0:
+                note = ""
             SportPlans.objects.create(intro=intro, category=category, duration=duration, place=place,
                                       start_time=start_time, end_time=end_time, deadline=deadline,
                                       note=note, num_need=num_need,
@@ -558,8 +593,7 @@ def sport_join(request):
 def sport_take_part(request):
     if request.method == 'GET':
         if not request.user.is_authenticated:  # 若未登录
-            plan_list = SportPlans.objects.filter(Q(ended=False) & Q(full=False))
-            return render(request, 'sport_join.html', {'not_log_in': True, 'plan_list': plan_list})  # 返回查看拼车信息页面
+            return redirect('/login/')
         else:
             join_user_now = request.user.username
             join_user = Users.objects.get(no=join_user_now)
@@ -611,7 +645,7 @@ def sport_take_part(request):
 def sport_my(request):
     if request.method == 'GET':
         if not request.user.is_authenticated:
-            return render(request, 'sport_my.html', {'not_logged_in': True})
+            return redirect('/login/')
         user = request.user.username
         my_start = SportPlans.objects.filter(pub_no=user)  # 我发起的
         my_join_tmp = JoinSportPlan.objects.filter(join_no=user)
@@ -691,7 +725,7 @@ def game_start(request):
     if request.method == 'GET':
         # 登录了才能发帖
         if not request.user.is_authenticated:
-            return render(request, 'my.html', {'not_log_in': True})  # 未登录,跳转至个人主页去登录
+            return redirect('/login/')
         else:
             return render(request, 'game_start.html')  # 已登录，跳转至发起拼车页面
     if request.method == 'POST':
@@ -714,9 +748,17 @@ def game_start(request):
         pub_wechat = user_now.weChat_id
         pub_gender = user_now.gender
 
-        if len(game_name) == 0 or len(place) == 0 or len(start_time) == 0 or len(num_need) == 0:
+        # 不允许输入小于等于零的需要人数
+        if int(num_need) <= 0:
+            return render(request, 'carpool_start.html', {'invaild_num': True})
+
+        if len(game_name) == 0 or len(place) == 0 or len(start_time) == 0 or len(num_need) == 0 or len(category) == 0 or len(game_mode) == 0 or len(auth_gender) == 0:
             return render(request, 'game_start.html', {'no_input': True})  # 未输入完整
         else:
+            if len(deadline) == 0:
+                deadline = start_time
+            if len(note) == 0:
+                note = ""
             GamePlans.objects.create(game_name=game_name, category=category, game_mode=game_mode, place=place,
                                      start_time=start_time, deadline=deadline,
                                      note=note, num_need=num_need,
@@ -737,8 +779,7 @@ def game_join(request):
 def game_take_part(request):
     if request.method == 'GET':
         if not request.user.is_authenticated:  # 若未登录
-            plan_list = GamePlans.objects.filter(Q(ended=False) & Q(full=False))
-            return render(request, 'game_join.html', {'not_log_in': True, 'plan_list': plan_list})  # 返回查看拼车信息页面
+            return redirect('/login/')
         else:
             join_user_now = request.user.username
             join_user = Users.objects.get(no=join_user_now)
@@ -790,7 +831,7 @@ def game_take_part(request):
 def game_my(request):
     if request.method == 'GET':
         if not request.user.is_authenticated:
-            return render(request, 'game_my.html', {'not_logged_in': True})
+            return redirect('/login/')
         user = request.user.username
         my_start = GamePlans.objects.filter(pub_no=user)  # 我发起的
         my_join_tmp = JoinGamePlan.objects.filter(join_no=user)

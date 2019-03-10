@@ -31,6 +31,14 @@
 
               <br>
               <h2 style="color: #36588D">请先登录</h2>
+              {% if wrong %}
+              <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>学号/工号或密码输入错误！<br>注意只能使用学号/工号登录哦~</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              {% endif %}
               <br>
               <form method="POST" action="/login/">
               {% csrf_token %}
@@ -44,7 +52,7 @@
                   <br>
                   <div style="text-align:center"><button type="submit" class="btn btn-primary btn-lg btn-block" style="background-color: #FFEA48;border: none;border-radius: 20px;color: #36588D;">进入!Hub</button></div><br>
               </form>
-              <div style="text-align:center"><button class="btn btn-primary btn-lg btn-block" onclick="location.href='/register/'" style="background-color: #95A8C5;border: none;border-radius: 20px;color: #36588D;">没有账号，点击注册</button></div><br><br>
+              <div style="text-align:center"><button class="btn btn-primary btn-lg btn-block" onclick="location.href='/index/'" style="background-color: #95A8C5;border: none;border-radius: 20px;color: #36588D;">返回主页</button></div><br><br>
                   </div>
                   <div class="col-1"></div>
               </div>

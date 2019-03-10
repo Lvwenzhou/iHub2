@@ -19,6 +19,34 @@
   <p style="text-align: center;color: #3D5989;font-family: 黑体;font-weight: bold;font-size: 20px;"><br>约健身列表</p><br>
 
   <div style="background-color: #EFEFEF;width: 100%;">
+
+      {% if have_no_gender_auth %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <strong>&nbsp;&nbsp;&nbsp;注意加入者性别限制！</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endif %}
+
+    {% if join_self %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <strong>&nbsp;&nbsp;&nbsp;这是你自己发起的！</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endif %}
+
+    {% if have_joined %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <strong>&nbsp;&nbsp;&nbsp;你已经加入啦！</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endif %}
+
     <div class="row"><div class="col-1"></div><div class="col-10">
     <br>
 
@@ -50,7 +78,7 @@
             </div>
             <div class="row" style="background-color: #FFEA48;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;">
                 <div class="col-3" style="top: 5px;">
-                    <a onclick="location.href='/sport_take_part/'"><img src="{% static "img/icons/join.png" %}" style="width:60px;height:60px;border-radius: 100%;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a>
+                    <a onclick="location.href='/sport_take_part/?plan_id={{ plan.id }}'"><img src="{% static "img/icons/join.png" %}" style="width:60px;height:60px;border-radius: 100%;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a>
                 </div>
                 <div class="col-9" style="top: 5px;">
                     <p><strong>发起人&nbsp;</strong>{{ plan.pub_username }}&nbsp;&nbsp;{{ plan.pub_gender }}<br><strong>报名截止&nbsp;</strong>{{ plan.deadline|date:"Y-m-d H:i" }}</p>

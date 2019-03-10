@@ -21,6 +21,25 @@
   <p>&nbsp;</p>
 
   <div style="background-color: #EFEFEF;width: 100%;overflow-x: hidden;">
+
+    {% if no_input %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <strong>&nbsp;&nbsp;&nbsp;请输入完整！</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endif %}
+
+    {% if invaild_num %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <strong>&nbsp;&nbsp;&nbsp;请认真填写所需人数！</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endif %}
+
     <div class="row"><div class="col-1"></div><div class="col-10">
     <br>
       <div style="background-color: #95A8C5;border-top-left-radius: 10px;border-top-right-radius: 10px;">
@@ -63,13 +82,13 @@
                           <label class="input-group-text" for="inputGroupSelect01">标签/分类</label>
                         </div>
                         <select class="custom-select" id="inputGroupSelect01" name="category_select">
-                          <option selected>请选择...</option>
                           <option value="奉贤->徐汇">奉贤->徐汇</option>
                           <option value="徐汇->奉贤">徐汇->奉贤</option>
                           <option value="奉贤->市内">奉贤->市内</option>
                           <option value="市内->奉贤">市内->奉贤</option>
                           <option value="奉贤<->机场">奉贤<->机场</option>
                           <option value="奉贤<->车站">奉贤<->车站</option>
+                          <option value="其他" selected>其他</option>
                         </select>
                       </div>
 
@@ -78,8 +97,7 @@
                           <label class="input-group-text" for="inputGroupSelect01">出行方式</label>
                         </div>
                         <select class="custom-select" id="inputGroupSelect01" name="trip_mode_select">
-                          <option selected>请选择...</option>
-                          <option value="出租车">出租车</option>
+                          <option value="出租车" selected>出租车</option>
                           <option value="发起者自驾">发起者自驾</option>
                           <option value="公共交通">公共交通</option>
                           <option value="其他">其他</option>
@@ -91,14 +109,11 @@
                           <label class="input-group-text" for="inputGroupSelect01">允许加入者性别</label>
                         </div>
                         <select class="custom-select" id="inputGroupSelect01" name="auth_gender_select">
-                          <option selected>请选择...</option>
-                          <option value="0">均可</option>
+                          <option value="0" selected>均可</option>
                           <option value="1">仅限男性</option>
                           <option value="2">仅限女性</option>
                         </select>
                       </div>
-
-
 
 
                       <div style="text-align:center"><button type="submit" class="btn btn-primary btn-lg btn-block" style="background-color: #FFEA48;border: none;border-radius: 20px;color: #36588D;font-size: 14px">发布</button></div><br>

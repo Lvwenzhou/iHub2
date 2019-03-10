@@ -19,10 +19,11 @@
   <div style="background-color: #3D5989;">
     <p>&nbsp;</p>
     <form action="/search/" method="POST">
+    {% csrf_token %}
       <div class="row">
         <div class="col-2"></div>
         <div class="col-8">
-          <input class="form-control" style="border-radius: 10px;" type="search" placeholder="🔍请输入你要搜索的内容" aria-label="Search">
+          <input class="form-control" style="border-radius: 10px;" type="search" name="word_for_search" placeholder="🔍请输入你要搜索的内容" aria-label="Search">
         </div>
         <div class="col-2"></div>
       </div>

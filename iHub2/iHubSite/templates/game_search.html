@@ -53,7 +53,7 @@
             </div>
             <div class="row" style="background-color: #FFEA48;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;">
                 <div class="col-3" style="top: 5px;">
-                    <a onclick="location.href='/game_take_part/'"><img src="{% static "img/icons/join.png" %}" style="width:60px;height:60px;border-radius: 100%;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a>
+                    <a onclick="location.href='/game_take_part/?plan_id={{ plan.id }}'"><img src="{% static "img/icons/join.png" %}" style="width:60px;height:60px;border-radius: 100%;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a>
                 </div>
                 <div class="col-9" style="top: 5px;">
                     <p><strong>发起人&nbsp;</strong>{{ plan.pub_username }}&nbsp;&nbsp;{{ plan.pub_gender }}<br><strong>报名截止&nbsp;</strong>{{ plan.deadline|date:"Y-m-d H:i" }}</p>
