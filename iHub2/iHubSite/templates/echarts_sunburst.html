@@ -1,0 +1,206 @@
+<html lang="en">
+{% load staticfiles %}
+<head>
+ <meta charset="utf-8">
+ <title>ops-coffee</title>
+ <!-- 引入 echarts.js -->
+ <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src={% static 'js/echarts.min.js' %}></script>
+</head>
+<body>
+<div id="main" style="width: 120%;height: 120%;" class="align-center"></div>
+    <script type="text/javascript">
+        var myChart = echarts.init(document.getElementById('main'));
+        var study_numall= {{study_numall|safe}};
+        var study_num1= {{study_num1|safe}};
+        var study_num2= {{study_num2|safe}};
+        var study_num3= {{study_num3|safe}};
+        var study_num4= {{study_num4|safe}};
+        var sport_numall= {{sport_numall|safe}};
+        var sport_num1= {{sport_num1|safe}};
+        var sport_num2= {{sport_num2|safe}};
+        var sport_num3= {{sport_num3|safe}};
+        var sport_num4= {{sport_num4|safe}};
+        var game_numall= {{game_numall|safe}};
+        var game_num1= {{game_num1|safe}};
+        var game_num2= {{game_num2|safe}};
+        var game_num3= {{game_num3|safe}};
+        var game_num4= {{game_num4|safe}};
+        var carpool_numall= {{carpool_numall|safe}};
+        var carpool_num1= {{carpool_num1|safe}};
+        var carpool_num2= {{carpool_num2|safe}};
+        var carpool_num3= {{carpool_num3|safe}};
+        var carpool_num4= {{carpool_num4|safe}};
+       var option = {
+               tooltip: {
+        trigger: 'item',
+        formatter: "{b}: {c}人"
+    },
+    series: {
+        type: 'sunburst',
+        data: [
+            {
+            name: '约学习',
+            value: study_numall,
+                itemStyle:{
+                color: '#0066FF',
+                },
+            textStyle:{
+                fontSize:18
+            },
+            children:
+            [
+                {
+                value: study_num1,
+                name: '大一',
+                    itemStyle:{
+                    color:'#0066CC'
+                    }
+                },
+                {
+                value: study_num2,
+                name: '大二',
+                    itemStyle:{
+                    color:'#0099FF'
+                    }
+                },
+                {
+                    value:study_num3,
+                    name:'大三',
+                    itemStyle:{
+                    color:'#0099CC'
+                    }
+                },
+                {
+                    value: study_num4,
+                    name:'大四',
+                    itemStyle:{
+                    color:'#006699'
+                    }
+                }
+            ]
+            },
+            {
+            name: '约健身',
+            value: sport_numall,
+                itemStyle:{
+                color:'#FF6600'
+                },
+            children:
+            [
+                {
+                value: sport_num1,
+                name: '大一',
+                    itemStyle:{
+                    color:'#FF6633'
+                    }
+                },
+                {
+                value: sport_num2,
+                name: '大二',
+                    itemStyle:{
+                    color:'#FF9900'
+                    }
+                },
+                {
+                    value:sport_num3,
+                    name:'大三',
+                    itemStyle:{
+                    color:'#FF9933'
+                    }
+                },
+                {
+                    value: sport_num4,
+                    name:'大四',
+                    itemStyle:{
+                    color:'#FF9966'
+                    }
+                }
+            ]
+            },
+            {
+            name: '约出行',
+            value: carpool_numall,
+                itemStyle:{
+                color:'#66CC66'
+                },
+            children:
+            [
+                {
+                value: carpool_num1,
+                name: '大一',
+                    itemStyle:{
+                    color:'#669900'
+                    }
+                },
+                {
+                value: carpool_num2,
+                name: '大二',
+                    itemStyle:{
+                    color:'#66CC99'
+                    }
+                },
+                {
+                    value:carpool_num3,
+                    name:'大三',
+                    itemStyle:{
+                    color:'#669966'
+                    }
+                },
+                {
+                    value: carpool_num4,
+                    name:'大四',
+                    itemStyle:{
+                    color:'#669999'
+                    }
+                }
+            ]
+            },
+            {
+            name: '约开黑',
+            value: game_numall,
+                itemStyle:{
+                color:'#990000'
+                },
+            children:
+            [
+                {
+                value: game_num1,
+                name: '大一',
+                    itemStyle:{
+                    color:'#993333'
+                    }
+                },
+                {
+                value: game_num2,
+                name: '大二',
+                    itemStyle:{
+                    color:'#990033'
+                    }
+                },
+                {
+                    value:game_num3,
+                    name:'大三',
+                    itemStyle:{
+                    color:'#996666'
+                    }
+                },
+                {
+                    value: game_num4,
+                    name:'大四',
+                    itemStyle:{
+                    color:'#999966'
+                    }
+                }
+            ]
+            },
+        ]
+    }
+};
+myChart.setOption(option);
+</script>
+</body>
+</html>

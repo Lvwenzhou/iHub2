@@ -23,6 +23,9 @@ urlpatterns = [
     path('weChat/', site_view.weChat),
     path('create_menu/', site_view.create_menu),
 
+    path('echarts_gender/', site_view.echarts_gender),
+    path('echarts_sunburst/', site_view.echarts_sunburst),
+
     path('login/', site_view.login),
     path('logout/', site_view.logout),
     path('register/', site_view.register),

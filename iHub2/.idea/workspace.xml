@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7c5cae28-b196-4316-8e0f-a386c713e209" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/iHubSite/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/iHubSite/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iHub2/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/iHub2/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/iHubSite/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/iHubSite/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,24 +16,89 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/iHubSite/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="377">
-              <caret line="45" column="66" selection-start-line="45" selection-start-column="66" selection-end-line="45" selection-end-column="66" />
+            <state relative-caret-position="1231">
+              <caret line="1128" column="56" selection-start-line="1128" selection-start-column="56" selection-end-line="1128" selection-end-column="56" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
+                <element signature="e#472#694#0" />
                 <element signature="e#718#1007#0" />
+                <element signature="e#1224#2369#0" />
+                <element signature="e#2109#4388#0" />
+                <element signature="e#4422#4623#0" />
+                <element signature="e#4651#5614#0" />
+                <element signature="e#5675#5801#0" />
+                <element signature="e#5845#6691#0" />
+                <element signature="e#6733#9100#0" />
+                <element signature="e#9143#9328#0" />
+                <element signature="e#9380#11793#0" />
+                <element signature="e#11835#11877#0" />
+                <element signature="e#11920#12697#0" />
+                <element signature="e#12746#13261#0" />
+                <element signature="e#13308#13871#0" />
+                <element signature="e#13931#14055#0" />
+                <element signature="e#14089#15083#0" />
+                <element signature="e#15121#17755#0" />
+                <element signature="e#17794#17975#0" />
+                <element signature="e#18023#20479#0" />
+                <element signature="e#20518#21289#0" />
+                <element signature="e#21332#21841#0" />
+                <element signature="e#21882#22439#0" />
+                <element signature="e#22499#22623#0" />
+                <element signature="e#22665#23511#0" />
+                <element signature="e#23549#25972#0" />
+                <element signature="e#26011#26192#0" />
+                <element signature="e#26240#28696#0" />
+                <element signature="e#28735#29506#0" />
+                <element signature="e#29549#30058#0" />
+                <element signature="e#30099#30656#0" />
+                <element signature="e#30715#30838#0" />
+                <element signature="e#30879#31691#0" />
+                <element signature="e#31728#34055#0" />
+                <element signature="e#34093#34272#0" />
+                <element signature="e#34319#36762#0" />
+                <element signature="e#36800#37565#0" />
+                <element signature="e#37607#38113#0" />
+                <element signature="e#38153#38707#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/iHubSite/templates/XMLimg.xml">
+        <entry file="file://$PROJECT_DIR$/iHubSite/templates/echarts_gender.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="6" column="45" selection-start-line="6" selection-start-column="45" selection-end-line="6" selection-end-column="45" />
+            <state relative-caret-position="105">
+              <caret line="5" column="23" lean-forward="true" selection-start-line="5" selection-start-column="23" selection-end-line="5" selection-end-column="23" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/iHubSite/templates/game_index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="147">
+              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+              <folding>
+                <element signature="n#style#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/iHubSite/templates/echarts_sunburst.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-672">
+              <caret line="46" column="21" selection-start-line="46" selection-start-column="21" selection-end-line="46" selection-end-column="21" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -41,17 +106,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/iHubSite/templates/XMLtext.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="13">
-              <caret line="6" column="11" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/iHub2/settings.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-929">
-              <caret line="28" selection-start-line="28" selection-end-line="28" />
+            <state relative-caret-position="714">
+              <caret line="34" selection-start-line="34" selection-end-line="34" />
             </state>
           </provider>
         </entry>
@@ -59,8 +115,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/iHub2/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="23" column="21" selection-start-line="23" selection-start-column="21" selection-end-line="23" selection-end-column="21" />
+            <state relative-caret-position="349">
+              <caret line="25" column="24" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
               <folding>
                 <element signature="e#629#661#0" expanded="true" />
               </folding>
@@ -111,7 +167,7 @@
         <entry file="file://$PROJECT_DIR$/iHubSite/templates/search.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="987">
-              <caret line="47" column="12" lean-forward="true" selection-start-line="47" selection-start-column="12" selection-end-line="47" selection-end-column="12" />
+              <caret line="47" column="12" selection-start-line="47" selection-start-column="12" selection-end-line="47" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -120,7 +176,7 @@
         <entry file="file://$PROJECT_DIR$/iHubSite/templates/sport_join.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="331">
-              <caret line="38" column="15" lean-forward="true" selection-start-line="38" selection-start-column="15" selection-end-line="38" selection-end-column="15" />
+              <caret line="38" column="15" selection-start-line="38" selection-start-column="15" selection-end-line="38" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -129,16 +185,7 @@
         <entry file="file://$PROJECT_DIR$/iHubSite/templates/my.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-231">
-              <caret line="28" column="13" lean-forward="true" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/iHubSite/templates/study_start.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2688">
-              <caret line="128" column="104" selection-start-line="128" selection-start-column="104" selection-end-line="128" selection-end-column="104" />
+              <caret line="28" column="13" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -192,9 +239,11 @@
         <option value="$PROJECT_DIR$/iHub2/settings.py" />
         <option value="$PROJECT_DIR$/iHubSite/templates/XMLimg.xml" />
         <option value="$PROJECT_DIR$/iHubSite/templates/XMLtext.xml" />
-        <option value="$PROJECT_DIR$/iHub2/urls.py" />
         <option value="$PROJECT_DIR$/iHubSite/templates/index.html" />
         <option value="$PROJECT_DIR$/iHubSite/views.py" />
+        <option value="$PROJECT_DIR$/iHubSite/templates/echarts_gender.html" />
+        <option value="$PROJECT_DIR$/iHub2/urls.py" />
+        <option value="$PROJECT_DIR$/iHubSite/templates/echarts_sunburst.html" />
       </list>
     </option>
   </component>
@@ -311,12 +360,12 @@
       <workItem from="1551957444575" duration="97558000" />
       <workItem from="1552446062412" duration="2635000" />
       <workItem from="1552618655368" duration="143000" />
-      <workItem from="1552661120893" duration="17802000" />
+      <workItem from="1552661120893" duration="22497000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="183980000" />
+    <option name="totallyTimeSpent" value="188675000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1719" height="932" extended-state="6" />
@@ -440,13 +489,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-302">
           <caret line="110" column="104" selection-start-line="110" selection-start-column="104" selection-end-line="110" selection-end-column="104" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/iHubSite/templates/game_index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-189">
-          <caret line="75" column="85" selection-start-line="75" selection-start-column="85" selection-end-line="75" selection-end-column="85" />
         </state>
       </provider>
     </entry>
@@ -593,41 +635,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/iHubSite/templates/XMLtext.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13">
-          <caret line="6" column="11" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/iHub2/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="23" column="21" selection-start-line="23" selection-start-column="21" selection-end-line="23" selection-end-column="21" />
-          <folding>
-            <element signature="e#629#661#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/iHubSite/templates/my.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-231">
-          <caret line="28" column="13" lean-forward="true" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
+          <caret line="28" column="13" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/iHubSite/templates/search.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="987">
-          <caret line="47" column="12" lean-forward="true" selection-start-line="47" selection-start-column="12" selection-end-line="47" selection-end-column="12" />
+          <caret line="47" column="12" selection-start-line="47" selection-start-column="12" selection-end-line="47" selection-end-column="12" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/iHubSite/templates/sport_join.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="331">
-          <caret line="38" column="15" lean-forward="true" selection-start-line="38" selection-start-column="15" selection-end-line="38" selection-end-column="15" />
+          <caret line="38" column="15" selection-start-line="38" selection-start-column="15" selection-end-line="38" selection-end-column="15" />
         </state>
       </provider>
     </entry>
@@ -668,13 +693,98 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/iHubSite/templates/XMLtext.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="714">
+          <caret line="34" selection-start-line="34" selection-end-line="34" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/iHubSite/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="377">
-          <caret line="45" column="66" selection-start-line="45" selection-start-column="66" selection-end-line="45" selection-end-column="66" />
+        <state relative-caret-position="1231">
+          <caret line="1128" column="56" selection-start-line="1128" selection-start-column="56" selection-end-line="1128" selection-end-column="56" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#472#694#0" />
             <element signature="e#718#1007#0" />
+            <element signature="e#1224#2369#0" />
+            <element signature="e#2109#4388#0" />
+            <element signature="e#4422#4623#0" />
+            <element signature="e#4651#5614#0" />
+            <element signature="e#5675#5801#0" />
+            <element signature="e#5845#6691#0" />
+            <element signature="e#6733#9100#0" />
+            <element signature="e#9143#9328#0" />
+            <element signature="e#9380#11793#0" />
+            <element signature="e#11835#11877#0" />
+            <element signature="e#11920#12697#0" />
+            <element signature="e#12746#13261#0" />
+            <element signature="e#13308#13871#0" />
+            <element signature="e#13931#14055#0" />
+            <element signature="e#14089#15083#0" />
+            <element signature="e#15121#17755#0" />
+            <element signature="e#17794#17975#0" />
+            <element signature="e#18023#20479#0" />
+            <element signature="e#20518#21289#0" />
+            <element signature="e#21332#21841#0" />
+            <element signature="e#21882#22439#0" />
+            <element signature="e#22499#22623#0" />
+            <element signature="e#22665#23511#0" />
+            <element signature="e#23549#25972#0" />
+            <element signature="e#26011#26192#0" />
+            <element signature="e#26240#28696#0" />
+            <element signature="e#28735#29506#0" />
+            <element signature="e#29549#30058#0" />
+            <element signature="e#30099#30656#0" />
+            <element signature="e#30715#30838#0" />
+            <element signature="e#30879#31691#0" />
+            <element signature="e#31728#34055#0" />
+            <element signature="e#34093#34272#0" />
+            <element signature="e#34319#36762#0" />
+            <element signature="e#36800#37565#0" />
+            <element signature="e#37607#38113#0" />
+            <element signature="e#38153#38707#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/iHubSite/templates/game_index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+          <folding>
+            <element signature="n#style#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/iHub2/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="349">
+          <caret line="25" column="24" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
+          <folding>
+            <element signature="e#629#661#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/iHubSite/templates/echarts_gender.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="5" column="23" lean-forward="true" selection-start-line="5" selection-start-column="23" selection-end-line="5" selection-end-column="23" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/iHubSite/templates/echarts_sunburst.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-672">
+          <caret line="46" column="21" selection-start-line="46" selection-start-column="21" selection-end-line="46" selection-end-column="21" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>

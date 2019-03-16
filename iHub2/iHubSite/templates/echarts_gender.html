@@ -1,0 +1,83 @@
+<html lang="en">
+{% load staticfiles %}
+<head>
+ <meta charset="utf-8">
+ <title>ops-coffee</title>
+ <!-- 引入 echarts.js -->
+ <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts-en.common.js"></script>
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 150%;height: 150%;" class="align-center"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+        var female1_number= {{female1_number|safe}};
+        var male1_number= {{male1_number|safe}};
+        var female2_number= {{female2_number|safe}};
+        var male2_number= {{male2_number|safe}};
+        var female3_number= {{female3_number|safe}};
+        var male3_number= {{male3_number|safe}};
+        var female4_number= {{female4_number|safe}};
+        var male4_number= {{male4_number|safe}};
+        // 指定图表的配置项和数据
+        myChart.setOption({
+         title:{
+          text:'iHub性别年级比例图',
+          textStyle:{
+          fontSize:100
+          },
+          x:'center',
+          y:'23%',
+         },
+         tooltip : {
+         trigger: 'item',
+         formatter: "{a} <br/>{b} : {c} ({d}%)",
+          textStyle: {
+          fontSize: 40
+          }
+         },
+         itemStyle: {
+         emphasis: {
+        shadowBlur: 200,
+        shadowColor: 'rgba(0, 0, 0, 0.5)'
+        },
+        },
+         series : [
+        {
+            name: '性别年级比例',
+            type: 'pie',
+            radius: '60%',
+            center:['50%','55%'],
+            data:[
+                {value:female1_number, name:'大一女生'},
+                {value:male1_number, name:'大一男生'},
+                {value:female2_number, name:'大二女生'},
+                {value:male2_number, name:'大二男生'},
+                {value:female3_number, name:'大三女生'},
+                {value:male3_number, name:'大三男生'},
+                {value:female4_number, name:'大四女生'},
+                {value:male4_number, name:'大四男生'},
+            ],
+           label: {
+            normal: {
+                show: true,
+                textStyle: {
+                    fontSize:50
+                }
+            },
+            },
+         labelLine:{
+             length:70
+         },
+        }
+    ]
+});
+window.onresize = myChart.resize;
+</script>
+</body>
+</html>

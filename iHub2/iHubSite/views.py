@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
+from django.db.models import Avg, Max, Min, Count, Sum
 
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
@@ -1065,3 +1066,69 @@ def create_menu(request):
         ],
     })
     return HttpResponse('ok')
+
+
+# 数据可视化
+# 性别年级表
+def echarts_gender(request):
+    if request.method == 'GET':
+        male1_number = Users.objects.filter(gender='male', no__startswith='1018').aggregate(Count('id'))
+        female1_number = Users.objects.filter(gender='female', no__startswith='1018').aggregate(Count('id'))
+        male2_number = Users.objects.filter(gender='male', no__startswith='1017').aggregate(Count('id'))
+        female2_number = Users.objects.filter(gender='female', no__startswith='1017').aggregate(Count('id'))
+        male3_number = Users.objects.filter(gender='male', no__startswith='1016').aggregate(Count('id'))
+        female3_number = Users.objects.filter(gender='female', no__startswith='1016').aggregate(Count('id'))
+        male4_number = Users.objects.filter(gender='male', no__startswith='1015').aggregate(Count('id'))
+        female4_number = Users.objects.filter(gender='female', no__startswith='1015').aggregate(Count('id'))
+        number = {'male1_number': male1_number['id__count'], 'female1_number': female1_number['id__count'],
+                  'male2_number': male2_number['id__count'], 'female2_number': female2_number['id__count'],
+                  'male3_number': male3_number['id__count'], 'female3_number': female3_number['id__count'],
+                  'male4_number': male4_number['id__count'], 'female4_number': female4_number['id__count']}
+        print(number)
+        return render(request, 'echarts_gender.html', number)
+
+
+# 旭日图
+def echarts_sunburst(request):
+    if request.method == 'GET':
+        study_numall = StudyPlans.objects.filter().aggregate(Count('id'))  # 得到studyplans 所有的人数
+        study_num1 = StudyPlans.objects.filter(pub_no__startswith='1018').aggregate(Count('id'))  # 得到studyplans中 大一的人数
+        study_num2 = StudyPlans.objects.filter(pub_no__startswith='1017').aggregate(Count('id'))  # 得到studyplans中 大二的人数
+        study_num3 = StudyPlans.objects.filter(pub_no__startswith='1016').aggregate(Count('id'))  # 得到studyplans中 大三的人数
+        study_num4 = StudyPlans.objects.filter(pub_no__startswith='1015').aggregate(Count('id'))  # 得到studyplans中 大四的人数
+
+        sport_numall = SportPlans.objects.filter().aggregate(Count('id'))  # 得到Sportplans 所有的人数
+        sport_num1 = SportPlans.objects.filter(pub_no__startswith='1018').aggregate(Count('id'))  # 得到Sportplans中 大一的人数
+        sport_num2 = SportPlans.objects.filter(pub_no__startswith='1017').aggregate(Count('id'))  # 得到Sportplans中 大二的人数
+        sport_num3 = SportPlans.objects.filter(pub_no__startswith='1016').aggregate(Count('id'))  # 得到Sportplans中 大三的人数
+        sport_num4 = SportPlans.objects.filter(pub_no__startswith='1015').aggregate(Count('id'))  # 得到Sportplans中 大四的人数
+
+        game_numall = GamePlans.objects.filter().aggregate(Count('id'))  # 得到GamePlans 所有的人数
+        game_num1 = GamePlans.objects.filter(pub_no__startswith='1018').aggregate(Count('id'))  # 得到GamePlans中 大一的人数
+        game_num2 = GamePlans.objects.filter(pub_no__startswith='1017').aggregate(Count('id'))  # 得到GamePlans中 大二的人数
+        game_num3 = GamePlans.objects.filter(pub_no__startswith='1016').aggregate(Count('id'))  # 得到GamePlans中 大三的人数
+        game_num4 = GamePlans.objects.filter(pub_no__startswith='1015').aggregate(Count('id'))  # 得到GamePlans中 大四的人数
+
+        carpool_numall = CarpoolPlans.objects.filter().aggregate(Count('id'))  # 得到CarpoolPlans所有的人数
+        carpool_num1 = CarpoolPlans.objects.filter(pub_no__startswith='1018').aggregate(
+            Count('id'))  # 得到CarpoolPlans中 大一的人数
+        carpool_num2 = CarpoolPlans.objects.filter(pub_no__startswith='1017').aggregate(
+            Count('id'))  # 得到CarpoolPlans中 大二的人数
+        carpool_num3 = CarpoolPlans.objects.filter(pub_no__startswith='1016').aggregate(
+            Count('id'))  # 得到CarpoolPlans中 大三的人数
+        carpool_num4 = CarpoolPlans.objects.filter(pub_no__startswith='1015').aggregate(
+            Count('id'))  # 得到CarpoolPlans中 大四的人数
+        number = {'study_numall': study_numall['id__count'], 'study_num1': study_num1['id__count'],
+                  'study_num2': study_num2['id__count'], 'study_num3': study_num3['id__count'],
+                  'study_num4': study_num4['id__count'],
+                  'carpool_numall': carpool_numall['id__count'], 'carpool_num1': carpool_num1['id__count'],
+                  'carpool_num2': carpool_num2['id__count'], 'carpool_num3': carpool_num3['id__count'],
+                  'carpool_num4': carpool_num4['id__count'],
+                  'sport_numall': sport_numall['id__count'], 'sport_num1': sport_num1['id__count'],
+                  'sport_num2': sport_num2['id__count'], 'sport_num3': sport_num3['id__count'],
+                  'sport_num4': sport_num4['id__count'],
+                  'game_numall': game_numall['id__count'], 'game_num1': game_num1['id__count'],
+                  'game_num2': game_num2['id__count'], 'game_num3': game_num3['id__count'],
+                  'game_num4': game_num4['id__count']
+                  }
+        return render(request, 'echarts_sunburst.html', number)
