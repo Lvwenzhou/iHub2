@@ -40,7 +40,10 @@ def my(request):
 
 def login(request):  # 登录
     if request.method == 'GET':
-        return render(request, 'login.html')  # 需要一个登录页面(前端加油哇)
+        if not request.user.is_authenticated:
+            return render(request, 'login.html')
+        else:
+            return render(request, 'index.html', {'logged': True, 'loged_in': True})
 
     if request.method == 'POST':
         user_no = request.POST.get('user_no_input')
