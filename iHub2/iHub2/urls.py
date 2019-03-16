@@ -19,7 +19,10 @@ import iHubSite.views as site_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    
+
+    path('weChat/', site_view.weChat),
+    path('create_menu/', site_view.create_menu),
+
     path('login/', site_view.login),
     path('logout/', site_view.logout),
     path('register/', site_view.register),

@@ -1,0 +1,34 @@
+<xml>
+<ToUserName><![CDATA[{{ ToUserName }}]]></ToUserName>
+<FromUserName><![CDATA[{{ FromUserName }}]]></FromUserName>
+<CreateTime>{{ CreateTime }}</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[{%if Content == "subscribe" %}感谢您的关注!
+回复"帮助"查看帮助~
+{% elif Content == "help" %}请回复相应数字：
+1.查看
+2.发起
+3.我的
+4.进入主页
+{% elif Content == '1' %}请回复相应数字：
+11.查看已有约出行
+12.查看已有约学习
+13.查看已有约健身
+14.查看已有约游戏
+{% elif Content == '2' %}请回复相应数字：
+21.发起约出行
+22.发起约学习
+23.发起约健身
+24.发起约游戏
+{% elif Content == '3' %}请回复相应数字：
+31.我的约出行
+32.我的约学习
+33.我的约健身
+34.我的约游戏
+35.个人信息
+{% elif Content == '4' %}点击 菜单栏 --> !Hub --> !Hub主页 进入主页哦~
+{% else %}{{Content}}
+{% endif %}
+查看帮助请发送"帮助"
+]]></Content>
+</xml>

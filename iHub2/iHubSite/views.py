@@ -1,15 +1,23 @@
 import datetime
+import hashlib
+import time
 
+# import ET as ET
+import xml.etree.cElementTree as ET
 from django.contrib import auth
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.db.models import Q
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 
 # Create your views here.
+from django.views.decorators.csrf import csrf_exempt
+
 from iHubSite.models import Users, CarpoolPlans, JoinCarpoolPlan, StudyPlans, JoinStudyPlan, SportPlans, JoinSportPlan, \
     GamePlans, JoinGamePlan
+
+from wechatpy import WeChatClient
 
 
 def index(request):
@@ -75,7 +83,8 @@ def register(request):  # 注册
         # 还有头像……还不会做，先放着，以后再说
 
         if len(name) == 0 or len(no) == 0 or len(username) == 0 or len(password) == 0 or len(
-                password_again) == 0 or len(gender) == 0 or len(mail) == 0 or len(wechatid) == 0 or len(major) == 0 or len(phone) == 0:
+                password_again) == 0 or len(gender) == 0 or len(mail) == 0 or len(wechatid) == 0 or len(
+            major) == 0 or len(phone) == 0:
             return render(request, 'register.html', {'not_full': True})  # 填写信息不够完整,重来
 
         # 不允许一个学号/工号多次注册
@@ -116,11 +125,16 @@ def search(request):
         search_word = request.POST.get('word_for_search')
         if len(search_word) == 0:
             return redirect('/index/')
-        carpool_list = CarpoolPlans.objects.filter(Q(from_site=search_word) | Q(to_site=search_word) | Q(note=search_word) | Q(category=search_word))
-        study_list = StudyPlans.objects.filter(Q(intro=search_word) | Q(category=search_word) | Q(study_mode=search_word) | Q(note=search_word))
+        carpool_list = CarpoolPlans.objects.filter(
+            Q(from_site=search_word) | Q(to_site=search_word) | Q(note=search_word) | Q(category=search_word))
+        study_list = StudyPlans.objects.filter(
+            Q(intro=search_word) | Q(category=search_word) | Q(study_mode=search_word) | Q(note=search_word))
         sport_list = SportPlans.objects.filter(Q(intro=search_word) | Q(category=search_word) | Q(note=search_word))
-        game_list = GamePlans.objects.filter(Q(game_name=search_word) | Q(category=search_word) | Q(game_mode=search_word) | Q(note=search_word))
-        return render(request, 'search.html', {'key_word': search_word, 'carpool_list': carpool_list, 'study_list': study_list, 'sport_list': sport_list, 'game_list': game_list})
+        game_list = GamePlans.objects.filter(
+            Q(game_name=search_word) | Q(category=search_word) | Q(game_mode=search_word) | Q(note=search_word))
+        return render(request, 'search.html',
+                      {'key_word': search_word, 'carpool_list': carpool_list, 'study_list': study_list,
+                       'sport_list': sport_list, 'game_list': game_list})
 
 
 # 以下是约出行相关功能的函数:
@@ -181,7 +195,8 @@ def carpool_start(request):
         if int(num_need) <= 0:
             return render(request, 'carpool_start.html', {'invaild_num': True})
 
-        if len(from_site) == 0 or len(to_site) == 0 or len(trip_mode) == 0 or len(category) == 0 or len(trip_time) == 0 or len(num_need) == 0 or len(auth_gender) == 0:
+        if len(from_site) == 0 or len(to_site) == 0 or len(trip_mode) == 0 or len(category) == 0 or len(
+                trip_time) == 0 or len(num_need) == 0 or len(auth_gender) == 0:
             return render(request, 'carpool_start.html', {'no_input': True})  # 未输入完整
         else:
             if len(deadline) == 0:
@@ -376,7 +391,9 @@ def study_start(request):
         if int(num_need) <= 0:
             return render(request, 'carpool_start.html', {'invaild_num': True})
 
-        if len(intro) == 0 or len(study_place) == 0 or len(duration) == 0 or len(study_mode) == 0 or len(start_time) == 0 or len(num_need) == 0 or len(category) == 0 or len(start_time) == 0 or len(end_time) == 0 or len(auth_gender) == 0:
+        if len(intro) == 0 or len(study_place) == 0 or len(duration) == 0 or len(study_mode) == 0 or len(
+                start_time) == 0 or len(num_need) == 0 or len(category) == 0 or len(start_time) == 0 or len(
+            end_time) == 0 or len(auth_gender) == 0:
             return render(request, 'study_start.html', {'no_input': True})  # 未输入完整
         else:
             if len(deadline) == 0:
@@ -566,7 +583,8 @@ def sport_start(request):
         if int(num_need) <= 0:
             return render(request, 'carpool_start.html', {'invaild_num': True})
 
-        if len(intro) == 0 or len(place) == 0 or len(start_time) == 0 or len(end_time) == 0 or len(num_need) == 0 or len(category) == 0 or len(duration) == 0 or len(duration) == 0:
+        if len(intro) == 0 or len(place) == 0 or len(start_time) == 0 or len(end_time) == 0 or len(
+                num_need) == 0 or len(category) == 0 or len(duration) == 0 or len(duration) == 0:
             return render(request, 'sport_start.html', {'no_input': True})  # 未输入完整
         else:
             if len(deadline) == 0:
@@ -715,7 +733,9 @@ def game_search(request):
         auth_gender_select = request.POST.get('auth_gender_select')
         if len(category_select) == 0 or len(auth_gender_select) or len(game_mode_select) == 0:
             return render(request, 'game_index.html', {'incomplete_input': True})
-        search_result = GamePlans.objects.filter(Q(ended=False) & Q(full=False) & Q(game_mode=game_mode_select) & Q(category=category_select) & Q(auth_gender=auth_gender_select))
+        search_result = GamePlans.objects.filter(
+            Q(ended=False) & Q(full=False) & Q(game_mode=game_mode_select) & Q(category=category_select) & Q(
+                auth_gender=auth_gender_select))
         search_cnt = len(search_result)
         return render(request, 'game_search.html', {'search_result': search_result, 'search_cnt': search_cnt})
 
@@ -752,7 +772,8 @@ def game_start(request):
         if int(num_need) <= 0:
             return render(request, 'carpool_start.html', {'invaild_num': True})
 
-        if len(game_name) == 0 or len(place) == 0 or len(start_time) == 0 or len(num_need) == 0 or len(category) == 0 or len(game_mode) == 0 or len(auth_gender) == 0:
+        if len(game_name) == 0 or len(place) == 0 or len(start_time) == 0 or len(num_need) == 0 or len(
+                category) == 0 or len(game_mode) == 0 or len(auth_gender) == 0:
             return render(request, 'game_start.html', {'no_input': True})  # 未输入完整
         else:
             if len(deadline) == 0:
@@ -881,3 +902,163 @@ def game_quit(request):
 
         return redirect('/game_my/')
 
+
+# 以下为微信端所需函数
+@csrf_exempt
+def weChat(request):
+    if request.method == 'GET':
+        signature = request.GET.get('signature')
+        timestamp = request.GET.get('timestamp')
+        nonce = request.GET.get('nonce')
+        echostr = request.GET.get('echostr')
+        token = "sshhhll1"
+        tmpArr = [token, timestamp, nonce]
+        tmpArr.sort()
+        string = ''.join(tmpArr).encode('utf-8')
+        string = hashlib.sha1(string).hexdigest()
+        if string == signature:
+            return HttpResponse(echostr)
+        else:
+            return HttpResponse("false")
+    if request.method == 'POST':
+        if not check_sign(request):
+            print('没连上???')
+            return None
+        request_xml = ET.fromstring(request.body)
+        ToUserName = request_xml.find('ToUserName').text
+        FromUserName = request_xml.find('FromUserName').text
+        CreateTime = request_xml.find('CreateTime').text
+        MsgType = request_xml.find('MsgType').text
+        # MsgId = request_xml.find('MsgId').text
+        if MsgType == 'text':
+            Content = request_xml.find('Content').text
+            Content = reply_text_msg(Content)
+            return render(request, 'XMLtext.xml', {'FromUserName': ToUserName, 'ToUserName': FromUserName,
+                                                   CreateTime: int(time.time()), 'MsgType': 'text', 'Content': Content})
+        if MsgType == 'image':
+            MediaId = request_xml.find('MediaId').text
+            # PicUrl = request_xml.find('PicUrl').text
+            return render(request, 'XMLimg.xml', {'FromUserName': ToUserName, 'ToUserName': FromUserName,
+                                                  CreateTime: int(time.time()), 'MsgType': 'image', 'MediaId': MediaId})
+        if MsgType == 'event':
+            Event = request_xml.find('Event').text
+            EventKey = request_xml.find('EventKey').text
+            if Event == 'CLICK' and EventKey == 'help':
+                Content = 'help'
+                return render(request, 'XMLtext.xml', {'FromUserName': ToUserName, 'ToUserName': FromUserName,
+                                                       CreateTime: int(time.time()), 'MsgType': 'text',
+                                                       'Content': Content})
+
+
+# check_sign函数检查微信签名
+@csrf_exempt
+def check_sign(request):
+    signature = request.GET.get('signature')
+    timestamp = request.GET.get('timestamp')
+    nonce = request.GET.get('nonce')
+    echostr = request.GET.get('echostr')
+    token = "sshhhll1"
+    tmpArr = [token, timestamp, nonce]
+    tmpArr.sort()
+    string = ''.join(tmpArr).encode('utf-8')
+    string = hashlib.sha1(string).hexdigest()
+    if string == signature:
+        return True
+    else:
+        return False
+
+
+# 处理文本回复信息
+def reply_text_msg(content):
+    if content == '帮助':
+        return 'help'
+    else:
+        return content
+
+
+# 微信公众号菜单
+def create_menu(request):
+    # 第一个参数是公众号里面的appID，第二个参数是appsecret
+    client = WeChatClient("wx6cdf8d8ab887e73d", "595971790db2a0e87860d3a017600f37")
+    client.menu.create({
+        "button": [
+            {
+                "name": "!Hub",
+                "sub_button": [
+                    {
+                        "type": "click",
+                        "name": "帮助",
+                        "key": "help"
+                    },
+                    {
+                        "type": "view",
+                        "name": "!Hub首页",
+                        "url": "http://sshhhll1.natapp1.cc/index"
+                    },
+                    {
+                        "type": "view",
+                        "name": "登录",
+                        "url": "http://sshhhll1.natapp1.cc/login"
+                    },
+                    {
+                        "type": "view",
+                        "name": "注册",
+                        "url": "http://sshhhll1.natapp1.cc/register"
+                    }
+                ]
+            },
+
+            {
+                "name": "查看",
+                "sub_button": [
+                    {
+                        "type": "view",
+                        "name": "约出行",
+                        "url": "http://sshhhll1.natapp1.cc/carpool_join"
+                    },
+                    {
+                        "type": "view",
+                        "name": "约学习",
+                        "url": "http://sshhhll1.natapp1.cc/study_join"
+                    },
+                    {
+                        "type": "view",
+                        "name": "约健身",
+                        "url": "http://sshhhll1.natapp1.cc/sport_join"
+                    },
+                    {
+                        "type": "view",
+                        "name": "约游戏",
+                        "url": "http://sshhhll1.natapp1.cc/game_join"
+                    }
+                ]
+            },
+
+            {
+                "name": "发起",
+                "sub_button": [
+                    {
+                        "type": "view",
+                        "name": "约出行",
+                        "url": "http://sshhhll1.natapp1.cc/carpool_start"
+                    },
+                    {
+                        "type": "view",
+                        "name": "约学习",
+                        "url": "http://sshhhll1.natapp1.cc/study_start"
+                    },
+                    {
+                        "type": "view",
+                        "name": "约健身",
+                        "url": "http://sshhhll1.natapp1.cc/sport_start"
+                    },
+                    {
+                        "type": "view",
+                        "name": "约游戏",
+                        "url": "http://sshhhll1.natapp1.cc/game_start"
+                    }
+                ]
+            }
+        ],
+    })
+    return HttpResponse('ok')
