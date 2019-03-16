@@ -1,17 +1,113 @@
-<html lang="en">
+<!doctype html>
 {% load staticfiles %}
-<head>
- <meta charset="utf-8">
- <title>ops-coffee</title>
- <!-- 引入 echarts.js -->
- <script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
-<script src={% static 'js/echarts.min.js' %}></script>
-</head>
-<body>
-<div id="main" style="width: 120%;height: 120%;" class="align-center"></div>
+<html lang="en" style="overflow-x: hidden;">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--link rel="stylesheet" href="{% static "css/style.css" %}"-->
+    <link rel="stylesheet" href="{% static "css/weui.css" %}">
+    <link rel="stylesheet" href="{% static "css/background_style.css" %}">
+
+    <title>!Hub</title>
+  </head>
+  <body style="overflow-x: hidden;">
+
+
+  <p style="text-align: center;color: #3D5989;font-family: 黑体;font-weight: bold;font-size: 20px;"><br>功能/年级比例</p>
+
+  <div style="background-color: #EFEFEF;">
+    <br>
+    <div class="row"><div class="col-1"></div>
+          <div class="col-10">
+            <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+            <div id="main" style="width: 100%;height: 400px;" class="align-center"></div>
+            <button type="button" class="btn btn-primary btn-lg btn-block" style="color: #FEFFFE;background-color: #3D5989;border-radius: 20px;border: none;" onclick="location.href='/data_analyse_index/'">查看其他数据分析</button><br><br>
+          </div>
+          <div class="col-1"></div>
+      </div>
+
+  </div>
+
+  <div class="row">
+      <div class="col-1"></div>
+      <div class="col-10">
+
+      </div>
+      <div class="col-1"></div>
+  </div>
+
+
+<div class="index_footer">
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div class="row">
+                <div class="col-4">
+                    <a href="/index/"><img src="{% static "img/icons/index_nav_home.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;ustify-content: center;overflow: hidden;"></a>
+                    <div style="text-align: center"><small class="form-text text-muted">主页</small></div>
+
+                </div>
+                <div class="col-4">
+
+                    <a href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{% static "img/icons/index_nav_start.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a>
+                    <div style="text-align: center"><small class="form-text text-muted">发起</small></div>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/carpool_start/">约出行</a>
+                    <a class="dropdown-item" href="/study_start/">约学习</a>
+                    <a class="dropdown-item" href="/sport_start/">约健身</a>
+                    <a class="dropdown-item" href="/game_start/">约开黑</a>
+                    </div>
+
+                </div>
+
+
+                <div class="col-4">
+                    <!--a href="/my/"><img src="{% static "img/icons/index_nav_my.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a-->
+                    <!--div style="text-align: center"><small class="form-text text-muted">我的</small></div-->
+
+                    <a href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{% static "img/icons/index_nav_my.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a>
+                    <div style="text-align: center"><small class="form-text text-muted">我的</small></div>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                    <a class="dropdown-item" href="/carpool_my/">我的约出行</a>
+                    <a class="dropdown-item" href="/study_my/">我的约学习</a>
+                    <a class="dropdown-item" href="/sport_my/">我的约健身</a>
+                    <a class="dropdown-item" href="/game_my/">我的约开黑</a>
+                    <a class="dropdown-item" href="/my/">个人信息</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+</div>
+<style>
+  .index_footer {
+    position: fixed;
+    /*position:absolute;*/
+    width: 100%;
+    z-index: 100;
+    bottom: 0;
+    height: 80px;
+    background-color: #FFFFFF;
+    }
+</style>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- 引入 echarts.js -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <!--script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts-en.common.js"></script-->
+    <!--script src={% static 'js/echarts.min.js' %}></script-->
+    <script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
     <script type="text/javascript">
         var myChart = echarts.init(document.getElementById('main'));
         var study_numall= {{study_numall|safe}};
@@ -35,7 +131,7 @@
         var carpool_num3= {{carpool_num3|safe}};
         var carpool_num4= {{carpool_num4|safe}};
        var option = {
-               tooltip: {
+        tooltip: {
         trigger: 'item',
         formatter: "{b}: {c}人"
     },
@@ -197,10 +293,10 @@
                 }
             ]
             },
-        ]
-    }
-};
-myChart.setOption(option);
-</script>
-</body>
+            ]
+        }
+    };
+    myChart.setOption(option, true);
+    </script>
+  </body>
 </html>

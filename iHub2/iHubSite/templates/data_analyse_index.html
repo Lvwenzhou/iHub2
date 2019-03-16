@@ -4,7 +4,7 @@
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1.0, user-scalable=no">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -16,28 +16,66 @@
   </head>
   <body style="overflow-x: hidden;">
 
+  <div style="background-color: #3D5989;">
+          <img alt="" src="{% static "img/background/login_title.png" %}" style="max-width:100%;height: auto;">
+      <br>
+  </div>
 
-  <p style="text-align: center;color: #3D5989;font-family: 黑体;font-weight: bold;font-size: 20px;"><br>性别/年级比例</p>
 
-  <div style="background-color: #EFEFEF;">
-    <br>
-      <div class="row"><div class="col-1"></div>
+  <div style="background-color: #F5F5F5">
+      <div class="row">
+          <div class="col-1"></div>
           <div class="col-10">
-            <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-            <div id="main" style="width: 100%;height: 400px;" class="align-center"></div>
-            <button type="button" class="btn btn-primary btn-lg btn-block" style="color: #FEFFFE;background-color: #3D5989;border-radius: 20px;border: none;" onclick="location.href='/data_analyse_index/'">查看其他数据分析</button><br><br>
+              <br>
+
+              <a href="/echarts_gender/"><div class="card" style="border: none;background-color: #FFE948;">
+                <div class="row">
+                  <div class="col-4" style="display: flex;align-items: center;">
+                    <img src="{% static "img/icons/data_gender.png" %}" style="height: 50px;width: auto;margin: 0 auto;align-items: center;" alt="...">
+                  </div>
+                  <div class="col-8">
+                    <div class="card-body" style="display: flex;align-items: center;">
+                      <h5 class="card-title" style="align-items: center;margin: 0 auto;color: #0D0D0D;">性别/年级比例</h5>
+                    </div>
+                  </div>
+                </div>
+              </div></a><br>
+
+              <a href="/echarts_sunburst/"><div class="card" style="border: none;background-color: #FFE948;">
+                <div class="row">
+                  <div class="col-4" style="display: flex;align-items: center;">
+                    <img src="{% static "img/icons/data_grade.png" %}" style="height: 50px;width: auto;margin: 0 auto;align-items: center;" alt="...">
+                  </div>
+                  <div class="col-8">
+                    <div class="card-body" style="display: flex;align-items: center;">
+                      <h5 class="card-title" style="align-items: center;margin: 0 auto;color: #0D0D0D;">功能/年级比例</h5>
+                    </div>
+                  </div>
+                </div>
+              </div></a><br>
+
+              <div class="card" style="border: none;background-color: #FFE948;">
+                <div class="row">
+                  <div class="col-4" style="display: flex;align-items: center;">
+                    <img src="{% static "img/icons/data_func_ratio.png" %}" style="height: 50px;width: auto;margin: 0 auto;align-items: center;" alt="...">
+                  </div>
+                  <div class="col-8">
+                    <div class="card-body" style="display: flex;align-items: center;">
+                      <h5 class="card-title" style="align-items: center;margin: 0 auto;color: #0D0D0D;">功能使用比例</h5>
+                    </div>
+                  </div>
+                </div>
+              </div><br>
+
+
+
+              <br><br><br>
           </div>
           <div class="col-1"></div>
       </div>
   </div>
 
-  <div class="row">
-      <div class="col-1"></div>
-      <div class="col-10">
 
-      </div>
-      <div class="col-1"></div>
-  </div>
 
 
 <div class="index_footer">
@@ -102,80 +140,6 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <!-- 引入 echarts.js -->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <!--script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts-en.common.js"></script-->
-    <!--script src={% static 'js/echarts.min.js' %}></script-->
-    <script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
-    <script type="text/javascript">
-          // 基于准备好的dom，初始化echarts实例
-          var myChart = echarts.init(document.getElementById('main'));
-          var female1_number= {{female1_number|safe}};
-          var male1_number= {{male1_number|safe}};
-          var female2_number= {{female2_number|safe}};
-          var male2_number= {{male2_number|safe}};
-          var female3_number= {{female3_number|safe}};
-          var male3_number= {{male3_number|safe}};
-          var female4_number= {{female4_number|safe}};
-          var male4_number= {{male4_number|safe}};
-          // 指定图表的配置项和数据
-          myChart.setOption({
-           title:{
-            show:false,
-            text:'iHub性别年级比例图',
-            textStyle:{
-            //fontSize:100
-            },
-            x:'center',
-            y:'top',
-           },
-           tooltip : {
-           trigger: 'item',
-           formatter: "{a} <br/>{b} : {c} ({d}%)",
-            textStyle: {
-            //fontSize: 40
-            }
-           },
-           itemStyle: {
-           emphasis: {
-          shadowBlur: 200,
-          shadowColor: 'rgba(0, 0, 0, 0.5)'
-          },
-          },
-           series : [
-          {
-              name: '性别年级比例',
-              type: 'pie',
-              radius: '60%',
-              center:['center','center'],
-              data:[
-                  {value:female1_number, name:'大一女生'},
-                  {value:male1_number, name:'大一男生'},
-                  {value:female2_number, name:'大二女生'},
-                  {value:male2_number, name:'大二男生'},
-                  {value:female3_number, name:'大三女生'},
-                  {value:male3_number, name:'大三男生'},
-                  {value:female4_number, name:'大四女生'},
-                  {value:male4_number, name:'大四男生'},
-              ],
-              label: {
-                normal: {
-                  show: true,
-                  textStyle: {
-                      //fontSize:50
-                  }
-                },
-                position:'center',
-              },
-              labelLine:{
-               //length:70,
-               //smooth: true,
-           },
-          }
-      ]
-      });
-      //window.onresize = myChart.resize;
-      myChart.setOption(option, true);
-    </script>
+
   </body>
 </html>

@@ -80,13 +80,13 @@
 
   {% if loged_in %}
   <div>
-      <img alt="" src="{% static "img/background/index_welcome.jpg" %}" style="max-width:100%;height: auto;">
+      <img alt="" src="{% static "img/background/index_welcome.jpg" %}" style="max-width:100%;height: auto;"><br><br><br><br>
   </div>
   {% else %}
   <div style="left: 20px;right: 20px;">
       <p>&nbsp;</p>
       <div style="text-align:center"><button class="btn btn-primary btn-lg btn-block" onclick="location.href='/login/'" style="background-color: #FFEA48;border: none;border-radius: 20px;color: #36588D;">我有账号，点击登录</button></div><br>
-      <div style="text-align:center"><button class="btn btn-primary btn-lg btn-block" onclick="location.href='/register/'" style="background-color: #95A8C5;border: none;border-radius: 20px;color: #36588D;">没有账号，点击注册</button></div><br><br>
+      <div style="text-align:center"><button class="btn btn-primary btn-lg btn-block" onclick="location.href='/register/'" style="background-color: #95A8C5;border: none;border-radius: 20px;color: #36588D;">没有账号，点击注册</button></div><br><br><br><br>
   </div>
   {% endif %}
 

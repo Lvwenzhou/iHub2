@@ -1069,6 +1069,14 @@ def create_menu(request):
 
 
 # 数据可视化
+# 数据分析导航页
+def data_analyse_index(request):
+    if request.method == 'GET':
+        return render(request, 'data_analyse_index.html')
+    else:
+        pass
+
+
 # 性别年级表
 def echarts_gender(request):
     if request.method == 'GET':
