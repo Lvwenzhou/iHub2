@@ -67,7 +67,10 @@
           {% elif plan.auth_gender == 2 %}
           <span class="badge badge-warning">仅限女性</span>
           {% endif %}
-          <span class="badge badge-primary">已有/需要人数: {{ plan.num_have }}/{{ plan.num_need }}</span><br><br>
+          <span class="badge badge-primary">已有/需要人数: {{ plan.num_have }}/{{ plan.num_need }}</span><br>
+          {% if plan.ended or plan.canceled %}
+          <span class="badge badge-danger">已结束</span><br><br>
+          {% endif %}
 
             </div>
             <div class="col-1"></div></div>
@@ -128,7 +131,10 @@
           {% elif plan.auth_gender == 2 %}
           <span class="badge badge-warning">仅限女性</span>
           {% endif %}
-          <span class="badge badge-primary">已有/需要人数: {{ plan.num_have }}/{{ plan.num_need }}</span><br><br>
+          <span class="badge badge-primary">已有/需要人数: {{ plan.num_have }}/{{ plan.num_need }}</span><br>
+          {% if plan.ended or plan.canceled %}
+          <span class="badge badge-danger">已结束</span><br><br>
+          {% endif %}
 
         </div>
         <div class="col-1"></div>
