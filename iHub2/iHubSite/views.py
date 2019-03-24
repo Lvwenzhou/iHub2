@@ -1144,3 +1144,67 @@ def echarts_sunburst(request):
                   'game_num4': game_num4['id__count']
                   }
         return render(request, 'echarts_sunburst.html', number)
+
+
+def echarts_category(request):
+    if request.method == 'GET':
+        carpool_xtf = CarpoolPlans.objects.filter(category='徐汇->奉贤').aggregate(Count('id'))
+        carpool_ftx = CarpoolPlans.objects.filter(category='奉贤->徐汇').aggregate(Count('id'))
+        carpool_fts = CarpoolPlans.objects.filter(category='奉贤->市内').aggregate(Count('id'))
+        carpool_stf = CarpoolPlans.objects.filter(category='市内->奉贤').aggregate(Count('id'))
+        carpool_ftj = CarpoolPlans.objects.filter(category='奉贤<->机场').aggregate(Count('id'))
+        carpool_ftc = CarpoolPlans.objects.filter(category='奉贤<->车站').aggregate(Count('id'))
+        carpool_other = CarpoolPlans.objects.filter(category='其他').aggregate(Count('id'))
+
+        game_alone = GamePlans.objects.filter(category='单机游戏').aggregate(Count('id'))
+        game_mul = GamePlans.objects.filter(category='多人游戏').aggregate(Count('id'))
+        game_mulol = GamePlans.objects.filter(category='多人在线').aggregate(Count('id'))
+        game_not = GamePlans.objects.filter(category='非电子游戏').aggregate(Count('id'))
+        game_other = GamePlans.objects.filter(category='其他').aggregate(Count('id'))
+        game_ltime = GamePlans.objects.filter(duration='长期').aggregate(Count('id'))
+        game_mtime = GamePlans.objects.filter(duration='中期').aggregate(Count('id'))
+        game_stime = GamePlans.objects.filter(duration='短期').aggregate(Count('id'))
+
+        study_review = StudyPlans.objects.filter(category='期末复习').aggregate(Count('id'))
+        study_kaoyan = StudyPlans.objects.filter(category='励志考研').aggregate(Count('id'))
+        study_teach2 = StudyPlans.objects.filter(category='互相教学').aggregate(Count('id'))
+        study_teach1 = StudyPlans.objects.filter(category='单方面教学').aggregate(Count('id'))
+        study_teammate = StudyPlans.objects.filter(category='求队友').aggregate(Count('id'))
+        study_study = StudyPlans.objects.filter(category='共同研究').aggregate(Count('id'))
+        study_quiz = StudyPlans.objects.filter(category='考证考试').aggregate(Count('id'))
+        study_other = StudyPlans.objects.filter(category='其他').aggregate(Count('id'))
+        study_ltime = StudyPlans.objects.filter(duration='长期').aggregate(Count('id'))
+        study_mtime = StudyPlans.objects.filter(duration='中期').aggregate(Count('id'))
+        study_stime = StudyPlans.objects.filter(duration='短期').aggregate(Count('id'))
+
+        sport_interest = SportPlans.objects.filter(category='兴趣爱好').aggregate(Count('id'))
+        sport_jianmei = SportPlans.objects.filter(category='健美').aggregate(Count('id'))
+        sport_jianfei = SportPlans.objects.filter(category='减肥').aggregate(Count('id'))
+        sport_yangsheng = SportPlans.objects.filter(category='养生').aggregate(Count('id'))
+        sport_other = SportPlans.objects.filter(category='其他').aggregate(Count('id'))
+        sport_ltime = SportPlans.objects.filter(duration='长期').aggregate(Count('id'))
+        sport_mtime = SportPlans.objects.filter(duration='中期').aggregate(Count('id'))
+        sport_stime = SportPlans.objects.filter(duration='短期').aggregate(Count('id'))
+
+        number = {'carpool_xtf': carpool_xtf['id__count'], 'carpool_ftx': carpool_ftx['id__count'],
+                  'carpool_fts': carpool_fts['id__count'],
+                  'carpool_stf': carpool_stf['id__count'], 'carpool_ftj': carpool_ftj['id__count'],
+                  'carpool_ftc': carpool_ftc['id__count'], 'carpool_other': carpool_other['id__count'],
+                  'study_review': study_review['id__count'], 'study_kaoyan': study_kaoyan['id__count'],
+                  'study_teach2': study_teach2['id__count'],
+                  'study_teach1': study_teach1['id__count'], 'study_teammate': study_teammate['id__count'],
+                  'study_study': study_study['id__count'],
+                  'study_quiz': study_quiz['id__count'], 'study_other': study_other['id__count'],
+                  'game_alone': game_alone['id__count'], 'game_mul': game_mul['id__count'],
+                  'game_mulol': game_mulol['id__count'], 'game_not': game_not['id__count'],
+                  'game_other': game_other['id__count'],
+                  'sport_interest': sport_interest['id__count'], 'sport_jianmei': sport_jianmei['id__count'],
+                  'sport_jianfei': sport_jianfei['id__count'], 'sport_yangsheng': sport_yangsheng['id__count'],
+                  'sport_other': sport_other['id__count'],
+                  'study_ltime': study_ltime['id__count'], 'study_stime': study_stime['id__count'],
+                  'study_mtime': study_mtime['id__count'],
+                  'game_ltime': game_ltime['id__count'], 'game_stime': game_stime['id__count'],
+                  'game_mtime': game_mtime['id__count'],
+                  'sport_ltime': sport_ltime['id__count'], 'sport_stime': sport_stime['id__count'],
+                  'sport_mtime': sport_mtime['id__count']}
+        return render(request, 'echarts_category.html', number)

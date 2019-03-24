@@ -1,0 +1,358 @@
+<!doctype html>
+{% load staticfiles %}
+<html lang="en" style="overflow-x: hidden;">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--link rel="stylesheet" href="{% static "css/style.css" %}"-->
+    <link rel="stylesheet" href="{% static "css/weui.css" %}">
+    <link rel="stylesheet" href="{% static "css/background_style.css" %}">
+
+    <title>!Hub</title>
+  </head>
+  <body style="overflow-x: hidden;">
+
+
+  <p style="text-align: center;color: #3D5989;font-family: 黑体;font-weight: bold;font-size: 20px;"><br>类别/时长比例</p>
+
+  <div style="background-color: #EFEFEF;">
+    <br>
+      <div class="row"><div class="col-1"></div>
+          <div class="col-10">
+            <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+            <div id="main" style="width: 100%;height: 400px;" class="align-center"></div>
+            <button type="button" class="btn btn-primary btn-lg btn-block" style="color: #FEFFFE;background-color: #3D5989;border-radius: 20px;border: none;" onclick="location.href='/data_analyse_index/'">查看其他数据分析</button><br><br>
+          </div>
+          <div class="col-1"></div>
+      </div>
+  </div>
+
+  <div class="row">
+      <div class="col-1"></div>
+      <div class="col-10">
+
+      </div>
+      <div class="col-1"></div>
+  </div>
+
+
+<div class="index_footer">
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div class="row">
+                <div class="col-4">
+                    <a href="/index/"><img src="{% static "img/icons/index_nav_home.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;ustify-content: center;overflow: hidden;"></a>
+                    <div style="text-align: center"><small class="form-text text-muted">主页</small></div>
+
+                </div>
+                <div class="col-4">
+
+                    <a href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{% static "img/icons/index_nav_start.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a>
+                    <div style="text-align: center"><small class="form-text text-muted">发起</small></div>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/carpool_start/">约出行</a>
+                    <a class="dropdown-item" href="/study_start/">约学习</a>
+                    <a class="dropdown-item" href="/sport_start/">约健身</a>
+                    <a class="dropdown-item" href="/game_start/">约开黑</a>
+                    </div>
+
+                </div>
+
+
+                <div class="col-4">
+                    <!--a href="/my/"><img src="{% static "img/icons/index_nav_my.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a-->
+                    <!--div style="text-align: center"><small class="form-text text-muted">我的</small></div-->
+
+                    <a href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{% static "img/icons/index_nav_my.png" %}" style="width:30px;height:30px;display: flex;margin: 0 auto;align-items: center;justify-content: center;overflow: hidden;"></a>
+                    <div style="text-align: center"><small class="form-text text-muted">我的</small></div>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                    <a class="dropdown-item" href="/carpool_my/">我的约出行</a>
+                    <a class="dropdown-item" href="/study_my/">我的约学习</a>
+                    <a class="dropdown-item" href="/sport_my/">我的约健身</a>
+                    <a class="dropdown-item" href="/game_my/">我的约开黑</a>
+                    <a class="dropdown-item" href="/my/">个人信息</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+</div>
+<style>
+  .index_footer {
+    position: fixed;
+    /*position:absolute;*/
+    width: 100%;
+    z-index: 100;
+    bottom: 0;
+    height: 80px;
+    background-color: #FFFFFF;
+    }
+</style>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- 引入 echarts.js -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <!--script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts-en.common.js"></script-->
+    <!--script src={% static 'js/echarts.min.js' %}></script-->
+    <script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
+    <script type="text/javascript">
+
+        var myChart = echarts.init(document.getElementById('main'));
+        var carpool_xtf={{carpool_xtf|safe}};
+        var carpool_ftx={{carpool_ftx|safe}};
+        var carpool_fts={{carpool_fts|safe}};
+        var carpool_stf={{carpool_stf|safe}};
+        var carpool_ftj={{carpool_ftj|safe}};
+        var carpool_ftc={{carpool_ftc|safe}};
+        var carpool_other={{carpool_other|safe}};
+
+        var study_review={{study_review|safe}};
+        var study_kaoyan={{study_kaoyan|safe}};
+        var study_teach2={{study_teach2|safe}};
+        var study_teach1={{study_teach1|safe}};
+        var study_teammate={{study_teammate|safe}};
+        var study_study={{study_study|safe}};
+        var study_quiz={{study_quiz|safe}};
+        var study_other={{study_other|safe}};
+
+        var game_alone={{game_alone|safe}};
+        var game_mul={{game_mul|safe}};
+        var game_mulol={{game_mulol|safe}};
+        var game_not={{game_not|safe}};
+        var game_other={{game_other|safe}};
+
+        var sport_interest={{sport_interest|safe}};
+        var sport_jianmei={{sport_jianmei|safe}};
+        var sport_jianfei={{sport_jianfei|safe}};
+        var sport_yangsheng={{sport_yangsheng|safe}};
+        var sport_other={{sport_other|safe}};
+
+        var study_ltime={{ study_ltime|safe }};
+        var study_mtime={{ study_mtime|safe }};
+        var study_stime={{ study_stime|safe }};
+
+        var sport_ltime={{ sport_ltime|safe }};
+        var sport_mtime={{ sport_mtime|safe }};
+        var sport_stime={{ sport_stime|safe }};
+
+        var game_ltime={{ game_ltime|safe }};
+        var game_mtime={{ game_mtime|safe }};
+        var game_stime={{ game_stime|safe }};
+
+        var option = {
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+
+    legend: {
+        show:false,
+        data:['其他','奉贤->徐汇','徐汇->奉贤','奉贤->市内','市内->奉贤','奉贤<->机场','奉贤<->车站'
+            ,'期末复习','励志考研','互相教学','单方面教学','求队友','共同研究','考证考试'
+            ,'兴趣爱好','健美','减肥','养生'
+            ,'单机游戏','多人游戏','多人在线','非电子游戏',]
+    },
+    toolbox: {
+        show : false,
+        orient: 'vertical',
+        x: 'right',
+        y: 'center',
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    xAxis : [
+        {
+            type : 'category',
+            data : ['约学习','约健身','约游戏','约出行']
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value'
+        }
+    ],
+    series : [
+        {
+            name:'其他',
+            type:'bar',
+            data:[carpool_other, study_other,sport_other,game_other ]
+        },
+
+
+                        {
+            name:'期末复习',
+            type:'bar',
+            stack: '约学习',
+            data:[study_review,]
+        },
+        {
+            name:'励志考研',
+            type:'bar',
+            stack: '约学习',
+            data:[study_kaoyan,]
+        },
+        {
+            name:'互相教学',
+            type:'bar',
+            stack: '约学习',
+            data:[study_teach2,]
+        },
+        {
+            name:'单方面教学',
+            type:'bar',
+            stack: '约学习',
+            data:[study_teach1,]
+        },
+        {
+            name:'求队友',
+            type:'bar',
+            stack: '约学习',
+            data:[study_teammate,]
+        },
+        {
+            name:'共同研究',
+            type:'bar',
+            stack: '约学习',
+            data:[study_study,]
+        },
+        {
+            name:'考证考试',
+            type:'bar',
+            stack: '约学习',
+            data:[study_quiz,]
+        },
+
+
+                {
+            name:'兴趣爱好',
+            type:'bar',
+            stack: '约健身',
+            data:[,sport_interest,]
+        },                 {
+            name:'健美',
+            type:'bar',
+            stack: '约健身',
+            data:[ ,sport_jianmei,]
+        },                  {
+            name:'减肥',
+            type:'bar',
+            stack: '约健身',
+            data:[ ,sport_jianfei,]
+        },                {
+            name:'养生',
+            type:'bar',
+            stack: '约健身',
+            data:[,sport_yangsheng,]
+        },
+
+
+
+        {
+            name:'单机游戏',
+            type:'bar',
+            stack: '约游戏',
+            data:[,,study_quiz,]
+        },
+        {
+            name:'多人游戏',
+            type:'bar',
+            stack: '约游戏',
+            data:[,,study_quiz,]
+        },
+        {
+            name:'多人在线',
+            type:'bar',
+            stack: '约游戏',
+            data:[,,study_quiz,]
+        },
+
+        {
+            name:'非电子游戏',
+            type:'bar',
+            stack: '约游戏',
+            data:[,,study_quiz,]
+        },
+
+
+        {
+            name:'奉贤->徐汇',
+            type:'bar',
+            stack: '约出行',
+            data:[,,,carpool_ftx]
+        },
+        {
+            name:'徐汇->奉贤',
+            type:'bar',
+            stack: '约出行',
+            data:[,,,carpool_xtf]
+        },
+        {
+            name:'奉贤->市内',
+            type:'bar',
+            stack: '约出行',
+            data:[,,,carpool_fts]
+        },
+                {
+            name:'市内->奉贤',
+            type:'bar',
+            stack: '约出行',
+            data:[,,,carpool_stf]
+        },
+                {
+            name:'奉贤<->机场',
+            type:'bar',
+            stack: '约出行',
+            data:[,,,carpool_ftj]
+        },
+                {
+            name:'奉贤<->车站',
+            type:'bar',
+            stack: '约出行',
+            data:[,,,carpool_ftc]
+        },
+
+        {
+            name:'长期',
+            type:'bar',
+            barWidth : 10,
+            stack: '持续时间',
+            data:[study_ltime, sport_ltime, game_ltime,]
+        },
+        {
+            name:'中期',
+            type:'bar',
+            stack: '持续时间',
+            data:[study_mtime, sport_mtime, game_mtime]
+        },
+        {
+            name:'短期',
+            type:'bar',
+            stack: '持续时间',
+            data:[study_stime, sport_stime,game_stime]
+        },
+    ]
+};
+myChart.setOption(option);
+</script>
+  </body>
+</html>

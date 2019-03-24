@@ -26,6 +26,7 @@ urlpatterns = [
     path('data_analyse_index/', site_view.data_analyse_index),
     path('echarts_gender/', site_view.echarts_gender),
     path('echarts_sunburst/', site_view.echarts_sunburst),
+    path('echarts_category/', site_view.echarts_category),
 
     path('login/', site_view.login),
     path('logout/', site_view.logout),
