@@ -735,7 +735,10 @@ def game_search(request):
         category_select = request.POST.get('category_select')
         game_mode_select = request.POST.get('game_mode_select')
         auth_gender_select = request.POST.get('auth_gender_select')
-        if len(category_select) == 0 or len(auth_gender_select) or len(game_mode_select) == 0:
+        # print(category_select)
+        # print(game_mode_select)
+        # print(auth_gender_select)
+        if len(category_select) == 0 or len(auth_gender_select) == 0 or len(game_mode_select) == 0:
             return render(request, 'game_index.html', {'incomplete_input': True})
         search_result = GamePlans.objects.filter(
             Q(ended=False) & Q(full=False) & Q(game_mode=game_mode_select) & Q(category=category_select) & Q(
@@ -759,6 +762,7 @@ def game_start(request):
         place = request.POST.get('place_input')  # 输入游戏地点
         start_time = request.POST.get('start_time_input')  # 输入计划开始时间
         deadline = request.POST.get('deadline_input')  # 输入截止时间
+        duration = request.POST.get('duration_select')  # 选择持续时间
         note = request.POST.get('note_input')  # 输入备注
         num_need = request.POST.get('num_need_input')  # 输入除发起者外需要人数
         auth_gender = request.POST.get('auth_gender_select')  # 选择允许加入者性别(男性、女性、两者)
@@ -777,7 +781,7 @@ def game_start(request):
             return render(request, 'carpool_start.html', {'invaild_num': True})
 
         if len(game_name) == 0 or len(place) == 0 or len(start_time) == 0 or len(num_need) == 0 or len(
-                category) == 0 or len(game_mode) == 0 or len(auth_gender) == 0:
+                category) == 0 or len(game_mode) == 0 or len(auth_gender) == 0 or len(duration) == 0:
             return render(request, 'game_start.html', {'no_input': True})  # 未输入完整
         else:
             if len(deadline) == 0:
@@ -786,7 +790,7 @@ def game_start(request):
                 note = ""
             GamePlans.objects.create(game_name=game_name, category=category, game_mode=game_mode, place=place,
                                      start_time=start_time, deadline=deadline,
-                                     note=note, num_need=num_need,
+                                     note=note, num_need=num_need, duration=duration,
                                      auth_gender=auth_gender, pub_time=pub_time,
                                      pub_username=pub_username, pub_name=pub_name, pub_no=pub_no,
                                      pub_wechat=pub_wechat, pub_gender=pub_gender)

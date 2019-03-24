@@ -151,6 +151,7 @@ class GamePlans(models.Model):
     place = models.CharField(u"游戏地点", max_length=100, null=True)
     start_time = models.DateTimeField(u"游戏开始时间", auto_now=False)
     deadline = models.DateTimeField(u"报名截止时间", auto_now=False, null=True)  # 在此时间前加入，若为空则为计划开始时间
+    duration = models.CharField(u"持续时间", null=True, max_length=100)
     pub_username = models.CharField(u"发布者昵称", max_length=100)
     pub_name = models.CharField(u"发布者姓名", max_length=100)
     pub_no = models.CharField(u"发布者学号/工号", max_length=100)
